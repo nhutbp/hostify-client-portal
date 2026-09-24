@@ -1,4 +1,4 @@
-import type { AuthUser } from '../../../../server/modules/auth/auth.types'
+import type { AuthUser } from '../../../../server/modules/identity/auth/auth.types'
 import {
   forgotPassword,
   getCurrentUser,
@@ -7,7 +7,7 @@ import {
   register,
   resendVerificationEmail,
   resetPassword,
-} from '../../../../server/modules/auth/auth'
+} from '../../../../server/modules/identity/auth/auth'
 import { unwrapSuccessResponse } from '@/utils/response'
 import type {
   ForgotPasswordRequest,

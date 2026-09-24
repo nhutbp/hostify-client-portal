@@ -1,6 +1,6 @@
 import { createFileRoute, Outlet, redirect } from '@tanstack/react-router'
 import FullLayout from '../layouts/full/FullLayout'
-import { getCurrentUser } from '../../server/modules/auth/auth'
+import { getCurrentUser } from '../../server/modules/identity/auth/auth'
 import { unwrapSuccessResponse } from '@/utils/response'
 
 export const Route = createFileRoute('/_dashboard')({

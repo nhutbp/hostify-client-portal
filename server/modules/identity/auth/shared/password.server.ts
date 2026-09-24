@@ -1,7 +1,7 @@
 import { createHmac, timingSafeEqual } from 'node:crypto'
 import argon2 from 'argon2'
-import { env } from '../../../common/env.server'
-import { createAppError } from '../../../common/app-error.server'
+import { env } from '../../../../common/env.server'
+import { createAppError } from '../../../../common/app-error.server'
 import { AUTH_ERROR_CODES } from '../auth.errors'
 
 export const DUMMY_PASSWORD_HASH =

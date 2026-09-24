@@ -1,6 +1,6 @@
 import { redirect } from '@tanstack/react-router'
 import type { PermissionActionCode } from '@/types/permission'
-import { getCurrentUser } from '../../../../server/modules/auth/auth'
+import { getCurrentUser } from '../../../../server/modules/identity/auth/auth'
 import { unwrapSuccessResponse } from '@/utils/response'
 
 export async function requirePermission(permission: PermissionActionCode) {

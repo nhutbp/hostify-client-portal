@@ -1,5 +1,5 @@
 import { createFileRoute, redirect } from '@tanstack/react-router'
-import { verifyEmailLink } from '../../../server/modules/auth/auth'
+import { verifyEmailLink } from '../../../server/modules/identity/auth/auth'
 
 type VerifyEmailConfirmSearch = {
   userId?: string

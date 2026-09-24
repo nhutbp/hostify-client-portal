@@ -1,5 +1,5 @@
 import { createServerFn } from '@tanstack/react-start'
-import { createSuccessResponse } from '../../common/response.server'
+import { createSuccessResponse } from '../../../common/response.server'
 import { apiKeyIdSchema, createApiKeySchema } from './api-keys.schemas'
 
 export const getApiKeys = createServerFn({ method: 'GET' }).handler(async () => {

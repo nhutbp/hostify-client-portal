@@ -1,5 +1,5 @@
 import { z } from 'zod'
-import { AUDIT_ACTIONS } from '../../common/audit/audit.constants'
+import { AUDIT_ACTIONS } from '../../../common/audit/audit.constants'
 
 export const listAuditLogsSchema = z.object({
   page: z.number().int().positive().default(1),

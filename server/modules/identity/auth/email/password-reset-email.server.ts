@@ -1,4 +1,4 @@
-import { sendMail } from '../../../common/mailer.server'
+import { sendMail } from '../../../../common/mailer.server'
 import { getAppBaseUrl, getPublicAssetPath } from './utils.server'
 import { createPasswordResetToken } from '../shared/password.server'
 

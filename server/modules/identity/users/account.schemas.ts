@@ -1,5 +1,5 @@
 import { z } from 'zod'
-import { CUSTOMER_GENDER_VALUES } from '../../shared/constants'
+import { CUSTOMER_GENDER_VALUES } from '../../../shared/constants'
 
 export const accountResourceIdSchema = z.object({
   id: z.string().uuid(),

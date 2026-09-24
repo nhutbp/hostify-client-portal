@@ -110,6 +110,11 @@ ssr-base/
 │   ├── db/                           # Prisma client/connection
 │   ├── third-party/                  # S3 và provider adapters
 │   └── shared/                       # constant server-only
+├── server/admin/                     # admin-only adapters không thuộc data-domain
+│   ├── appearance/
+│   ├── media/
+│   ├── posts/
+│   └── system/
 ├── shared/                           # contract/type dùng chung client-server
 └── prisma/                           # schema, migration, seed, generated client
 ```

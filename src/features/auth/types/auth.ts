@@ -1,4 +1,4 @@
-import type { AuthUser } from '../../../../server/modules/auth/auth.types'
+import type { AuthUser } from '../../../../server/modules/identity/auth/auth.types'
 
 export type User = AuthUser
 

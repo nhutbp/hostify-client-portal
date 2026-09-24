@@ -130,7 +130,7 @@ server/modules/
     └── audit-logs/
 ```
 
-Existing legacy modules such as `server/modules/users`, `server/modules/auth`, `server/modules/appearance`, `server/modules/media`, `server/modules/posts`, and `server/modules/system` may remain until an explicit migration is planned. New modules must use the taxonomy above. Do not mix a migration with unrelated feature work.
+Identity modules have been grouped under `server/modules/identity/{users,auth,api-keys}` and audit under `server/modules/audit/audit-logs`. Admin-only adapters live under `server/admin/{appearance,media,posts,system}` because they are not data-domain modules. New modules must use the taxonomy above. Do not add new legacy top-level module folders.
 
 ## Backend module layout
 
@@ -261,7 +261,7 @@ Pages compose UI only. Keep data orchestration in hooks and server calls in serv
 - Route files under `src/routes` remain thin.
 - Use loaders only for required SSR data, redirects, and guards.
 - The server session is the auth source of truth; do not use localStorage as the authority.
-- Auth flows live under `src/features/auth` and `server/modules/auth` until migrated into `identity/auth`.
+- Auth flows live under `src/features/auth` and `server/modules/identity/auth`.
 - Admin routes require server-verified dashboard access and permissions.
 - Customer routes require an authenticated user and organization/service ownership checks.
 - Use `$id/index.tsx` for detail routes and `$id/edit/index.tsx` for edit routes.

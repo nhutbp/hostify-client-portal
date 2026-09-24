@@ -6,14 +6,14 @@ import {
   getAdminMedia,
   createAdminMediaFolder,
   updateAdminMedia,
-} from '../../../../../server/modules/media/media'
+} from '../../../../../server/admin/media/media'
 import type {
   CreateMediaInput,
   CreateMediaFolderInput,
   MediaListInput,
   UpdateMediaInput,
   UpdateMediaSettingsInput,
-} from '../../../../../server/modules/media/media.schemas'
+} from '../../../../../server/admin/media/media.schemas'
 import { unwrapSuccessResponse } from '@/utils/response'
 import type { MediaRecord, MediaSettings } from '../types'
 

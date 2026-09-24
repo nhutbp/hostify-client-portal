@@ -1,6 +1,6 @@
-import { getCurrentUserFromRequest } from '../modules/auth/auth.service.server'
+import { getCurrentUserFromRequest } from '../modules/identity/auth/auth.service.server'
 import { createAppError } from './app-error.server'
-import { AUTH_ERROR_CODES } from '../modules/auth/auth.errors'
+import { AUTH_ERROR_CODES } from '../modules/identity/auth/auth.errors'
 import { isPermissionCode } from '../../shared/permissions'
 import type { PermissionActionCode } from '../../shared/permissions'
 import { ADMIN_ROLE_CODES, ROLE_CODES } from '../../shared/roles'

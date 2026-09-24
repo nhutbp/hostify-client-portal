@@ -4,7 +4,7 @@ import {
   useQuery,
   useQueryClient,
 } from '@tanstack/react-query'
-import type { UpdateMediaSettingsInput } from '../../../../../server/modules/media/media.schemas'
+import type { UpdateMediaSettingsInput } from '../../../../../server/admin/media/media.schemas'
 import { mediaService } from '../services/mediaService'
 
 export const mediaSettingsKey = ['admin', 'media', 'settings'] as const

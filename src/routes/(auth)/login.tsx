@@ -1,6 +1,6 @@
 import { createFileRoute, redirect } from '@tanstack/react-router'
 import LoginPage from '@/features/auth/pages/login/index.tsx'
-import { getCurrentUser } from '../../../server/modules/auth/auth'
+import { getCurrentUser } from '../../../server/modules/identity/auth/auth'
 import { unwrapSuccessResponse } from '@/utils/response'
 import { getAuthenticatedRedirect } from '@/features/auth/utils/authRedirect'
 

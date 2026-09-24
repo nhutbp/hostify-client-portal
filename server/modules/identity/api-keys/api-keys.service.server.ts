@@ -1,11 +1,11 @@
 import { createHash, randomBytes } from 'node:crypto'
-import { prisma } from '../../db/prisma'
-import { requireAuthContext } from '../../common/auth-context.server'
-import { createAppError } from '../../common/app-error.server'
-import { createId } from '../../common/id.server'
+import { prisma } from '../../../db/prisma'
+import { requireAuthContext } from '../../../common/auth-context.server'
+import { createAppError } from '../../../common/app-error.server'
+import { createId } from '../../../common/id.server'
 import { API_KEY_ERROR_CODES } from './api-keys.errors'
 import type { CreateApiKeyInput } from './api-keys.schemas'
-import { recordAuditLog } from '../../common/audit/audit.service.server'
+import { recordAuditLog } from '../../../common/audit/audit.service.server'
 
 const API_KEY_PREFIX = 'hca_live_'
 

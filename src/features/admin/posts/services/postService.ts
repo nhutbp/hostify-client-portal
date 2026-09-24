@@ -11,7 +11,7 @@ import {
   updateAdminPost,
   updateAdminPostCategory,
   updateAdminPostPlatform,
-} from '../../../../../server/modules/posts/posts'
+} from '../../../../../server/admin/posts/posts'
 import type {
   CreatePostCategoryInput,
   CreatePostInput,
@@ -21,7 +21,7 @@ import type {
   UpdatePostInput,
   CreatePostPlatformInput,
   UpdatePostPlatformInput,
-} from '../../../../../server/modules/posts/posts.schemas'
+} from '../../../../../server/admin/posts/posts.schemas'
 import { unwrapSuccessResponse } from '@/utils/response'
 
 export type {
@@ -33,7 +33,7 @@ export type {
   UpdatePostInput,
   CreatePostPlatformInput,
   UpdatePostPlatformInput,
-} from '../../../../../server/modules/posts/posts.schemas'
+} from '../../../../../server/admin/posts/posts.schemas'
 export type PostPlatform = {
   id: string
   name: string

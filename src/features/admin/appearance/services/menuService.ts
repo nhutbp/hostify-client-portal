@@ -3,19 +3,19 @@ import {
   deleteAdminMenu,
   getAdminMenus,
   updateAdminMenu,
-} from '../../../../../server/modules/appearance/appearance'
+} from '../../../../../server/admin/appearance/appearance'
 import type {
   CreateMenuInput,
   ListMenusInput,
   UpdateMenuInput,
-} from '../../../../../server/modules/appearance/appearance.schemas'
+} from '../../../../../server/admin/appearance/appearance.schemas'
 import { unwrapSuccessResponse } from '@/utils/response'
 
 export type {
   CreateMenuInput,
   ListMenusInput,
   UpdateMenuInput,
-} from '../../../../../server/modules/appearance/appearance.schemas'
+} from '../../../../../server/admin/appearance/appearance.schemas'
 export const menuService = {
   list: (input: ListMenusInput) =>
     getAdminMenus({ data: input }).then(unwrapSuccessResponse),

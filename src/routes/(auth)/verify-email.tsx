@@ -1,6 +1,6 @@
 import { createFileRoute, redirect } from '@tanstack/react-router'
 import VerifyEmailPage from '@/features/auth/pages/verify-email/index.tsx'
-import { getCurrentUser } from '../../../server/modules/auth/auth'
+import { getCurrentUser } from '../../../server/modules/identity/auth/auth'
 import { unwrapSuccessResponse } from '@/utils/response'
 
 export const Route = createFileRoute('/(auth)/verify-email')({

@@ -1,20 +1,20 @@
 import { v7 as uuidv7 } from 'uuid'
-import { Prisma } from '../../../prisma/generated/client.js'
-import { createAppError } from '../../common/app-error.server'
+import { Prisma } from '../../../../prisma/generated/client.js'
+import { createAppError } from '../../../common/app-error.server'
 import {
   requireAuthContext,
   requirePermission,
-} from '../../common/auth-context.server'
-import { createPaginationMeta } from '../../common/pagination.server'
-import { prisma } from '../../db/prisma'
+} from '../../../common/auth-context.server'
+import { createPaginationMeta } from '../../../common/pagination.server'
+import { prisma } from '../../../db/prisma'
 import { hashPassword } from '../auth/shared/password.server'
-import { isPermissionCode } from '../../../shared/permissions'
+import { isPermissionCode } from '../../../../shared/permissions'
 import {
   ADMIN_ROLE_CODES,
   ROLE_CODES,
   STAFF_ROLE_CODES,
   SYSTEM_ROLE_CODES,
-} from '../../../shared/roles'
+} from '../../../../shared/roles'
 import type {
   BulkUpdateAdminUserStatusInput,
   CreateAdminUserInput,
@@ -28,12 +28,12 @@ import type {
   UpdateAdminUserRolesInput,
 } from './users.schemas'
 import { USER_ERROR_CODES, USER_ROLE_ERROR_CODES } from './users.errors'
-import { recordAuditLog } from '../../common/audit/audit.service.server'
+import { recordAuditLog } from '../../../common/audit/audit.service.server'
 import {
   AUDIT_ACTION_CODES,
   AUDIT_SOURCE_CODES,
   AUDIT_TARGETS,
-} from '../../common/audit/audit.constants'
+} from '../../../common/audit/audit.constants'
 import {
   findAdminUserDetail,
   findAdminUserRelatedData,

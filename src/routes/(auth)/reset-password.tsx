@@ -1,6 +1,6 @@
 import { createFileRoute, redirect } from '@tanstack/react-router'
 import ResetPasswordPage from '@/features/auth/pages/reset-password/index.tsx'
-import { getCurrentUser } from '../../../server/modules/auth/auth'
+import { getCurrentUser } from '../../../server/modules/identity/auth/auth'
 import { unwrapSuccessResponse } from '@/utils/response'
 
 export const Route = createFileRoute('/(auth)/reset-password')({

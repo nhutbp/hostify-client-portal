@@ -1,4 +1,4 @@
-import { getAdminAuditLogs } from '../../../../../server/modules/audit/audit'
+import { getAdminAuditLogs } from '../../../../../server/modules/audit/audit-logs/audit'
 import { unwrapSuccessResponse } from '@/utils/response'
 import type { AuditAction } from '../../../../../server/common/audit/audit.constants'
 

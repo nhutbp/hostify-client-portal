@@ -1,7 +1,7 @@
-import { prisma } from '../../db/prisma'
+import { prisma } from '../../../db/prisma'
 import { getCurrentUserFromRequest } from '../auth/auth.service.server'
-import { unwrapSuccessResponse } from '../../../src/utils/response'
-import { createAppError } from '../../common/app-error.server'
+import { unwrapSuccessResponse } from '../../../../src/utils/response'
+import { createAppError } from '../../../common/app-error.server'
 import { hashPassword, verifyPassword } from '../auth/shared/password.server'
 import type { z } from 'zod'
 import type {
@@ -10,7 +10,7 @@ import type {
   updateAccountProfileSchema,
 } from './account.schemas'
 import { ACCOUNT_ERROR_CODES } from './account.errors'
-import { recordAuditLog } from '../../common/audit/audit.service.server'
+import { recordAuditLog } from '../../../common/audit/audit.service.server'
 
 async function requireCurrentUser() {
   const user = unwrapSuccessResponse(await getCurrentUserFromRequest())

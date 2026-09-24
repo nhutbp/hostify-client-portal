@@ -14,7 +14,7 @@ import {
   createRoleFromAdmin,
   updateRoleFromAdmin,
   deleteRoleFromAdmin,
-} from '../../../../../server/modules/users/users'
+} from '../../../../../server/modules/identity/users/users'
 import type {
   BulkUpdateAdminUserStatusInput,
   CreateAdminUserInput,
@@ -22,7 +22,7 @@ import type {
   UpdateAdminUserStatusInput,
   UpdateAdminUserProfileInput,
   UpdateAdminUserRolesInput,
-} from '../../../../../server/modules/users/users.schemas'
+} from '../../../../../server/modules/identity/users/users.schemas'
 import type {
   AdminUser,
   AdminUserDetail,

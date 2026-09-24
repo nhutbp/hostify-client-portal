@@ -10,8 +10,8 @@ import '@/config/i18n'
 
 import { ThemeProvider } from '@/components/provider/ThemeProvider'
 import { AuthBootstrapProvider } from '@/features/auth/context/AuthBootstrapProvider'
-import { getCurrentUser } from '../../server/modules/auth/auth'
-import { getPublicWebsiteSettings } from '../../server/modules/system/system'
+import { getCurrentUser } from '../../server/modules/identity/auth/auth'
+import { getPublicWebsiteSettings } from '../../server/admin/system/system'
 import { unwrapSuccessResponse } from '@/utils/response'
 
 import appCss from '../styles.css?url'

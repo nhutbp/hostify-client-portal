@@ -107,12 +107,19 @@ ssr-base/
 │       └── audit-logs/
 ├── server/common/        # error, auth context, cookies, mailer, pagination
 ├── server/db/            # Prisma client
+├── server/admin/         # admin-only adapters không thuộc data-domain
+│   ├── appearance/
+│   ├── media/
+│   ├── posts/
+│   └── system/
 ├── server/third-party/   # S3 và provider adapter
 ├── shared/               # contract/type client-server
 └── prisma/               # schema, migrations, seed, generated
 ```
 
 Các module con mới chưa cần tạo trước nếu chưa có use case hoặc database migration tương ứng. Mọi module backend mới phải thuộc một trong 10 vùng dữ liệu: `identity`, `catalog`, `commerce`, `billing`, `services`, `infrastructure`, `provisioning`, `domain-proxy-via`, `support`, `audit`. Các module hiện có như `server/modules/users` có thể được di chuyển dần vào `server/modules/identity/users` trong một migration/refactor riêng. Các module `appearance`, `media`, `posts`, `system` hiện có cần được phân loại vào vùng dữ liệu phù hợp hoặc chuyển thành phần dùng chung/admin adapter, không tạo thêm module cha ngoài taxonomy này.
+
+Trong source hiện tại, các module identity/audit đã được gom về `server/modules/identity/{users,auth,api-keys}` và `server/modules/audit/audit-logs`. Các module chỉ phục vụ admin (`appearance`, `media`, `posts`, `system`) được đặt tại `server/admin` vì chúng không sở hữu một data-domain mới trong taxonomy.
 
 ### Quy tắc phụ thuộc
 

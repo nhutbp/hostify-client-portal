@@ -1,5 +1,5 @@
 import { createServerFn } from '@tanstack/react-start'
-import { createSuccessResponse } from '../../common/response.server'
+import { createSuccessResponse } from '../../../common/response.server'
 import {
   bulkUpdateAdminUserStatusSchema,
   createAdminUserSchema,

@@ -2,7 +2,7 @@ import {
   createApiKey,
   getApiKeys,
   revokeApiKey,
-} from '../../../../../server/modules/api-keys/api-keys'
+} from '../../../../../server/modules/identity/api-keys/api-keys'
 import { unwrapSuccessResponse } from '@/utils/response'
 
 export type ApiKeyView = {

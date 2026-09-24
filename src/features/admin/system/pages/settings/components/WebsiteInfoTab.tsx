@@ -19,7 +19,7 @@ import { toast } from '@/utils/toast'
 import {
   getPublicWebsiteSettings,
   saveWebsiteSettings,
-} from '../../../../../../../server/modules/system/system'
+} from '../../../../../../../server/admin/system/system'
 
 export function WebsiteInfoTab() {
   const { t } = useTranslation('system')

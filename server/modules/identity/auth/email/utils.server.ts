@@ -1,5 +1,5 @@
 import path from 'node:path'
-import { env } from '../../../common/env.server'
+import { env } from '../../../../common/env.server'
 
 export function getAppBaseUrl() {
   return env.appUrl

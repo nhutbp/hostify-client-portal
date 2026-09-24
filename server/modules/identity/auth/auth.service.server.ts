@@ -15,7 +15,7 @@ import {
   readCookieValue,
   setAuthCookies,
   setSessionCookie,
-} from '../../common/cookies.server'
+} from '../../../common/cookies.server'
 import {
   createUserRecord,
   createSessionRecord,
@@ -39,15 +39,15 @@ import {
   buildVerificationLink,
   sendVerificationLinkEmail,
 } from './email/verification-email.server'
-import { prisma } from '../../db/prisma'
-import { createAppError } from '../../common/app-error.server'
+import { prisma } from '../../../db/prisma'
+import { createAppError } from '../../../common/app-error.server'
 import {
   createMessageResponse,
   createSuccessResponse,
-} from '../../common/response.server'
-import { normalizePhoneForVN } from '../../../src/utils/phone'
+} from '../../../common/response.server'
+import { normalizePhoneForVN } from '../../../../src/utils/phone'
 import { AUTH_ERROR_CODES } from './auth.errors'
-import { ROLE_CODES } from '../../../shared/roles'
+import { ROLE_CODES } from '../../../../shared/roles'
 import type {
   AuthUser,
   ForgotPasswordCredentials,

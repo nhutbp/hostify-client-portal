@@ -1,12 +1,12 @@
-import type { Prisma } from '../../../prisma/generated/client.js'
-import { prisma } from '../../db/prisma'
-import { getPagination } from '../../common/pagination.server'
+import type { Prisma } from '../../../../prisma/generated/client.js'
+import { prisma } from '../../../db/prisma'
+import { getPagination } from '../../../common/pagination.server'
 import type { ListAdminUsersInput } from './users.schemas'
 import {
   ADMIN_ROLE_CODES,
   ROLE_CODES,
   STAFF_ROLE_CODES,
-} from '../../../shared/roles'
+} from '../../../../shared/roles'
 
 function roleWhere(role: ListAdminUsersInput['role']): Prisma.UserWhereInput {
   if (role === 'ADMIN')

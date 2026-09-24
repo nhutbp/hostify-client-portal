@@ -1,5 +1,5 @@
-import type { Prisma } from '../../../prisma/generated/client.js'
-import { prisma } from '../../db/prisma'
+import type { Prisma } from '../../../../prisma/generated/client.js'
+import { prisma } from '../../../db/prisma'
 import type { UserStatus } from './types/user.constants.js'
 
 export async function findUserByLogin(login: string) {
