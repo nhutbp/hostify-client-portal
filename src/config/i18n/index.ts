@@ -14,6 +14,8 @@ import appearanceEn from '@/features/admin/appearance/i18n/en.json'
 import appearanceVi from '@/features/admin/appearance/i18n/vi.json'
 import adminUsersEn from '@/features/admin/users/i18n/en.json'
 import adminUsersVi from '@/features/admin/users/i18n/vi.json'
+import catalogEn from '@/features/admin/catalog/i18n/en.json'
+import catalogVi from '@/features/admin/catalog/i18n/vi.json'
 import i18n from 'i18next'
 
 export const LANGUAGES = {
@@ -49,6 +51,7 @@ i18n.use(initReactI18next).init({
       posts: postsVi,
       appearance: appearanceVi,
       adminUsers: adminUsersVi,
+      catalog: catalogVi,
     },
     en: {
       translation: en,
@@ -58,6 +61,7 @@ i18n.use(initReactI18next).init({
       posts: postsEn,
       appearance: appearanceEn,
       adminUsers: adminUsersEn,
+      catalog: catalogEn,
     },
   },
   lng: getSavedLanguage(),
@@ -67,7 +71,7 @@ i18n.use(initReactI18next).init({
   },
   returnNull: false,
   defaultNS: 'translation',
-  ns: ['translation', 'apiErrors', 'auth', 'system', 'media'],
+  ns: ['translation', 'apiErrors', 'auth', 'system', 'media', 'catalog'],
 })
 
 // Save language to localStorage when changed

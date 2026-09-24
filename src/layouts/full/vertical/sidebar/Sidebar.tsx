@@ -34,9 +34,9 @@ const CollapsibleMenuItem = ({
   isCollapsed: boolean
 }) => {
   const hasChildren = item.children && item.children.length > 0
-  const isActive = item.url === currentPath
+  const isActive = item.active !== false && item.url === currentPath
   const hasActiveChild = item.children?.some(
-    (child) => child.url === currentPath,
+    (child) => child.active !== false && child.url === currentPath,
   )
 
   // Calculate total badge count for parent menu
@@ -55,9 +55,11 @@ const CollapsibleMenuItem = ({
         to={item.url}
         onClick={onClose}
         className={cn(
-          'text-md flex items-center gap-3 rounded-lg px-3 py-2.5 font-medium transition-colors',
+          'relative flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-colors',
           'hover:bg-primary/10 hover:text-primary',
-          isActive ? 'bg-primary/10 text-primary' : 'text-sidebar-foreground',
+          isActive
+            ? 'bg-primary/10 text-primary before:absolute before:left-0 before:h-7 before:w-1 before:rounded-r-full before:bg-primary'
+            : 'text-sidebar-foreground',
           isCollapsed && 'justify-center px-2',
         )}
       >
@@ -113,17 +115,17 @@ const CollapsibleMenuItem = ({
       >
         <div className="border-border ml-4 space-y-1 border-l pl-4">
           {item.children?.map((child) => {
-            const isChildActive = child.url === currentPath
+            const isChildActive = child.active !== false && child.url === currentPath
             return (
               <Link
                 key={child.id}
                 to={child.url}
                 onClick={onClose}
                 className={cn(
-                  'text-md flex items-center gap-2 rounded-lg px-3 py-2 transition-colors',
+                  'relative flex items-center gap-2 rounded-lg px-3 py-2 text-sm transition-colors',
                   'hover:bg-primary/10 hover:text-primary',
                   isChildActive
-                    ? 'bg-primary/10 text-primary font-medium'
+                    ? 'bg-primary/10 text-primary font-medium before:absolute before:left-0 before:h-7 before:w-1 before:rounded-r-full before:bg-primary'
                     : 'text-sidebar-foreground/80',
                   isCollapsed && 'justify-center px-2',
                 )}
@@ -244,18 +246,25 @@ const SidebarLayout = ({ onClose }: { onClose?: () => void }) => {
       {/* Navigation */}
       <SimpleBar className="flex-1 overflow-y-auto">
         <nav className={cn('space-y-1', isCollapsed ? 'p-2' : 'p-4')}>
-          {filteredSidebarContent.map((item) => (
-            <CollapsibleMenuItem
-              key={item.id}
-              item={item}
-              isExpanded={expandedMenus.has(item.id)}
-              onToggle={() => toggleMenu(item.id)}
-              currentPath={pathname}
-              onClose={onClose}
-              t={t}
-              badgeCounts={{}}
-              isCollapsed={isCollapsed}
-            />
+          {filteredSidebarContent.map((item, index) => (
+            <div key={item.id}>
+              {!isCollapsed &&
+                (index === 0 || item.section !== filteredSidebarContent[index - 1]?.section) && (
+                  <p className="text-muted-foreground mb-2 mt-5 px-3 text-[11px] font-semibold uppercase tracking-[0.08em] first:mt-0">
+                    {t(item.section ?? 'sidebar.sections.other')}
+                  </p>
+                )}
+              <CollapsibleMenuItem
+                item={item}
+                isExpanded={expandedMenus.has(item.id)}
+                onToggle={() => toggleMenu(item.id)}
+                currentPath={pathname}
+                onClose={onClose}
+                t={t}
+                badgeCounts={{}}
+                isCollapsed={isCollapsed}
+              />
+            </div>
           ))}
         </nav>
       </SimpleBar>

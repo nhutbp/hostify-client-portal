@@ -37,10 +37,10 @@ const Profile = () => {
   }
 
   return (
-    <div className="group/menu relative shrink-0 ps-1 sm:ps-15">
+    <div className="group/menu relative shrink-0 ps-1 sm:ps-3">
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
-          <span className="hover:text-primary hover:bg-lightprimary group-hover/menu:bg-lightprimary group-hover/menu:text-primary flex cursor-pointer items-center justify-center rounded-full">
+          <span className="flex cursor-pointer items-center gap-2 rounded-full px-2 py-1 hover:bg-blue-50">
             {avatarUrl && !avatarError ? (
               <img
                 src={avatarUrl}
@@ -51,10 +51,12 @@ const Profile = () => {
                 onError={() => setAvatarError(true)}
               />
             ) : (
-              <span className="flex h-[35px] w-[35px] items-center justify-center rounded-full bg-slate-100 text-slate-500 dark:bg-slate-700 dark:text-slate-300">
-                <UserRound className="h-5 w-5" />
+              <span className="flex h-[35px] w-[35px] items-center justify-center rounded-full bg-blue-600 text-sm font-bold text-white">
+                {user?.displayName?.slice(0, 2).toUpperCase() ?? <UserRound className="h-5 w-5" />}
               </span>
             )}
+            <span className="hidden text-left lg:block"><span className="block text-sm font-semibold text-slate-800">{user?.displayName ?? 'Nguyễn Văn A'}</span><span className="block text-[11px] text-slate-400">Quản trị viên</span></span>
+            <Icon icon="solar:alt-arrow-down-linear" className="hidden size-4 text-slate-500 lg:block" />
           </span>
         </DropdownMenuTrigger>
         <DropdownMenuContent

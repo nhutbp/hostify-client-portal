@@ -1,0 +1,10 @@
+{
+  "vps": {
+    "breadcrumb": "Products / Services / VPS", "title": "Manage VPS packages", "description": "Create and edit VPS packages displayed to customers", "viewWebsite": "View website",
+    "categories": { "vps": "VPS", "hosting": "Hosting", "physical": "Physical server", "proxy": "Proxy", "via": "VIA" }, "packageCount": "{{count}} packages", "listTitle": "{{category}} package list", "listDescription": "Manage packages, pricing, configuration and visibility status", "add": "Add VPS package", "searchPlaceholder": "Search VPS packages...",
+    "filters": { "provider": "Provider", "status": "Status", "datacenter": "Datacenter", "all": "All", "advanced": "Advanced filter" },
+    "table": { "name": "Package name", "configuration": "Configuration", "price": "Price", "provider": "Provider", "location": "Location", "status": "Status", "actions": "Actions", "perMonth": "VND/month", "popular": "Popular", "showing": "Showing 1 - {{count}} of 120 packages" },
+    "form": { "back": "Back to VPS packages", "createTitle": "Add VPS package", "createDescription": "Create a new VPS package for customers", "basicInfo": "Basic information", "configuration": "Configuration", "pricing": "Pricing & regions", "visibility": "Visibility", "name": "Package name", "namePlaceholder": "VPS Professional", "shortDescription": "Short description", "shortDescriptionValue": "Suitable for websites and applications with high, stable performance.", "category": "Category", "tag": "Tags", "tagValue": "Popular, High performance, Business", "defaultProvider": "Default provider", "image": "Cover image", "changeImage": "Change image", "visible": "Visible", "hidden": "Hidden", "cancel": "Cancel", "saveDraft": "Save draft", "next": "Next" },
+    "required": "*", "providers": { "a": "Provider A", "b": "Provider B" }, "locations": { "vietnam": "Vietnam", "singapore": "Singapore", "japan": "Japan", "usa": "United States", "germany": "Germany" }
+  }
+}

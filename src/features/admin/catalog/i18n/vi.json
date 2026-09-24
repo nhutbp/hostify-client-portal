@@ -1,0 +1,10 @@
+{
+  "vps": {
+    "breadcrumb": "Sản phẩm / Dịch vụ / VPS", "title": "Quản lý gói VPS", "description": "Tạo, chỉnh sửa các gói VPS hiển thị cho khách hàng", "viewWebsite": "Xem website",
+    "categories": { "vps": "VPS", "hosting": "Hosting", "physical": "Máy chủ vật lý", "proxy": "Proxy", "via": "VIA" }, "packageCount": "{{count}} gói", "listTitle": "Danh sách gói {{category}}", "listDescription": "Quản lý các gói, giá bán, cấu hình và trạng thái hiển thị", "add": "Thêm gói VPS", "searchPlaceholder": "Tìm kiếm gói VPS...",
+    "filters": { "provider": "Nhà cung cấp", "status": "Trạng thái", "datacenter": "Vị trí DC", "all": "Tất cả", "advanced": "Lọc nâng cao" },
+    "table": { "name": "Tên gói", "configuration": "Cấu hình", "price": "Giá bán", "provider": "Nhà cung cấp", "location": "Vị trí DC", "status": "Trạng thái", "actions": "Hành động", "perMonth": "đ/tháng", "popular": "Phổ biến", "showing": "Hiển thị 1 - {{count}} của 120 gói" },
+    "form": { "back": "Quay lại danh sách VPS", "createTitle": "Thêm gói VPS", "createDescription": "Tạo gói VPS mới để cung cấp cho khách hàng", "basicInfo": "Thông tin cơ bản", "configuration": "Cấu hình", "pricing": "Giá & khu vực", "visibility": "Hiển thị", "name": "Tên gói", "namePlaceholder": "VPS Professional", "shortDescription": "Mô tả ngắn", "shortDescriptionValue": "Phù hợp cho website, ứng dụng, hiệu năng cao, ổn định.", "category": "Danh mục", "tag": "Tag", "tagValue": "Phổ biến, Hiệu năng cao, Doanh nghiệp", "defaultProvider": "Nhà cung cấp mặc định", "image": "Hình ảnh đại diện", "changeImage": "Thay ảnh", "visible": "Hiển thị", "hidden": "Ẩn", "cancel": "Hủy", "saveDraft": "Lưu nháp", "next": "Tiếp theo" },
+    "required": "*", "providers": { "a": "Provider A", "b": "Provider B" }, "locations": { "vietnam": "Việt Nam", "singapore": "Singapore", "japan": "Nhật Bản", "usa": "Hoa Kỳ", "germany": "Đức" }
+  }
+}

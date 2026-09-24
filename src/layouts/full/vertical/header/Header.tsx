@@ -58,10 +58,8 @@ const Header = () => {
   return (
     <>
       <header
-        className={`sticky top-0 z-40 ${
-          isSticky
-            ? 'dark:bg-dark fixed w-full bg-white shadow-md'
-            : 'bg-transparent'
+        className={`sticky top-0 z-40 border-b border-slate-100 bg-white/95 backdrop-blur ${
+          isSticky ? 'shadow-sm' : ''
         }`}
       >
         <nav className="container mx-auto flex w-full items-center justify-between rounded-none bg-transparent px-5 py-2.5 sm:px-10 dark:bg-transparent">
@@ -83,7 +81,11 @@ const Header = () => {
           </div>
 
           <div className="hidden md:block">
-            <div className="flex items-center gap-0">
+            <div className="flex items-center gap-2">
+              <button type="button" className="relative rounded-full p-2 text-slate-600 hover:bg-blue-50 hover:text-blue-600" aria-label="Thông báo">
+                <Icon icon="solar:bell-linear" width="21" />
+                <span className="absolute right-0 top-0 flex size-4 items-center justify-center rounded-full bg-red-500 text-[9px] font-bold text-white">3</span>
+              </button>
               {/* Language Switcher */}
               <LanguageSwitcher />
               {/* Theme Toggle */}
