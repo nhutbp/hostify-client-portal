@@ -1,9 +1,9 @@
-import { createColumnHelper } from '@tanstack/react-table'
 import { useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Table } from '@/components/table/Table'
 import { Link } from '@tanstack/react-router'
 import { useAuditLogs } from '../hooks/useAuditLogs'
+import { createAppColumnHelper } from '@/components/table/tableConfig'
 
 type AuditRow = {
   id: string
@@ -16,7 +16,7 @@ type AuditRow = {
   entity: { id: string; name: string; code?: string; slug?: string } | null
 }
 
-const columnHelper = createColumnHelper<AuditRow>()
+const columnHelper = createAppColumnHelper<AuditRow>()
 
 function entityHref(row: AuditRow) {
   const identifier = row.entity?.code ?? row.entity?.slug ?? row.entity?.id

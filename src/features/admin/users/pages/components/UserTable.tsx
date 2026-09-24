@@ -6,6 +6,7 @@ import type { AdminUser, AdminUserRole, AdminUserStatus } from '../../types'
 import { createIndexColumn } from '@/components/table/IndexColumn'
 import { Table } from '@/components/table/Table'
 import { TableActionButton } from '@/components/table/TableActions'
+import { appTableFeatures } from '@/components/table/tableConfig'
 
 const roleStyles: Record<AdminUserRole, string> = {
   CUSTOMER: 'bg-slate-100 text-slate-700',
@@ -58,7 +59,7 @@ export function UserTable({
   const { t, i18n } = useTranslation('adminUsers')
   const allSelected =
     items.length > 0 && items.every(({ id }) => selected.has(id))
-  const columns = useMemo<ColumnDef<AdminUser>[]>(
+  const columns = useMemo<ColumnDef<typeof appTableFeatures, AdminUser, any>[]>(
     () => [
       ...(canApprove
         ? [
@@ -96,7 +97,7 @@ export function UserTable({
                 />
               ),
               meta: { showMobile: true },
-            } satisfies ColumnDef<AdminUser>,
+            } satisfies ColumnDef<typeof appTableFeatures, AdminUser, any>,
           ]
         : []),
       createIndexColumn<AdminUser>({ page, pageSize: limit }),
@@ -221,9 +222,9 @@ export function UserTable({
                 headerClassName: 'text-right',
                 cellClassName: 'text-right',
               },
-            } satisfies ColumnDef<AdminUser>,
+            } satisfies ColumnDef<typeof appTableFeatures, AdminUser, any>,
           ]
-        : []) as ColumnDef<AdminUser>[]),
+        : []) as ColumnDef<typeof appTableFeatures, AdminUser, any>[]),
     ],
     [
       allSelected,

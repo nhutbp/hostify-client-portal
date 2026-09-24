@@ -1,241 +1,312 @@
 ---
 name: app-base
-description: Repo-specific guide for the TanStack Start source base. Use it for Prisma schema changes, SSR auth, frontend folder structure, feature/page/component splitting, shared component usage, TanStack Query, and code organization rules in this repository.
+description: Repo-specific instructions for building and changing this TanStack Start + Prisma VPS portal. Use for frontend features, admin/customer screens, server modules, server functions, APIs, database work, auth, and shared UI.
 ---
 
-# App Base Guide
+# App Base Skill
 
-Use this skill when working inside this repo so changes stay aligned with the current architecture.
+Use this skill for every implementation or review inside this repository. Preserve the existing architecture and naming conventions. Do not introduce a second architecture or move unrelated folders unless the user explicitly requests a migration.
 
-## Core Rules
+## Project architecture
 
-- SSR is the source of truth for auth
-- Keep route files thin
-- Keep server logic in `server`
-- Keep feature logic in `src/features/<feature>`
-- Use `@/` imports instead of long relative paths
-- Split large page files into smaller components early
-- Prefer reusable components over copy-paste UI
-- Keep frontend composition aligned with the existing design system
-- Never hardcode visible UI text when a translation key can be used
-- Focused flows across the app should use card-based layouts and stay dark-mode ready
+The repository has four important layers:
 
-## Server Structure
+- `src/features`: frontend feature code.
+- `src/routes`: thin TanStack Router route composition and guards.
+- `server`: server-only modules, services, repositories, auth, and integrations.
+- `prisma`: schema, migrations, seed, and generated Prisma Client.
 
-Keep server code in the `server` tree and split it by concern:
+Shared code is split by responsibility:
 
-- `server/common`: env, cookies, mailer, and other shared server helpers
-- `server/db`: Prisma bootstrap and database access setup
-- `server/modules/auth`: auth entrypoints, service layer, schemas, types, email templates, and password helpers
-- `server/modules/users`: user repository and user-domain constants/types
+- `src/components`: reusable frontend UI primitives and common components.
+- `src/layouts`: application shells and navigation layouts.
+- `src/config`: API, app configuration, and i18n setup.
+- `src/utils`: pure frontend utilities only.
+- `shared`: client/server contracts, permissions, roles, and truly shared types.
+- `server/common`: server-only errors, cookies, environment, mailer, pagination, and response helpers.
+- `server/db`: Prisma bootstrap and database access setup.
+- `server/third-party`: external provider adapters such as S3.
 
-Server rules:
+## Frontend grouping
 
-- Keep business logic that touches database, cookies, tokens, or email on the server
-- Keep UI/service wrappers in `src/features/*/services`
-- Do not import Prisma or mailer code into React components
-- Keep auth token creation, verification, refresh, and reset flows inside `server/modules/auth`
-- Keep env access centralized in `server/common/env.server.ts`
-- Keep repositories focused on data access, not presentation
-
-### Standard module layout
-
-Every domain module should follow this shape, adding only the folders it needs:
+Frontend features are grouped by user area:
 
 ```text
-server/modules/<domain>/
-  <domain>.api.ts                 # HTTP/API entrypoints and contracts
-  <domain>.ts                     # TanStack server functions/RPC entrypoints
-  <domain>.schemas.ts             # Zod input/output validation
-  <domain>.errors.ts              # Stable domain error codes
-  <domain>.constants.ts           # Closed values and domain constants
-  <domain>.types.server.ts        # Server-only types
-  <domain>.repository.server.ts   # Prisma/data access only
-  <domain>.service.server.ts      # Auth + business workflows
-  shared/                         # Domain helpers shared by sub-features
-  <sub-feature>/                  # Optional bounded sub-domain
+src/features/
+├── auth/                         # unauthenticated authentication flows
+├── admin/                        # admin portal
+│   ├── appearance/
+│   ├── audit/
+│   ├── dashboard/
+│   ├── media/
+│   ├── posts/
+│   ├── system/
+│   └── users/
+└── customer/                     # authenticated customer portal
+    ├── dashboard/
+    ├── services/
+    ├── catalog/
+    ├── commerce/
+    ├── billing/
+    ├── domains/
+    ├── proxies/
+    ├── via/
+    ├── support/
+    ├── notifications/
+    └── settings/
 ```
 
-Do not import Prisma from `src/features`. Frontend services are the only client-facing adapter for server functions. Keep API handlers thin: validate input, call a service, and return the common response envelope.
+`customer` is the area for a customer who has signed in. `admin` is for staff/admin operations. Do not place customer screens under `admin`, and do not mix admin-only service calls into customer hooks.
 
-## Database Workflow
-
-When the schema changes:
-
-1. Edit `prisma/schema.prisma`
-2. Run `npm run db:generate`
-3. Apply the schema with `npm run db:migrate` for local migration development, `npm run db:migrate:deploy` for committed migrations, or `npm run db:push` only for temporary prototyping
-4. Update server code, feature types, hooks, and UI
-
-Use these rules:
-
-- Prefer enums for status fields and other closed sets
-- Prefer `@map` for snake_case database columns when source code should stay camelCase
-- Do not edit generated Prisma Client files directly
-- Keep table and field names aligned with the domain, not the UI
-
-## Response And Error Contracts
-
-Use a single response contract across the app:
-
-- Success: `{ success: true, message, result, timestamp, path }`
-- Arrays: still return data inside `result`
-- Paginated payloads: keep pagination metadata inside `result`
-- Message-only success responses: still wrap them in the same success contract
-- Errors: return stable codes like `AUTH_001`, `AUTH_002`, and keep `code` plus `errorCode` aligned
-- Frontend must translate by code first and only fall back to server messages when needed
-
-Recommended files:
-
-- `server/common/response.server.ts`
-- `server/common/app-error.server.ts`
-- `src/utils/apiError.ts`
-
-## Query Workflow
-
-- Use TanStack Query in feature hooks
-- Keep fetching, mutation, and invalidation in hooks or services
-- Do not put query logic directly in route files
-- Use `useQueryClient()` in React code instead of a global query client singleton
-- Invalidate queries with stable query keys after mutations
-
-## Feature Structure
-
-Use this layout for new features:
-
-- `pages`: page entry and composition
-- `components`: feature-specific UI pieces
-- `hooks`: query and mutation orchestration
-- `services`: client-facing wrappers around server functions
-- `store`: feature state
-- `types`: feature types, enums, and constants
-- `context`: feature-specific providers
-
-The canonical screen layout is:
+Use this feature shape when it applies:
 
 ```text
-src/features/admin/<feature>/
-  components/                     # reusable feature components
-  data/                            # static options and UI data only
-  hooks/                           # TanStack Query/Form orchestration
-  i18n/                            # en.json and vi.json
-  pages/
-    <screen>/
-      index.tsx                    # composition shell only
-      components/                  # blocks used only by this screen
-  services/                        # wrappers around server functions
-  types/                           # client types and view models
-  utils/                           # pure formatting/mapping helpers
+src/features/<area>/<feature>/
+├── components/                   # reusable UI for this feature
+├── data/                         # static UI options only
+├── hooks/                        # TanStack Query/Form orchestration
+├── i18n/                         # en.json and vi.json
+├── pages/                        # screen composition
+│   └── <screen>/
+│       ├── index.tsx             # page shell only
+│       └── components/           # blocks used only by this screen
+├── services/                     # client-facing server-function wrappers
+├── store/                        # feature state, only when needed
+├── types/                        # client types and view models
+└── utils/                        # pure feature mapping/formatting helpers
 ```
 
-Use the same name at each boundary: `server/modules/<feature>`, `src/features/admin/<feature>`, and `src/routes/.../<feature>`. A feature service must unwrap the common response contract; hooks must call the service, own query keys, mutations, and invalidation; pages must not import server functions directly.
+The existing `src/features/auth` is the reference for auth pages. The existing `src/features/admin` is the reference for admin pages. Add `src/features/customer` as customer functionality is implemented.
 
-For pages with more than one section, split one level deeper:
+## Backend module taxonomy
 
-- `src/features/<feature>/pages/<page>/index.tsx`: page shell and composition only
-- `src/features/<feature>/pages/<page>/components/*`: page-local blocks
+All new server code must belong to one of these module parents, matching the data model:
 
-Use this when a page has:
+```text
+server/modules/
+├── identity/
+│   ├── users/
+│   ├── organizations/
+│   ├── memberships/
+│   ├── roles/
+│   ├── permissions/
+│   ├── auth/
+│   └── api-keys/
+├── catalog/
+│   ├── products/
+│   ├── plans/
+│   ├── prices/
+│   └── addons/
+├── commerce/
+│   ├── carts/
+│   ├── orders/
+│   └── coupons/
+├── billing/
+│   ├── invoices/
+│   ├── payments/
+│   └── refunds/
+├── services/
+│   ├── customer-services/
+│   ├── service-events/
+│   └── service-actions/
+├── infrastructure/
+│   ├── providers/
+│   ├── datacenters/
+│   ├── resources/
+│   └── ip-pools/
+├── provisioning/
+│   ├── provisioning-jobs/
+│   └── job-attempts/
+├── domain-proxy-via/
+│   ├── domains/
+│   ├── dns-records/
+│   ├── proxy-allocations/
+│   └── via-accounts/
+├── support/
+│   ├── tickets/
+│   ├── ticket-messages/
+│   └── notifications/
+└── audit/
+    └── audit-logs/
+```
 
-- header plus form plus footer
-- toolbar plus filters plus list
-- hero section plus content cards
-- multiple reusable blocks that would make the page file too long
+Existing legacy modules such as `server/modules/users`, `server/modules/auth`, `server/modules/appearance`, `server/modules/media`, `server/modules/posts`, and `server/modules/system` may remain until an explicit migration is planned. New modules must use the taxonomy above. Do not mix a migration with unrelated feature work.
 
-## Page Splitting Rule
+## Backend module layout
 
-If a page starts holding more than one concern, split it.
+Each child module should contain only the layers it needs:
 
-Split when you see any of these:
+```text
+server/modules/<parent>/<child>/
+├── <child>.ts                       # public TanStack server functions
+├── <child>.schemas.ts               # Zod input validation
+├── <child>.errors.ts                # stable domain error codes
+├── <child>.constants.ts             # closed values and constants
+├── <child>.types.ts                 # shared-safe module types
+├── <child>.types.server.ts          # server-only types when needed
+├── <child>.repository.server.ts     # Prisma/data access only
+├── <child>.service.server.ts        # business workflows
+├── <child>.api.ts                   # HTTP adapter only when an HTTP API is required
+└── shared/                          # helpers private to this module
+```
 
-- form section plus header plus footer in one file
-- list view plus toolbar plus filters in one file
-- fetch logic mixed with rendering
-- multiple reusable blocks repeated inside one page
+The existing code uses some files at `server/modules/<legacy-module>/` rather than the nested layout. Follow the nested layout for new modules, and preserve existing imports when editing legacy modules unless the task is a migration.
 
-Keep the page file as an assembly layer only. Move blocks into components and keep data access in hooks.
+### Layer rules
 
-## Frontend Component Rules
+- Server functions validate input, authorize the caller, delegate to a service, and return the common response envelope.
+- Services own business rules, transactions, orchestration, cookies, email side effects, and lifecycle transitions.
+- Repositories own Prisma queries and persistence only; they do not format UI responses or send notifications.
+- Schemas validate untrusted input at the server boundary. Never rely only on client validation.
+- Errors use stable codes and `createAppError`; do not throw ad hoc strings.
+- API handlers stay thin. Do not put Prisma queries or large business workflows in route/API entrypoints.
+- A module may call another module through a public service/contract, not by importing its repository internals.
+- Provider integrations belong behind adapters in `server/third-party` or the `infrastructure`/`provisioning` modules.
 
-Use existing shared components first:
+## Server function and API pattern
 
-- `Panel` for centered cards, auth shells, and boxed content
-- `Button` for actions, with shared variants instead of custom button styling
-- `InputField`, `InputFieldPassword`, and `CodeField` for forms
-- `Table`, `Pagination`, `SelectionColumn`, and `TableActions` for list screens
-- `FieldGroup` for consistent form spacing and grouping
+Use the repository's TanStack Start pattern:
 
-Patterns to follow:
+```ts
+import { createServerFn } from '@tanstack/react-start'
+import { createOrderSchema } from './orders.schemas'
 
-- Keep form validation close to the form component
-- Keep submit handlers in feature forms or hooks, not in route files
-- Keep layout wrappers separate from business logic
-- Keep translation keys in the UI layer
-- Do not hardcode labels, placeholders, helper text, empty states, or error text if a translation key is available
-- Keep dark-mode support on shared components and page wrappers
-- Focused screens should prefer centered card shells and should not rely on full-page loading overlays
+export const createOrder = createServerFn({ method: 'POST' })
+  .validator(createOrderSchema)
+  .handler(async ({ data }) => {
+    const { createOrderForCustomer } = await import('./orders.service.server')
+    return createOrderForCustomer(data)
+  })
+```
 
-If a page gets long, split it by responsibility:
+Use dynamic imports for server-only service modules as in the existing auth entrypoints. Keep Prisma, secrets, mailer, provider credentials, and server cookies out of client bundles.
 
-- `Header.tsx`
-- `Filters.tsx`
-- `Form.tsx`
-- `List.tsx`
-- `EmptyState.tsx`
-- `Footer.tsx`
+For protected functions, get the current session on the server and enforce organization/role/service ownership there. A frontend route guard is not authorization.
 
-Avoid this:
+## Response and error contracts
 
-- one huge page file with all JSX, validation, fetch logic, and repeated sections mixed together
+Use `server/common/response.server.ts`:
 
-For dashboard routes, use `pages/<screen>/index.tsx` rather than putting a screen directly under `pages`. Dynamic routes must use `$id/index.tsx` and `$id/edit/index.tsx`; never create a generic `$section.tsx` beside an `$id` route because the two patterns collide.
+- Success: `createSuccessResponse(result, message)`.
+- Message-only success: `createMessageResponse(message)`.
+- Arrays: `createArrayResponse(items, message)`.
+- Pagination: `createPaginatedResponse(items, total, page, limit, message)`.
 
-## Auth Rules
+The success envelope is:
 
-- Keep login, register, verify email, forgot password, and reset password in the auth feature
-- Server auth code lives under `server/modules/auth`
-- Client wrappers live under `src/features/auth/services`
-- Session and token handling must stay server-side
-- Do not rely on localStorage as the auth source of truth
-- Keep page copy translated and keep focused views card-based with dark-mode parity
+```ts
+{
+  success: true,
+  message: string,
+  result: T,
+  timestamp: string,
+  path: string
+}
+```
 
-## Component Rules
+Errors must use `AppError` from `server/common/app-error.server.ts`. Keep `code` and `errorCode` equal to a stable domain code such as `AUTH_001`, `USER_006`, or `ORDER_001`. The frontend should unwrap with `src/utils/response.ts` and translate errors with `src/utils/apiError.ts`.
 
-- Shared UI belongs in `src/components`
-- Feature-specific UI belongs inside the feature folder
-- Keep components small and single-purpose
-- If a component mixes layout, form state, and business logic, split it
-- Prefer composition over large prop bags
+## Frontend service, hook, and page pattern
 
-## Route Rules
+The frontend must not call server functions from route files or arbitrary components. Use this flow:
 
-- Route files should mostly render a feature page or redirect
-- Avoid direct database or fetch logic in route files
-- Use loaders only when SSR data is required for the route
-- Keep dashboard guards and auth guards driven by server/session data
-- Use static route files for static menu entries and thin route files that only set `head`/guards and render a feature page
-- Keep route path parameters aligned with the page contract; use `$id/index` for detail and `$id/edit/index` for edit
+```text
+page/component -> hook -> feature service -> server function -> service -> repository/Prisma
+```
 
-## Reference UI Pattern
+Feature service example:
 
-The auth screens in this repo are a canonical example of the frontend pattern:
+```ts
+export const customerService = {
+  detail: (id: string) =>
+    getCustomerService({ data: { id } }).then(unwrapSuccessResponse),
+}
+```
 
-- `src/features/auth/pages/login/index.tsx` uses `Panel` and composes a form component
-- `src/features/auth/pages/login/components/LoginForm.tsx` owns TanStack Form state and submit logic
-- `src/features/auth/pages/register/index.tsx` and `reset-password/index.tsx` follow the same split
-- Verification flows should keep page-level copy separate from form logic
+Feature hooks own query keys, fetching, mutations, and invalidation:
 
-## Naming Rules
+```ts
+export const customerServiceKeys = {
+  all: ['customer', 'services'] as const,
+  detail: (id: string) => [...customerServiceKeys.all, 'detail', id] as const,
+}
 
-- Use descriptive domain-based names
-- Put reusable constants close to the domain they belong to
-- Keep `types` for feature-specific types and enums
-- Keep server helpers small and grouped by domain
+export function useCustomerService(id?: string) {
+  return useQuery({
+    queryKey: customerServiceKeys.detail(id ?? ''),
+    queryFn: () => customerService.detail(id!),
+    enabled: Boolean(id),
+  })
+}
+```
 
-## Good Finish Checklist
+After mutations, invalidate the smallest stable parent key that covers affected data. Do not use a global query-client singleton.
 
-- Schema changed and Prisma regenerated
-- Query logic moved out of routes
-- Large page files split into smaller components
-- Shared UI extracted where useful
-- SSR auth still works as the single source of truth
+Pages compose UI only. Keep data orchestration in hooks and server calls in services. Split long pages into screen-local components before mixing header, filters, form, table, and submit logic in one file.
+
+## Forms and UI
+
+- Prefer existing `InputField`, `InputFieldPassword`, `CodeField`, `Button`, `Panel`, `FieldGroup`, `Table`, `Pagination`, and `TableActions`.
+- Use TanStack Form patterns already present in auth/admin features.
+- Validate on the client for feedback, but always validate again with Zod on the server.
+- Keep submit logic in a form component or mutation hook, not in a route.
+- Password inputs must allow paste and password-manager autofill. Do not add `onPaste={preventDefault}`.
+- Keep labels, placeholders, errors, empty states, and action text in i18n files.
+- Use `@/` imports for frontend aliases; avoid long relative imports in `src`.
+- Feature UI belongs under the feature. Generic UI belongs under `src/components`.
+- Keep responsive layout and dark-mode support aligned with existing shared components.
+
+## Routing and auth
+
+- Route files under `src/routes` remain thin.
+- Use loaders only for required SSR data, redirects, and guards.
+- The server session is the auth source of truth; do not use localStorage as the authority.
+- Auth flows live under `src/features/auth` and `server/modules/auth` until migrated into `identity/auth`.
+- Admin routes require server-verified dashboard access and permissions.
+- Customer routes require an authenticated user and organization/service ownership checks.
+- Use `$id/index.tsx` for detail routes and `$id/edit/index.tsx` for edit routes.
+
+## Database and Prisma
+
+When changing the schema:
+
+1. Edit `prisma/schema.prisma`.
+2. Run `npm run db:generate`.
+3. Use `npm run db:migrate` for local migration development.
+4. Use `npm run db:migrate:deploy` for deployment.
+5. Use `npm run db:push` only for temporary prototyping.
+6. Update repository, service, response types, hooks, and UI.
+
+Rules:
+
+- Do not edit `prisma/generated` manually.
+- Prefer enums for closed statuses and lifecycle states.
+- Keep database names domain-oriented, not screen-oriented.
+- Use transactions for order/payment/service state changes that must be atomic.
+- Store money in integer minor units with explicit currency.
+- Use idempotency keys for checkout, payment webhooks, provisioning jobs, and service actions.
+- Never log passwords, tokens, provider credentials, payment secrets, or full request headers.
+
+## Naming and imports
+
+- Components use PascalCase: `ServiceCard.tsx`, `UserTable.tsx`.
+- Hooks use `use<Feature><Purpose>`: `useCustomerServices`, `useAdminUsers`.
+- Services use `<domain>Service` or `<area><Domain>Service`.
+- Server files use `.server.ts` when they must never enter the client bundle.
+- Schemas end with `.schemas.ts`; repositories with `.repository.server.ts`.
+- Use domain names consistently across route, feature, server module, schema, and service.
+- Keep imports grouped: external packages, aliases, relative imports, then types where practical.
+
+## Verification workflow
+
+Before finishing a change:
+
+1. Check the affected module and its existing neighboring patterns.
+2. Confirm authorization is enforced on the server.
+3. Run `npm run db:generate` when Prisma or generated types are involved.
+4. Run `npm test` for behavior changes.
+5. Run `npm run lint`; distinguish pre-existing toolchain errors from errors introduced by the change.
+6. Run `npm run build` for route, dependency, SSR, or production-bundle changes.
+7. Inspect `git diff` and confirm `.env`, `node_modules`, `dist`, and generated output are not committed.
+
+Do not silently change dependency majors, rename module trees, or push externally unless the user requested that scope.

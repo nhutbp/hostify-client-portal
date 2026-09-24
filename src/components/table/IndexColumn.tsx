@@ -1,4 +1,6 @@
+import type { RowData } from '@tanstack/react-table'
 import type { ColumnDef } from '@tanstack/react-table'
+import { appTableFeatures } from './tableConfig'
 
 export interface IndexColumnOptions {
   page: number
@@ -6,11 +8,11 @@ export interface IndexColumnOptions {
   showMobile?: boolean
 }
 
-function createIndexColumn<TData>({
+function createIndexColumn<TData extends RowData>({
   page,
   pageSize,
   showMobile,
-}: IndexColumnOptions): ColumnDef<TData> {
+}: IndexColumnOptions): ColumnDef<typeof appTableFeatures, TData, unknown> {
   const offset = Math.max(0, (page - 1) * pageSize)
 
   return {

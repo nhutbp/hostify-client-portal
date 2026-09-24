@@ -1,4 +1,3 @@
-import { createColumnHelper } from '@tanstack/react-table'
 import type { RowSelectionState } from '@tanstack/react-table'
 import { FileText, Pencil, Plus } from 'lucide-react'
 import { Link, useNavigate } from '@tanstack/react-router'
@@ -10,6 +9,7 @@ import { Table } from '@/components/table/Table'
 import type { PaginationMeta } from '@/components/table/Pagination'
 import { usePosts } from '../hooks/usePosts'
 import { usePermission } from '@/features/auth/hooks/usePermission'
+import { createAppColumnHelper } from '@/components/table/tableConfig'
 
 type PostRow = {
   id: string
@@ -20,7 +20,7 @@ type PostRow = {
   categories: Array<{ category: { name: string } }>
   platforms: Array<{ platform: { name: string } }>
 }
-const helper = createColumnHelper<PostRow>()
+const helper = createAppColumnHelper<PostRow>()
 export default function PostsPage() {
   const { t } = useTranslation('posts')
   const navigate = useNavigate()

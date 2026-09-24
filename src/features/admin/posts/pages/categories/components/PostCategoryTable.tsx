@@ -1,4 +1,3 @@
-import { createColumnHelper } from '@tanstack/react-table'
 import { Pencil, Search, Trash2 } from 'lucide-react'
 import { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -14,8 +13,9 @@ import {
 import { Table } from '@/components/table/Table'
 import type { PaginationMeta } from '@/components/table/Pagination'
 import type { PostCategory } from './data'
+import { createAppColumnHelper } from '@/components/table/tableConfig'
 
-const helper = createColumnHelper<PostCategory>()
+const helper = createAppColumnHelper<PostCategory>()
 
 export function PostCategoryTable({
   categories,

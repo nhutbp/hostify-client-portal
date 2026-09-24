@@ -1,13 +1,15 @@
+import type { RowData } from '@tanstack/react-table'
 import type { ColumnDef } from '@tanstack/react-table'
 import { Checkbox } from '@/components/ui/checkbox'
+import { appTableFeatures } from './tableConfig'
 
 export interface SelectionColumnOptions {
   showMobile?: boolean
 }
 
-function createSelectionColumn<TData>(
+function createSelectionColumn<TData extends RowData>(
   options?: SelectionColumnOptions,
-): ColumnDef<TData> {
+): ColumnDef<typeof appTableFeatures, TData, unknown> {
   return {
     id: 'select',
     meta: {

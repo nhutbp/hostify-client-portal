@@ -1,37 +1,22 @@
 // ReusableDataTable - A reusable data table component using TanStack Table
 // Designed for consistent UI across the application following CustomerManagement.tsx design
 import { useState } from 'react'
-import {
-  useReactTable,
-  getCoreRowModel,
-  getSortedRowModel,
-  flexRender,
-} from '@tanstack/react-table'
 import type {
   ColumnDef,
-  SortingState,
+  RowData,
   RowSelectionState,
+  SortingState,
   Updater,
 } from '@tanstack/react-table'
 import { Pagination } from './Pagination'
 import type { PaginationMeta } from './Pagination'
+import { appTableFeatures, useAppTable } from './tableConfig'
 import { cn } from '@/utils/utils'
 
-declare module '@tanstack/react-table' {
-  interface TableMeta<TData> {
-    lastSelectedRowIndex?: React.MutableRefObject<number | null>
-  }
-  interface ColumnMeta<TData, TValue> {
-    showMobile?: boolean
-    headerClassName?: string
-    cellClassName?: string
-  }
-}
-
-export interface DataTableProps<TData> {
+export interface DataTableProps<TData extends RowData> {
   // Data
   data: TData[]
-  columns: ColumnDef<TData, any>[]
+  columns: ColumnDef<typeof appTableFeatures, TData, any>[]
 
   // Pagination
   pagination?: PaginationMeta
@@ -85,7 +70,7 @@ const LoadingRow = ({ leafColumns }: { leafColumns: any[] }) => (
   </tr>
 )
 
-export function Table<TData>({
+export function Table<TData extends RowData>({
   data,
   columns,
   pagination,
@@ -103,7 +88,7 @@ export function Table<TData>({
 }: DataTableProps<TData>) {
   const [sorting, setSorting] = useState<SortingState>([])
 
-  const table = useReactTable({
+  const table = useAppTable({
     data,
     columns,
     state: {
@@ -125,8 +110,6 @@ export function Table<TData>({
       },
     }),
 
-    getCoreRowModel: getCoreRowModel(),
-    getSortedRowModel: getSortedRowModel(),
     manualPagination: true,
     pageCount: pagination?.totalPages ?? -1,
     enableRowSelection: rowSelection !== undefined,
@@ -174,10 +157,7 @@ export function Table<TData>({
                       <div className="flex items-center gap-1">
                         {header.isPlaceholder
                           ? null
-                          : flexRender(
-                              header.column.columnDef.header,
-                              header.getContext(),
-                            )}
+                          : table.FlexRender({ header })}
                         {header.column.getIsSorted() && (
                           <span className="text-slate-600 dark:text-slate-400">
                             {header.column.getIsSorted() === 'asc' ? '↑' : '↓'}
@@ -228,10 +208,9 @@ export function Table<TData>({
                           meta?.cellClassName,
                         )}
                       >
-                        {flexRender(
-                          cell.column.columnDef.cell,
-                          cell.getContext(),
-                        )}
+                        {table.FlexRender({
+                          cell,
+                        })}
                       </td>
                     )
                   })}

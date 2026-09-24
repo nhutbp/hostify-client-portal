@@ -1,4 +1,3 @@
-import { createColumnHelper } from '@tanstack/react-table'
 import { Pencil, Search, Trash2 } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 import { Button } from '@/components/ui/button'
@@ -6,8 +5,9 @@ import { Input } from '@/components/ui/input'
 import { Table } from '@/components/table/Table'
 import type { PaginationMeta } from '@/components/table/Pagination'
 import type { PostPlatform } from './data'
+import { createAppColumnHelper } from '@/components/table/tableConfig'
 
-const helper = createColumnHelper<PostPlatform>()
+const helper = createAppColumnHelper<PostPlatform>()
 
 export function PostPlatformTable({
   platforms,

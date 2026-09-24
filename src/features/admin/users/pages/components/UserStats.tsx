@@ -106,6 +106,10 @@ function useRoleDistribution() {
         polar({
           inset: 4,
           radiusRatio: 0.9,
+          scales: {
+            angle: null,
+            radius: null,
+          },
           marks: [
             radialArc(slices, {
               key: (slice) => slice.data.role,
@@ -121,9 +125,11 @@ function useRoleDistribution() {
         domain: chartRoles.map(({ role }) => role),
         range: chartRoles.map(({ role }) => roleColors[role]),
       },
+      scales: {
+        x: null,
+        y: null,
+      },
       guides: false,
-      x: null,
-      y: null,
       keyboard: false,
       animate: true,
     })
