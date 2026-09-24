@@ -147,9 +147,6 @@ export default function LoginForm({
               onKeyDown={(e) => {
                 if (e.key === ' ') e.preventDefault()
               }}
-              onPaste={(e) => {
-                e.preventDefault()
-              }}
               showPassword={showPassword}
               setShowPassword={setShowPassword}
               showPasswordLabel={t('auth.showPassword')}

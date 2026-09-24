@@ -241,7 +241,6 @@ export default function RegisterForm({
               placeholder={t('auth.enterPassword')}
               autoComplete="new-password"
               onKeyDown={preventSpaceInput}
-              onPaste={preventSpaceInput}
               showPassword={showPassword}
               setShowPassword={setShowPassword}
               showPasswordLabel={t('auth.showPassword')}
@@ -280,7 +279,6 @@ export default function RegisterForm({
               placeholder={t('auth.confirmPasswordPlaceholder')}
               autoComplete="new-password"
               onKeyDown={preventSpaceInput}
-              onPaste={preventSpaceInput}
               showPassword={showConfirmPassword}
               setShowPassword={setShowConfirmPassword}
               showPasswordLabel={t('auth.showPassword')}
