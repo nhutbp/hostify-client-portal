@@ -83,7 +83,7 @@
     "lucide-react": "^1.48.0",
     "marked": "^18.0.14",
     "nodemailer": "^10.0.10",
-    "prisma": "^8.0.0-rc.15",
+    "prisma": "^7.10.0",
     "react": "^19.3.0",
     "react-day-picker": "^10.0.1",
     "react-dom": "^19.3.0",
