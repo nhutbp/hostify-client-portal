@@ -1,0 +1,71 @@
+{
+  "title": "System Settings",
+  "description": "Manage system configuration and settings",
+  "tabs": {
+    "api": "API Management",
+    "website": "Website information",
+    "media": "Media"
+  },
+  "website": {
+    "title": "Website information",
+    "description": "The website name is used as the default browser title.",
+    "siteName": "Website name",
+    "siteNamePlaceholder": "Enter website name",
+    "logo": "Website logo",
+    "chooseLogo": "Choose a logo from the media library",
+    "removeLogo": "Remove logo",
+    "save": "Save website information",
+    "saving": "Saving...",
+    "saved": "Website information saved",
+    "saveFailed": "Unable to save website information",
+    "pickerTitle": "Choose website logo",
+    "favicon": "Website favicon",
+    "faviconHint": "Use a square image, preferably 32x32 or 48x48 pixels.",
+    "chooseFavicon": "Choose favicon",
+    "removeFavicon": "Remove favicon",
+    "faviconPickerTitle": "Choose website favicon",
+    "close": "Close"
+  },
+  "api": {
+    "title": "API Management",
+    "description": "Create an API key for external systems to access product data.",
+    "name": "API key name",
+    "namePlaceholder": "Example: Partner system",
+    "expiresAt": "Expiration date",
+    "create": "Create API key",
+    "secretOnce": "The API key is shown only once. Save it before closing this screen.",
+    "copyCurl": "Copy cURL",
+    "copied": "Copied",
+    "listTitle": "Created API keys",
+    "neverExpires": "Never expires",
+    "revoked": "Revoked",
+    "revoke": "Revoke",
+    "empty": "No API keys yet"
+  },
+  "mobileConfig": {
+    "title": "Mobile Configuration",
+    "description": "Configure settings for mobile applications",
+    "underDevelopment": "Under Development",
+    "comingSoon": "This feature is currently under development and will be available soon."
+  },
+  "options": {
+    "title": "System Options",
+    "optionKey": "Option Key",
+    "optionValue": "Option Value",
+    "autoload": "Autoload",
+    "createdAt": "Created At",
+    "updatedAt": "Updated At",
+    "actions": "Actions",
+    "edit": "Edit",
+    "delete": "Delete",
+    "create": "Create Option",
+    "noOptions": "No options found"
+  },
+  "common": {
+    "loading": "Loading...",
+    "error": "An error occurred",
+    "retry": "Retry",
+    "cancel": "Cancel",
+    "save": "Save"
+  }
+}

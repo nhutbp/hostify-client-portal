@@ -1,0 +1,81 @@
+{
+  "title": "Thư viện Media",
+  "description": "Quản lý hình ảnh và tệp tin dùng trong hệ thống",
+  "storage": {
+    "source": "Lưu trong source",
+    "s3": "Lưu trên S3",
+    "publicFolder": "public/images"
+  },
+  "manager": {
+    "allFiles": "Thư mục",
+    "unclassified": "Chưa phân loại",
+    "banner": "Banner",
+    "logo": "Logo",
+    "documents": "Tài liệu",
+    "other": "Khác",
+    "trash": "Thùng rác",
+    "allFilesBreadcrumb": "Tất cả files",
+    "search": "Tìm kiếm file, thư mục...",
+    "newFolder": "Thư mục mới",
+    "upload": "Tải lên",
+    "allTypes": "Tất cả loại",
+    "allSizes": "Tất cả kích thước",
+    "uploadedAt": "Ngày tải lên",
+    "filter": "Bộ lọc",
+    "list": "Danh sách",
+    "grid": "Lưới",
+    "fileInfo": "Thông tin file",
+    "selectFile": "Chọn file để xem thông tin",
+    "filePath": "Đường dẫn",
+    "fileSize": "Kích thước",
+    "imageSize": "Kích thước ảnh",
+    "uploadedBy": "Được tải lên bởi",
+    "allUploaders": "Tất cả người tải lên",
+    "actions": "Hành động",
+    "download": "Tải xuống",
+    "rename": "Đổi tên",
+    "move": "Di chuyển",
+    "copyLink": "Sao chép liên kết",
+    "edit": "Chỉnh sửa",
+    "delete": "Xóa file",
+    "noFiles": "Không có file phù hợp",
+    "usedStorage": "Dung lượng đã sử dụng",
+    "manageStorage": "Quản lý dung lượng",
+    "fileType": "Loại file",
+    "folder": "Thư mục",
+    "file": "File",
+    "loadMore": "Tải thêm",
+    "selectMultiple": "Chọn nhiều",
+    "cancelSelect": "Bỏ chọn nhiều",
+    "deleteSelected": "Xóa file đã chọn",
+    "selectedCount": "file đã chọn"
+  },
+  "settings": {
+    "title": "Cài đặt Media",
+    "description": "Chọn nơi lưu trữ và cấu hình kết nối S3",
+    "save": "Lưu cài đặt",
+    "saving": "Đang lưu...",
+    "saved": "Đã lưu cài đặt Media",
+    "saveFailed": "Không thể lưu cài đặt Media",
+    "modes": {
+      "source": {
+        "title": "Lưu trong source",
+        "description": "Lưu tệp trong thư mục public/images của ứng dụng."
+      },
+      "s3": {
+        "title": "Lưu trên S3",
+        "description": "Lưu tệp trên S3 hoặc dịch vụ tương thích S3."
+      }
+    },
+    "fields": {
+      "endpoint": "Endpoint",
+      "bucket": "Bucket",
+      "region": "Region",
+      "accessKeyId": "Access Key ID",
+      "secretAccessKey": "Secret Access Key",
+      "forcePathStyle": "Force path style",
+      "maxUploadSizeMb": "Giới hạn dung lượng tải lên (MB)",
+      "maxUploadSizeHelp": "Áp dụng cho mỗi file tải lên. Giá trị từ 1 đến 10240 MB."
+    }
+  }
+}

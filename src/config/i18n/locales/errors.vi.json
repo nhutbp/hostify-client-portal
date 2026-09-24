@@ -1,0 +1,117 @@
+{
+  "system": {
+    "UNKNOWN_ERROR": "Lỗi hệ thống không xác định",
+    "VALIDATION_ERROR": "Lỗi xác thực dữ liệu",
+    "QUERY_FAILED_ERROR": "Lỗi truy vấn cơ sở dữ liệu",
+    "SYSTEM_001": "Dữ liệu không hợp lệ",
+    "SYSTEM_002": "Bạn cần đăng nhập để thực hiện thao tác này",
+    "SYSTEM_003": "Không tìm thấy dữ liệu",
+    "SYSTEM_004": "Dữ liệu đã tồn tại",
+    "SYSTEM_005": "Máy chủ chưa được cấu hình đầy đủ"
+  },
+  "account": {
+    "ACCOUNT_001": "Email hoặc số điện thoại đã được sử dụng",
+    "ACCOUNT_002": "Mật khẩu hiện tại không chính xác",
+    "ACCOUNT_003": "Mật khẩu mới phải khác mật khẩu hiện tại"
+  },
+  "appearance": {
+    "APPEARANCE_001": "Không tìm thấy menu"
+  },
+  "media": {
+    "MEDIA_001": "Không tìm thấy tệp",
+    "MEDIA_002": "Đường dẫn tệp không hợp lệ",
+    "MEDIA_003": "Tệp vượt quá dung lượng cho phép",
+    "MEDIA_004": "Đổi tên tệp thất bại",
+    "MEDIA_005": "Xóa tệp thất bại"
+  },
+  "post": {
+    "POST_001": "Không tìm thấy bài viết",
+    "POST_002": "Không tìm thấy platform",
+    "POST_003": "Platform đang được sử dụng",
+    "POST_004": "Không tìm thấy danh mục",
+    "POST_005": "Danh mục cha không hợp lệ",
+    "POST_006": "Danh mục đang được sử dụng"
+  },
+  "auth": {
+    "AUTH_001": "Thông tin đăng nhập không hợp lệ",
+    "AUTH_002": "Thông tin đăng nhập không hợp lệ",
+    "AUTH_003": "Người dùng đã tồn tại",
+    "AUTH_004": "Tài khoản đã bị khóa do đăng nhập sai quá nhiều lần",
+    "AUTH_005": "Token đã hết hạn",
+    "AUTH_006": "Token không hợp lệ",
+    "AUTH_007": "Không có token được cung cấp",
+    "AUTH_008": "Yêu cầu xác thực",
+    "AUTH_009": "Không có quyền truy cập",
+    "AUTH_010": "Phiên đăng nhập đã bị thu hồi",
+    "AUTH_011": "Mã OTP không hợp lệ hoặc đã hết hạn",
+    "AUTH_012": "Vui lòng đợi trước khi yêu cầu mã OTP mới",
+    "AUTH_013": "Tài khoản người dùng đã bị khóa",
+    "AUTH_014": "Mã OTP không hợp lệ",
+    "AUTH_015": "Số điện thoại không hợp lệ",
+    "AUTH_016": "Yêu cầu token mật khẩu cấp hai",
+    "AUTH_017": "Token mật khẩu cấp hai không hợp lệ",
+    "AUTH_018": "Loại token mật khẩu cấp hai không hợp lệ",
+    "AUTH_019": "Token mật khẩu cấp hai không khớp",
+    "AUTH_020": "Token mật khẩu cấp hai đã hết hạn",
+    "AUTH_021": "Shipper đã online",
+    "AUTH_022": "Từ chối đăng nhập web admin",
+    "AUTH_023": "Shipper bị khóa do từ chối đơn hàng quá nhiều",
+    "AUTH_024": "Không tìm thấy API key",
+    "AUTH_025": "API key không hợp lệ",
+    "AUTH_026": "Không tìm thấy phiên đăng nhập",
+    "AUTH_027": "Tài khoản đã bị cấm",
+    "AUTH_028": "Tài khoản đang chờ phê duyệt",
+    "AUTH_029": "Tài khoản không hoạt động",
+    "AUTH_030": "Tài khoản đã bị xóa",
+    "AUTH_031": "Token đặt lại mật khẩu đã hết hạn",
+    "AUTH_032": "Mã quyền hệ thống không hợp lệ"
+  },
+  "s3": {
+    "S3_001": "Chưa có dữ liệu file để upload",
+    "S3_002": "File không được vượt quá 2MB",
+    "S3_003": "Định dạng file không được hỗ trợ",
+    "S3_004": "Upload file lên máy chủ thất bại"
+  },
+  "apiKey": {
+    "API_KEY_001": "Không tìm thấy API key",
+    "API_KEY_002": "API key không hợp lệ",
+    "API_KEY_003": "API key đã hết hạn",
+    "API_KEY_004": "API key đã bị thu hồi",
+    "API_KEY_005": "Thiếu API key"
+  },
+  "user": {
+    "USER_001": "Không tìm thấy người dùng",
+    "USER_002": "Người dùng đã tồn tại",
+    "USER_003": "Số điện thoại không hợp lệ",
+    "USER_004": "Email không hợp lệ",
+    "USER_005": "Email không tồn tại",
+    "USER_006": "Mật khẩu không đáp ứng yêu cầu",
+    "USER_007": "Mật khẩu hiện tại không chính xác",
+    "USER_008": "Không tìm thấy phiên đăng nhập",
+    "USER_009": "Email đã tồn tại",
+    "USER_010": "Số điện thoại đã tồn tại",
+    "USER_011": "Yêu cầu ID người dùng",
+    "USER_012": "Mật khẩu cấp hai đã tồn tại",
+    "USER_013": "Mật khẩu cấp hai không chính xác",
+    "USER_014": "Chưa thiết lập mật khẩu cấp hai",
+    "USER_015": "Số điện thoại không thuộc về người dùng",
+    "USER_016": "Shipper cần có địa chỉ",
+    "USER_017": "Tỉnh và phường phải được cung cấp cùng nhau",
+    "USER_018": "Loại chủ sở hữu không khớp",
+    "USER_019": "Gửi email xác thực thất bại",
+    "USER_020": "Bạn không có quyền thực hiện hành động này",
+    "USER_021": "Không thể thao tác với tài khoản Super Admin",
+    "USER_022": "Không tìm thấy quyền",
+    "USER_023": "Không thể xóa quyền quản trị của chính bạn",
+    "USER_024": "Không thể khóa tài khoản của chính bạn",
+    "USER_025": "Chưa chọn người dùng"
+  },
+  "userRole": {
+    "USER_ROLE_001": "Không tìm thấy vai trò",
+    "USER_ROLE_002": "Vai trò đã tồn tại",
+    "USER_ROLE_003": "Không thể xóa vai trò mặc định",
+    "USER_ROLE_004": "Vai trò đang được sử dụng",
+    "USER_ROLE_005": "Mã vai trò đã tồn tại",
+    "USER_ROLE_006": "Không thể thao tác với vai trò hệ thống"
+  }
+}

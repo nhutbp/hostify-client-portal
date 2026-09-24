@@ -1,0 +1,81 @@
+{
+  "title": "Media Library",
+  "description": "Manage images and files used across the system",
+  "storage": {
+    "source": "Source storage",
+    "s3": "S3 storage",
+    "publicFolder": "public/images"
+  },
+  "manager": {
+    "allFiles": "Folders",
+    "unclassified": "Unclassified",
+    "banner": "Banner",
+    "logo": "Logo",
+    "documents": "Documents",
+    "other": "Other",
+    "trash": "Trash",
+    "allFilesBreadcrumb": "All files",
+    "search": "Search files and folders...",
+    "newFolder": "New folder",
+    "upload": "Upload",
+    "allTypes": "All types",
+    "allSizes": "All sizes",
+    "uploadedAt": "Upload date",
+    "filter": "Filter",
+    "list": "List",
+    "grid": "Grid",
+    "fileInfo": "File information",
+    "selectFile": "Select a file to view information",
+    "filePath": "Path",
+    "fileSize": "Size",
+    "imageSize": "Image size",
+    "uploadedBy": "Uploaded by",
+    "allUploaders": "All uploaders",
+    "actions": "Actions",
+    "download": "Download",
+    "rename": "Rename",
+    "move": "Move",
+    "copyLink": "Copy link",
+    "edit": "Edit",
+    "delete": "Delete file",
+    "noFiles": "No matching files",
+    "usedStorage": "Used storage",
+    "manageStorage": "Manage storage",
+    "fileType": "File type",
+    "folder": "Folder",
+    "file": "File",
+    "loadMore": "Load more",
+    "selectMultiple": "Select multiple",
+    "cancelSelect": "Cancel selection",
+    "deleteSelected": "Delete selected files",
+    "selectedCount": "files selected"
+  },
+  "settings": {
+    "title": "Media settings",
+    "description": "Choose storage and configure the S3 connection",
+    "save": "Save settings",
+    "saving": "Saving...",
+    "saved": "Media settings saved",
+    "saveFailed": "Unable to save media settings",
+    "modes": {
+      "source": {
+        "title": "Source storage",
+        "description": "Store files in the app public/images directory."
+      },
+      "s3": {
+        "title": "S3 storage",
+        "description": "Store files on S3 or an S3-compatible service."
+      }
+    },
+    "fields": {
+      "endpoint": "Endpoint",
+      "bucket": "Bucket",
+      "region": "Region",
+      "accessKeyId": "Access Key ID",
+      "secretAccessKey": "Secret Access Key",
+      "forcePathStyle": "Force path style",
+      "maxUploadSizeMb": "Maximum upload size (MB)",
+      "maxUploadSizeHelp": "Applies to each uploaded file. The value must be between 1 and 10240 MB."
+    }
+  }
+}

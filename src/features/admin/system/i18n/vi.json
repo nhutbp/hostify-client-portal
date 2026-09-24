@@ -1,0 +1,71 @@
+{
+  "title": "Cài đặt hệ thống",
+  "description": "Quản lý cấu hình và cài đặt hệ thống",
+  "tabs": {
+    "api": "Quản lý API",
+    "website": "Thông tin website",
+    "media": "Media"
+  },
+  "website": {
+    "title": "Thông tin website",
+    "description": "Tên website được dùng làm tiêu đề mặc định trên trình duyệt.",
+    "siteName": "Tên website",
+    "siteNamePlaceholder": "Nhập tên website",
+    "logo": "Logo website",
+    "chooseLogo": "Chọn logo từ thư viện media",
+    "removeLogo": "Xóa logo",
+    "save": "Lưu thông tin website",
+    "saving": "Đang lưu...",
+    "saved": "Đã lưu thông tin website",
+    "saveFailed": "Không thể lưu thông tin website",
+    "pickerTitle": "Chọn logo website",
+    "favicon": "Favicon website",
+    "faviconHint": "Nên sử dụng ảnh vuông, kích thước 32x32 hoặc 48x48 pixel.",
+    "chooseFavicon": "Chọn favicon",
+    "removeFavicon": "Xóa favicon",
+    "faviconPickerTitle": "Chọn favicon website",
+    "close": "Đóng"
+  },
+  "api": {
+    "title": "Quản lý API",
+    "description": "Tạo API key để hệ thống bên ngoài truy cập dữ liệu sản phẩm.",
+    "name": "Tên API key",
+    "namePlaceholder": "Ví dụ: Hệ thống đối tác",
+    "expiresAt": "Ngày hết hạn",
+    "create": "Tạo API key",
+    "secretOnce": "API key chỉ được hiển thị một lần. Hãy lưu lại trước khi đóng màn hình này.",
+    "copyCurl": "Sao chép cURL",
+    "copied": "Đã sao chép",
+    "listTitle": "API key đã tạo",
+    "neverExpires": "Không hết hạn",
+    "revoked": "Đã thu hồi",
+    "revoke": "Thu hồi",
+    "empty": "Chưa có API key nào"
+  },
+  "mobileConfig": {
+    "title": "Cấu hình Mobile",
+    "description": "Cấu hình cài đặt cho ứng dụng di động",
+    "underDevelopment": "Đang phát triển",
+    "comingSoon": "Tính năng này đang được phát triển và sẽ sớm ra mắt."
+  },
+  "options": {
+    "title": "Tùy chọn hệ thống",
+    "optionKey": "Khóa tùy chọn",
+    "optionValue": "Giá trị",
+    "autoload": "Tự động tải",
+    "createdAt": "Ngày tạo",
+    "updatedAt": "Ngày cập nhật",
+    "actions": "Thao tác",
+    "edit": "Sửa",
+    "delete": "Xóa",
+    "create": "Tạo tùy chọn",
+    "noOptions": "Không có tùy chọn nào"
+  },
+  "common": {
+    "loading": "Đang tải...",
+    "error": "Đã xảy ra lỗi",
+    "retry": "Thử lại",
+    "cancel": "Hủy",
+    "save": "Lưu"
+  }
+}

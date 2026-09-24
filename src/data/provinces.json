@@ -1,0 +1,138 @@
+{
+  "11": {
+    "province_code": "11",
+    "name": "Điện Biên"
+  },
+  "12": {
+    "province_code": "12",
+    "name": "Lai Châu"
+  },
+  "14": {
+    "province_code": "14",
+    "name": "Sơn La"
+  },
+  "15": {
+    "province_code": "15",
+    "name": "Lào Cai"
+  },
+  "19": {
+    "province_code": "19",
+    "name": "Thái Nguyên"
+  },
+  "20": {
+    "province_code": "20",
+    "name": "Lạng Sơn"
+  },
+  "22": {
+    "province_code": "22",
+    "name": "Quảng Ninh"
+  },
+  "24": {
+    "province_code": "24",
+    "name": "Bắc Ninh"
+  },
+  "25": {
+    "province_code": "25",
+    "name": "Phú Thọ"
+  },
+  "31": {
+    "province_code": "31",
+    "name": "Thành phố Hải Phòng"
+  },
+  "33": {
+    "province_code": "33",
+    "name": "Hưng Yên"
+  },
+  "37": {
+    "province_code": "37",
+    "name": "Ninh Bình"
+  },
+  "38": {
+    "province_code": "38",
+    "name": "Thanh Hóa"
+  },
+  "40": {
+    "province_code": "40",
+    "name": "Nghệ An"
+  },
+  "42": {
+    "province_code": "42",
+    "name": "Hà Tĩnh"
+  },
+  "44": {
+    "province_code": "44",
+    "name": "Quảng Trị"
+  },
+  "46": {
+    "province_code": "46",
+    "name": "Thành phố Huế"
+  },
+  "48": {
+    "province_code": "48",
+    "name": "Thành phố Đà Nẵng"
+  },
+  "51": {
+    "province_code": "51",
+    "name": "Quảng Ngãi"
+  },
+  "52": {
+    "province_code": "52",
+    "name": "Gia Lai"
+  },
+  "56": {
+    "province_code": "56",
+    "name": "Khánh Hòa"
+  },
+  "66": {
+    "province_code": "66",
+    "name": "Đắk Lắk"
+  },
+  "68": {
+    "province_code": "68",
+    "name": "Lâm Đồng"
+  },
+  "75": {
+    "province_code": "75",
+    "name": "Đồng Nai"
+  },
+  "79": {
+    "province_code": "79",
+    "name": "Thành phố Hồ Chí Minh"
+  },
+  "80": {
+    "province_code": "80",
+    "name": "Tây Ninh"
+  },
+  "82": {
+    "province_code": "82",
+    "name": "Đồng Tháp"
+  },
+  "86": {
+    "province_code": "86",
+    "name": "Vĩnh Long"
+  },
+  "91": {
+    "province_code": "91",
+    "name": "An Giang"
+  },
+  "92": {
+    "province_code": "92",
+    "name": "Thành phố Cần Thơ"
+  },
+  "96": {
+    "province_code": "96",
+    "name": "Cà Mau"
+  },
+  "01": {
+    "province_code": "01",
+    "name": "Thành phố Hà Nội"
+  },
+  "04": {
+    "province_code": "04",
+    "name": "Cao Bằng"
+  },
+  "08": {
+    "province_code": "08",
+    "name": "Tuyên Quang"
+  }
+}

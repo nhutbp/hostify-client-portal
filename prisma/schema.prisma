@@ -1,0 +1,467 @@
+generator client {
+  provider = "prisma-client"
+  output   = "./generated"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model User {
+  id                    String                  @id @db.Uuid
+  login                 String                  @unique
+  password              String
+  secondPassword        String?                 @map("second_password")
+  displayName           String                  @map("display_name")
+  email                 String                  @unique
+  status                String                  @default("ACTIVE")
+  phone                 String?                 @unique
+  code                  String                  @unique
+  createdAt             DateTime                @default(now()) @map("created_at")
+  updatedAt             DateTime                @updatedAt @map("updated_at")
+  sessions              Session[]
+  userRoles             UserRole[]
+  apiKeys               ApiKey[]
+  addresses             UserAddress[]
+  paymentMethods        CustomerPaymentMethod[]
+  userProfile           UserProfile?
+
+  @@map("users")
+}
+
+model UserProfile {
+  id             String          @id @db.Uuid
+  userId         String          @unique @map("user_id") @db.Uuid
+  user           User            @relation(fields: [userId], references: [id], onDelete: Cascade)
+  fullName       String          @map("full_name")
+  phone          String?
+  birthDate      DateTime?       @map("birth_date") @db.Date
+  gender         CustomerGender  @default(UNDISCLOSED)
+  avatarUrl      String?         @map("avatar_url")
+  createdAt      DateTime        @default(now()) @map("created_at")
+  updatedAt      DateTime        @updatedAt @map("updated_at")
+
+  @@index([phone])
+  @@map("user_profiles")
+}
+
+model Session {
+  id                  String    @id @db.Uuid
+  accessToken         String    @unique @map("access_token")
+  userId              String    @map("user_id") @db.Uuid
+  user                User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt           DateTime  @default(now()) @map("created_at")
+  accessTokenExpires  DateTime  @map("access_token_expires")
+  refreshToken        String    @unique @map("refresh_token")
+  refreshTokenExpires DateTime  @map("refresh_token_expires")
+  deviceInfo          Json?     @map("device_info")
+  revokedAt           DateTime? @map("revoked_at")
+
+  @@index([userId])
+  @@map("session")
+}
+
+model ApiKey {
+  id          String    @id @db.Uuid
+  name        String
+  keyType     ApiKeyType @default(USER) @map("key_type")
+  clientCode  String?   @unique @map("client_code")
+  sourceSystem String?  @map("source_system")
+  allowedScopes Json?   @map("allowed_scopes")
+  secretKeyCiphertext String? @map("secret_key_ciphertext")
+  keyVersion  String?   @map("key_version")
+  keyPrefix   String    @map("key_prefix")
+  keyHash     String    @unique @map("key_hash")
+  createdById String    @map("created_by_id") @db.Uuid
+  createdBy   User      @relation(fields: [createdById], references: [id])
+  lastUsedAt  DateTime? @map("last_used_at")
+  expiresAt   DateTime? @map("expires_at")
+  revokedAt   DateTime? @map("revoked_at")
+  createdAt   DateTime  @default(now()) @map("created_at")
+  updatedAt   DateTime  @updatedAt @map("updated_at")
+
+  @@index([createdById, revokedAt])
+  @@map("api_keys")
+}
+
+enum ApiKeyType {
+  USER
+  SYSTEM_INTEGRATION
+}
+
+model Role {
+  id                 String           @id @db.Uuid
+  code               String           @unique
+  name               String
+  description        String?
+  canAccessDashboard Boolean          @default(true) @map("can_access_dashboard")
+  userRoles          UserRole[]
+  permissions        RolePermission[]
+
+  @@map("roles")
+}
+
+model Permission {
+  id                 String           @id @db.Uuid
+  code               String           @unique
+  module             String           @map("module_code")
+  resource           String           @map("resource_code")
+  action             String           @map("action_code")
+  name               String
+  description        String?
+  /// Backward-compatible column; Role.canAccessDashboard is authoritative.
+  canAccessDashboard Boolean          @default(true) @map("can_access_dashboard")
+  roles              RolePermission[]
+
+  @@unique([module, resource, action])
+  @@index([module, resource])
+  @@map("permissions")
+}
+
+model UserRole {
+  userId String @map("user_id") @db.Uuid
+  roleId String @map("role_id") @db.Uuid
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  role   Role   @relation(fields: [roleId], references: [id], onDelete: Cascade)
+
+  @@id([userId, roleId])
+  @@map("user_roles")
+}
+
+model RolePermission {
+  roleId       String     @map("role_id") @db.Uuid
+  permissionId String     @map("permission_id") @db.Uuid
+  role         Role       @relation(fields: [roleId], references: [id], onDelete: Cascade)
+  permission   Permission @relation(fields: [permissionId], references: [id], onDelete: Cascade)
+
+  @@id([roleId, permissionId])
+  @@map("role_permissions")
+}
+
+// ============================================================
+// Identity & Customer group
+// Relations in this section may reference only this group.
+// ============================================================
+
+enum CustomerGender {
+  MALE
+  FEMALE
+  OTHER
+  UNDISCLOSED
+}
+
+enum CustomerPaymentType {
+  CARD
+  BANK_ACCOUNT
+  E_WALLET
+}
+
+enum RecordStatus {
+  ACTIVE
+  INACTIVE
+  REVOKED
+}
+
+model UserAddress {
+  id            String    @id @db.Uuid
+  userId        String    @map("user_id") @db.Uuid
+  user          User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  label         String
+  recipientName String    @map("recipient_name")
+  phone         String
+  provinceCode  String?   @map("province_code")
+  provinceName  String?   @map("province_name")
+  districtCode  String?   @map("district_code")
+  districtName  String?   @map("district_name")
+  wardCode      String?   @map("ward_code")
+  wardName      String?   @map("ward_name")
+  addressLine   String    @map("address_line")
+  postalCode    String?   @map("postal_code")
+  latitude      Decimal?  @db.Decimal(10, 7)
+  longitude     Decimal?  @db.Decimal(10, 7)
+  isDefault     Boolean   @default(false) @map("is_default")
+  createdAt     DateTime  @default(now()) @map("created_at")
+  updatedAt     DateTime  @updatedAt @map("updated_at")
+  deletedAt     DateTime? @map("deleted_at")
+
+  @@index([userId, isDefault])
+  @@map("user_addresses")
+}
+
+model CustomerPaymentMethod {
+  id                String              @id @db.Uuid
+  userId            String              @map("user_id") @db.Uuid
+  user              User                @relation(fields: [userId], references: [id], onDelete: Cascade)
+  provider          String
+  type              CustomerPaymentType
+  providerToken     String              @map("provider_token")
+  brand             String?
+  last4             String?
+  expiryMonth       Int?                @map("expiry_month")
+  expiryYear        Int?                @map("expiry_year")
+  walletPhoneMasked String?             @map("wallet_phone_masked")
+  isDefault         Boolean             @default(false) @map("is_default")
+  status            RecordStatus        @default(ACTIVE)
+  createdAt         DateTime            @default(now()) @map("created_at")
+  updatedAt         DateTime            @updatedAt @map("updated_at")
+
+  @@index([userId, type, isDefault])
+  @@map("customer_payment_methods")
+}
+
+model Option {
+  optionId    Int      @id @default(autoincrement()) @map("option_id")
+  optionName  String   @unique @map("option_name")
+  optionValue String   @map("option_value") @db.Text
+  autoload    Boolean  @default(true)
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+
+  @@map("options")
+}
+
+enum MediaStorageMode {
+  SOURCE
+  S3
+}
+
+model Media {
+  id           String           @id @db.Uuid
+  name         String
+  originalName String           @map("original_name")
+  path         String
+  url          String
+  storageMode  MediaStorageMode @map("storage_mode")
+  mimeType     String            @map("mime_type")
+  extension    String
+  size         BigInt            @default(0)
+  width        Int?
+  height       Int?
+  folder       String            @default("/")
+  altText      String?           @map("alt_text")
+  uploadedById String?           @map("uploaded_by_id") @db.Uuid
+  createdAt    DateTime          @default(now()) @map("created_at")
+  updatedAt    DateTime          @updatedAt @map("updated_at")
+  deletedAt    DateTime?         @map("deleted_at")
+
+  @@index([folder, createdAt])
+  @@index([storageMode, createdAt])
+  @@index([deletedAt])
+  @@map("media")
+}
+
+model MediaFolder {
+  id          String           @id @db.Uuid
+  parentId    String?          @map("parent_id") @db.Uuid
+  parent      MediaFolder?     @relation("MediaFolderTree", fields: [parentId], references: [id], onDelete: Cascade)
+  children    MediaFolder[]    @relation("MediaFolderTree")
+  name        String
+  path        String
+  count       Int              @default(0)
+  storageMode MediaStorageMode @map("storage_mode")
+  createdById String?          @map("created_by_id") @db.Uuid
+  createdAt   DateTime         @default(now()) @map("created_at")
+  updatedAt   DateTime         @updatedAt @map("updated_at")
+  deletedAt   DateTime?        @map("deleted_at")
+
+  @@index([storageMode, path])
+  @@index([parentId])
+  @@index([deletedAt])
+  @@map("media_folders")
+}
+
+// ============================================================
+// Engagement group
+// User support records.
+// ============================================================
+
+enum SupportStatus {
+  OPEN
+  IN_PROGRESS
+  WAITING_CUSTOMER
+  RESOLVED
+  CLOSED
+}
+
+enum SupportPriority {
+  LOW
+  NORMAL
+  HIGH
+  URGENT
+}
+
+model SupportRequest {
+  id           String          @id @db.Uuid
+  code         String          @unique
+  userId       String          @map("user_id") @db.Uuid
+  subject      String
+  content      String
+  status       SupportStatus   @default(OPEN)
+  priority     SupportPriority @default(NORMAL)
+  assignedToId String?         @map("assigned_to_id") @db.Uuid
+  resolvedAt   DateTime?       @map("resolved_at")
+  createdAt    DateTime        @default(now()) @map("created_at")
+  updatedAt    DateTime        @updatedAt @map("updated_at")
+
+  @@index([userId, status, createdAt])
+  @@index([assignedToId, status])
+  @@map("support_requests")
+}
+
+// ============================================================
+// Analytics & Audit group
+// entity IDs are snapshots/logical references only.
+// ============================================================
+
+model AuditLog {
+  id          String   @id @db.Uuid
+  actorUserId String?  @map("actor_user_id") @db.Uuid
+  module      String   @default("legacy")
+  resource    String   @default("unknown")
+  action      String
+  entityType  String   @map("entity_type")
+  entityId    String?  @map("entity_id")
+  before      Json?
+  after       Json?
+  metadata    Json?
+  ipAddress   String?  @map("ip_address")
+  userAgent   String?  @map("user_agent")
+  createdAt   DateTime @default(now()) @map("created_at")
+
+  @@index([module, resource, createdAt])
+  @@index([action, createdAt])
+  @@index([entityType, entityId, createdAt])
+  @@index([actorUserId, createdAt])
+  @@map("audit_logs")
+}
+
+model SeedExecution {
+  id         String   @id @db.Uuid
+  version    String   @unique
+  name       String
+  executedAt DateTime @default(now()) @map("executed_at")
+
+  @@index([executedAt])
+  @@map("seed_executions")
+}
+
+enum PageStatus {
+  DRAFT
+  PUBLISHED
+}
+
+enum PageVisibility {
+  PUBLIC
+  PRIVATE
+}
+
+model Page {
+  id            String         @id @db.Uuid
+  title         String
+  slug          String         @unique
+  content       String         @default("")
+  status        PageStatus     @default(DRAFT)
+  visibility    PageVisibility @default(PUBLIC)
+  featuredImage String?        @map("featured_image")
+  publishedAt   DateTime?      @map("published_at")
+  createdAt     DateTime       @default(now()) @map("created_at")
+  updatedAt     DateTime       @updatedAt @map("updated_at")
+  deletedAt     DateTime?      @map("deleted_at")
+
+  @@index([status, updatedAt])
+  @@index([status, visibility, publishedAt])
+  @@map("pages")
+}
+
+model PostCategory {
+  id          String             @id @db.Uuid
+  parentId    String?            @map("parent_id") @db.Uuid
+  parent      PostCategory?      @relation("PostCategoryTree", fields: [parentId], references: [id], onDelete: SetNull)
+  children    PostCategory[]     @relation("PostCategoryTree")
+  name        String
+  slug        String             @unique
+  description String?
+  imageUrl    String?            @map("image_url")
+  createdAt   DateTime           @default(now()) @map("created_at")
+  updatedAt   DateTime           @updatedAt @map("updated_at")
+  deletedAt   DateTime?          @map("deleted_at")
+  posts       PostCategoryLink[]
+
+  @@index([name])
+  @@index([parentId])
+  @@map("post_categories")
+}
+
+model Post {
+  id            String             @id @db.Uuid
+  title         String
+  slug          String             @unique
+  excerpt       String?
+  content       String             @default("")
+  status        PageStatus         @default(DRAFT)
+  visibility    PageVisibility     @default(PUBLIC)
+  featuredImage String?            @map("featured_image")
+  publishedAt   DateTime?          @map("published_at")
+  createdAt     DateTime           @default(now()) @map("created_at")
+  updatedAt     DateTime           @updatedAt @map("updated_at")
+  deletedAt     DateTime?          @map("deleted_at")
+  categories    PostCategoryLink[]
+  platforms     PostPlatformLink[]
+  metas         PostMeta[]
+
+  @@index([status, updatedAt])
+  @@index([status, visibility, publishedAt])
+  @@map("posts")
+}
+
+model PostPlatform {
+  id          String             @id @db.Uuid
+  name        String
+  slug        String             @unique
+  description String?
+  createdAt   DateTime           @default(now()) @map("created_at")
+  updatedAt   DateTime           @updatedAt @map("updated_at")
+  deletedAt   DateTime?          @map("deleted_at")
+  posts       PostPlatformLink[]
+
+  @@index([name])
+  @@map("post_platforms")
+}
+
+model PostMeta {
+  id        String   @id @db.Uuid
+  postId    String   @map("post_id") @db.Uuid
+  post      Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
+  metaKey   String   @map("meta_key")
+  metaValue Json     @map("meta_value")
+  valueType String?  @map("value_type")
+  isPublic  Boolean  @default(false) @map("is_public")
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@unique([postId, metaKey])
+  @@index([postId])
+  @@map("post_meta")
+}
+
+model PostCategoryLink {
+  postId     String       @map("post_id") @db.Uuid
+  categoryId String       @map("category_id") @db.Uuid
+  post       Post         @relation(fields: [postId], references: [id], onDelete: Cascade)
+  category   PostCategory @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+
+  @@id([postId, categoryId])
+  @@index([categoryId])
+  @@map("post_category_links")
+}
+
+model PostPlatformLink {
+  postId     String       @map("post_id") @db.Uuid
+  platformId String       @map("platform_id") @db.Uuid
+  post       Post         @relation(fields: [postId], references: [id], onDelete: Cascade)
+  platform   PostPlatform @relation(fields: [platformId], references: [id], onDelete: Cascade)
+
+  @@id([postId, platformId])
+  @@index([platformId])
+  @@map("post_platform_links")
+}

@@ -1,0 +1,6 @@
+export const S3_ERROR_CODES = {
+  FILE_REQUIRED: 'S3_001',
+  FILE_TOO_LARGE: 'S3_002',
+  INVALID_TYPE: 'S3_003',
+  UPLOAD_FAILED: 'S3_004',
+} as const

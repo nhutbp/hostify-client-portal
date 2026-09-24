@@ -1,0 +1,7 @@
+export const API_KEY_ERROR_CODES = {
+  NOT_FOUND: 'API_KEY_001',
+  INVALID: 'API_KEY_002',
+  EXPIRED: 'API_KEY_003',
+  REVOKED: 'API_KEY_004',
+  REQUIRED: 'API_KEY_005',
+} as const

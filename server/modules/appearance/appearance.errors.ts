@@ -1,0 +1,3 @@
+export const APPEARANCE_ERROR_CODES = {
+  MENU_NOT_FOUND: 'APPEARANCE_001',
+} as const

@@ -1,0 +1,117 @@
+{
+  "system": {
+    "UNKNOWN_ERROR": "Unknown system error",
+    "VALIDATION_ERROR": "Validation failed",
+    "QUERY_FAILED_ERROR": "Database query failed",
+    "SYSTEM_001": "The submitted data is invalid",
+    "SYSTEM_002": "Authentication is required",
+    "SYSTEM_003": "The requested data was not found",
+    "SYSTEM_004": "The data already exists",
+    "SYSTEM_005": "The server is not fully configured"
+  },
+  "account": {
+    "ACCOUNT_001": "Email or phone number is already in use",
+    "ACCOUNT_002": "Current password is incorrect",
+    "ACCOUNT_003": "New password must be different from the current password"
+  },
+  "appearance": {
+    "APPEARANCE_001": "Menu not found"
+  },
+  "media": {
+    "MEDIA_001": "File not found",
+    "MEDIA_002": "Invalid file path",
+    "MEDIA_003": "File exceeds the allowed size",
+    "MEDIA_004": "Failed to rename file",
+    "MEDIA_005": "Failed to delete file"
+  },
+  "post": {
+    "POST_001": "Post not found",
+    "POST_002": "Platform not found",
+    "POST_003": "Platform is in use",
+    "POST_004": "Category not found",
+    "POST_005": "Invalid parent category",
+    "POST_006": "Category is in use"
+  },
+  "auth": {
+    "AUTH_001": "Invalid credentials",
+    "AUTH_002": "Invalid credentials",
+    "AUTH_003": "User already exists",
+    "AUTH_004": "Account locked due to too many failed login attempts",
+    "AUTH_005": "Token has expired",
+    "AUTH_006": "Invalid token",
+    "AUTH_007": "No token provided",
+    "AUTH_008": "Authentication required",
+    "AUTH_009": "Access denied",
+    "AUTH_010": "Session has been revoked",
+    "AUTH_011": "OTP is invalid or has expired",
+    "AUTH_012": "Please wait before requesting a new OTP",
+    "AUTH_013": "User account is locked",
+    "AUTH_014": "Invalid OTP",
+    "AUTH_015": "Invalid phone number",
+    "AUTH_016": "Second password token required",
+    "AUTH_017": "Invalid second password token",
+    "AUTH_018": "Invalid second password token type",
+    "AUTH_019": "Second password token mismatch",
+    "AUTH_020": "Second password token has expired",
+    "AUTH_021": "Shipper is already online",
+    "AUTH_022": "Web admin login denied",
+    "AUTH_023": "Shipper locked due to package rejections",
+    "AUTH_024": "API key not found",
+    "AUTH_025": "Invalid API key",
+    "AUTH_026": "Session not found",
+    "AUTH_027": "Account has been banned",
+    "AUTH_028": "Account is pending approval",
+    "AUTH_029": "Account is inactive",
+    "AUTH_030": "Account has been deleted",
+    "AUTH_031": "Reset password token has expired",
+    "AUTH_032": "Invalid system permission code"
+  },
+  "s3": {
+    "S3_001": "No file data was provided",
+    "S3_002": "The file must not exceed 2MB",
+    "S3_003": "The file type is not supported",
+    "S3_004": "The file upload failed"
+  },
+  "apiKey": {
+    "API_KEY_001": "API key not found",
+    "API_KEY_002": "Invalid API key",
+    "API_KEY_003": "API key has expired",
+    "API_KEY_004": "API key has been revoked",
+    "API_KEY_005": "API key is required"
+  },
+  "user": {
+    "USER_001": "User not found",
+    "USER_002": "User already exists",
+    "USER_003": "Invalid phone number format",
+    "USER_004": "Invalid email format",
+    "USER_005": "Email not found",
+    "USER_006": "Password does not meet requirements",
+    "USER_007": "Current password is incorrect",
+    "USER_008": "User sessions not found",
+    "USER_009": "Email already exists",
+    "USER_010": "Phone number already exists",
+    "USER_011": "User ID is required",
+    "USER_012": "Second password already exists",
+    "USER_013": "Second password is incorrect",
+    "USER_014": "Second password not set",
+    "USER_015": "Phone does not belong to user",
+    "USER_016": "Address required for shipper",
+    "USER_017": "Province and ward must be provided together",
+    "USER_018": "Availability owner type mismatch",
+    "USER_019": "Email verification send failed",
+    "USER_020": "You do not have permission to perform this action",
+    "USER_021": "The Super Admin account cannot be modified",
+    "USER_022": "Permission not found",
+    "USER_023": "You cannot remove your own administrator permission",
+    "USER_024": "You cannot block your own account",
+    "USER_025": "No users selected"
+  },
+  "userRole": {
+    "USER_ROLE_001": "Role not found",
+    "USER_ROLE_002": "Role already exists",
+    "USER_ROLE_003": "Cannot delete default role",
+    "USER_ROLE_004": "Role is in use",
+    "USER_ROLE_005": "Role code already exists",
+    "USER_ROLE_006": "System role cannot be modified"
+  }
+}

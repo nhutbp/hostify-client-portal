@@ -1,0 +1,172 @@
+{
+    "11": {
+        "province_code": "11",
+        "name": "Điện Biên",
+        "level": 2
+    },
+    "12": {
+        "province_code": "12",
+        "name": "Lai Châu",
+        "level": 2
+    },
+    "14": {
+        "province_code": "14",
+        "name": "Sơn La",
+        "level": 2
+    },
+    "15": {
+        "province_code": "15",
+        "name": "Lào Cai",
+        "level": 2
+    },
+    "19": {
+        "province_code": "19",
+        "name": "Thái Nguyên",
+        "level": 2
+    },
+    "20": {
+        "province_code": "20",
+        "name": "Lạng Sơn",
+        "level": 2
+    },
+    "22": {
+        "province_code": "22",
+        "name": "Quảng Ninh",
+        "level": 2
+    },
+    "24": {
+        "province_code": "24",
+        "name": "Bắc Ninh",
+        "level": 2
+    },
+    "25": {
+        "province_code": "25",
+        "name": "Phú Thọ",
+        "level": 2
+    },
+    "31": {
+        "province_code": "31",
+        "name": "Thành phố Hải Phòng",
+        "level": 2
+    },
+    "33": {
+        "province_code": "33",
+        "name": "Hưng Yên",
+        "level": 2
+    },
+    "37": {
+        "province_code": "37",
+        "name": "Ninh Bình",
+        "level": 2
+    },
+    "38": {
+        "province_code": "38",
+        "name": "Thanh Hóa",
+        "level": 2
+    },
+    "40": {
+        "province_code": "40",
+        "name": "Nghệ An",
+        "level": 2
+    },
+    "42": {
+        "province_code": "42",
+        "name": "Hà Tĩnh",
+        "level": 2
+    },
+    "44": {
+        "province_code": "44",
+        "name": "Quảng Trị",
+        "level": 2
+    },
+    "46": {
+        "province_code": "46",
+        "name": "Thành phố Huế",
+        "level": 2
+    },
+    "48": {
+        "province_code": "48",
+        "name": "Thành phố Đà Nẵng",
+        "level": 2
+    },
+    "51": {
+        "province_code": "51",
+        "name": "Quảng Ngãi",
+        "level": 2
+    },
+    "52": {
+        "province_code": "52",
+        "name": "Gia Lai",
+        "level": 2
+    },
+    "56": {
+        "province_code": "56",
+        "name": "Khánh Hòa",
+        "level": 1
+    },
+    "66": {
+        "province_code": "66",
+        "name": "Đắk Lắk",
+        "level": 2
+    },
+    "68": {
+        "province_code": "68",
+        "name": "Lâm Đồng",
+        "level": 1
+    },
+    "75": {
+        "province_code": "75",
+        "name": "Đồng Nai",
+        "level": 1
+    },
+    "79": {
+        "province_code": "79",
+        "name": "Thành phố Hồ Chí Minh",
+        "level": 1
+    },
+    "80": {
+        "province_code": "80",
+        "name": "Tây Ninh",
+        "level": 1
+    },
+    "82": {
+        "province_code": "82",
+        "name": "Đồng Tháp",
+        "level": 1
+    },
+    "86": {
+        "province_code": "86",
+        "name": "Vĩnh Long",
+        "level": 1
+    },
+    "91": {
+        "province_code": "91",
+        "name": "An Giang",
+        "level": 1
+    },
+    "92": {
+        "province_code": "92",
+        "name": "Thành phố Cần Thơ",
+        "level": 1
+    },
+    "96": {
+        "province_code": "96",
+        "name": "Cà Mau",
+        "level": 1
+    },
+    "01": {
+        "province_code": "01",
+        "name": "Thành phố Hà Nội",
+        "level": 2
+    },
+    "04": {
+        "province_code": "04",
+        "name": "Cao Bằng",
+        "level": 2
+    },
+    "08": {
+        "province_code": "08",
+        "name": "Tuyên Quang",
+        "level": 2
+    }
+}
