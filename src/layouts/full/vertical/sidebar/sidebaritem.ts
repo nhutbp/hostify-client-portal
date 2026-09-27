@@ -51,10 +51,33 @@ const SidebarContent: MenuItem[] = [
     icon: 'solar:server-square-linear',
     section: 'sidebar.sections.products',
     children: [
-      { id: uniqueId('menu-'), titleKey: 'sidebar.vpsPackages', icon: 'solar:layers-linear', url: '/dashboard/catalog/vps' },
-      { id: uniqueId('menu-'), titleKey: 'sidebar.vpsServers', icon: 'solar:server-square-linear', url: '/dashboard/catalog/vps', active: false },
-      { id: uniqueId('menu-'), titleKey: 'sidebar.vpsTemplates', icon: 'solar:widget-2-linear', url: '/dashboard/catalog/vps', active: false },
-      { id: uniqueId('menu-'), titleKey: 'sidebar.vpsSettings', icon: 'solar:settings-linear', url: '/dashboard/catalog/vps', active: false },
+      {
+        id: uniqueId('menu-'),
+        titleKey: 'sidebar.vpsPackages',
+        icon: 'solar:layers-linear',
+        url: '/dashboard/catalog/vps',
+      },
+      {
+        id: uniqueId('menu-'),
+        titleKey: 'sidebar.vpsServers',
+        icon: 'solar:server-square-linear',
+        url: '/dashboard/catalog/vps',
+        active: false,
+      },
+      {
+        id: uniqueId('menu-'),
+        titleKey: 'sidebar.vpsTemplates',
+        icon: 'solar:widget-2-linear',
+        url: '/dashboard/catalog/vps',
+        active: false,
+      },
+      {
+        id: uniqueId('menu-'),
+        titleKey: 'sidebar.vpsSettings',
+        icon: 'solar:settings-linear',
+        url: '/dashboard/catalog/vps',
+        active: false,
+      },
     ],
   },
   {
@@ -96,6 +119,14 @@ const SidebarContent: MenuItem[] = [
     section: 'sidebar.sections.products',
     url: '/dashboard/catalog/vps',
     active: false,
+  },
+  {
+    id: uniqueId('menu-'),
+    titleKey: 'sidebar.productProviders',
+    icon: 'solar:buildings-2-linear',
+    section: 'sidebar.sections.products',
+    url: '/dashboard/catalog/providers',
+    permission: PERMISSION_CODES.CATALOG_PRODUCT_VIEW,
   },
   {
     id: uniqueId('menu-'),

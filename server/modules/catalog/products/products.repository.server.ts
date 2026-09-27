@@ -9,7 +9,7 @@ export function listCatalogProductRecords(input: ListCatalogProductsInput) {
   return prisma.product.findMany({
     where: {
       status,
-      ...(input.category ? { category: input.category } : {}),
+      ...(input.category ? { category: { slug: input.category.toLowerCase(), kind: 'SERVICE', deletedAt: null } } : {}),
       ...(input.search
         ? {
             OR: [
@@ -20,7 +20,7 @@ export function listCatalogProductRecords(input: ListCatalogProductsInput) {
           }
         : {}),
     },
-    orderBy: [{ category: 'asc' }, { name: 'asc' }],
+    orderBy: [{ category: { name: 'asc' } }, { name: 'asc' }],
     include: {
       plans: {
         where: { status: 'ACTIVE' },
@@ -36,6 +36,8 @@ export function listCatalogProductRecords(input: ListCatalogProductsInput) {
         where: { status: 'ACTIVE' },
         orderBy: { name: 'asc' },
       },
+      category: { select: { id: true, name: true, slug: true, parentId: true } },
+      metas: { where: { isPublic: true }, select: { metaKey: true, metaValue: true } },
     },
   })
 }
@@ -58,6 +60,8 @@ export function findCatalogProductRecord(id: string) {
         where: { status: 'ACTIVE' },
         orderBy: { name: 'asc' },
       },
+      category: { select: { id: true, name: true, slug: true, parentId: true } },
+      metas: { where: { isPublic: true }, select: { metaKey: true, metaValue: true } },
     },
   })
 }

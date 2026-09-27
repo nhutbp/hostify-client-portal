@@ -15,18 +15,18 @@ Tài liệu này bổ sung cho [plan phát triển nền tảng](./vps-service-m
 
 ## 2. Phân vùng module dữ liệu
 
-| Module | Trách nhiệm | Bảng chính |
-|---|---|---|
-| Identity | Người dùng, organization, quyền | `users`, `organizations`, `memberships`, `roles`, `permissions` |
-| Catalog | Sản phẩm, gói, tính năng, giá | `products`, `plans`, `prices`, `addons` |
-| Commerce | Giỏ hàng, order, coupon | `carts`, `cart_items`, `orders`, `order_items`, `coupons` |
-| Billing | Invoice, payment, refund, credit | `invoices`, `payments`, `refunds`, `credits` |
-| Services | Dịch vụ khách hàng và vòng đời | `customer_services`, `service_events`, `service_actions` |
-| Infrastructure | Provider, node, IP, capacity | `providers`, `datacenters`, `resources`, `ip_pools` |
-| Provisioning | Job cấp phát/thay đổi dịch vụ | `provisioning_jobs`, `job_attempts` |
-| Domain/Proxy/VIA | Tài nguyên dịch vụ chuyên biệt | `domains`, `dns_records`, `proxy_allocations`, `via_accounts` |
-| Support | Ticket, SLA, thông báo | `tickets`, `ticket_messages`, `notifications` |
-| Audit | Theo dõi thao tác và thay đổi | `audit_logs` |
+| Module           | Trách nhiệm                           | Bảng chính                                                                                                            |
+| ---------------- | ------------------------------------- | --------------------------------------------------------------------------------------------------------------------- |
+| Identity         | Người dùng, organization, quyền       | `users`, `organizations`, `memberships`, `roles`, `permissions`                                                       |
+| Catalog          | Sản phẩm, gói, tag, nhà cung cấp, giá | `products`, `product_categories`, `product_tags`, `product_meta`, `product_plans`, `product_prices`, `product_addons` |
+| Commerce         | Giỏ hàng, order, coupon               | `carts`, `cart_items`, `orders`, `order_items`, `coupons`                                                             |
+| Billing          | Invoice, payment, refund, credit      | `invoices`, `payments`, `refunds`, `credits`                                                                          |
+| Services         | Dịch vụ khách hàng và vòng đời        | `customer_services`, `service_events`, `service_actions`                                                              |
+| Infrastructure   | Provider, node, IP, capacity          | `providers`, `datacenters`, `resources`, `ip_pools`                                                                   |
+| Provisioning     | Job cấp phát/thay đổi dịch vụ         | `provisioning_jobs`, `job_attempts`                                                                                   |
+| Domain/Proxy/VIA | Tài nguyên dịch vụ chuyên biệt        | `domains`, `dns_records`, `proxy_allocations`, `via_accounts`                                                         |
+| Support          | Ticket, SLA, thông báo                | `tickets`, `ticket_messages`, `notifications`                                                                         |
+| Audit            | Theo dõi thao tác và thay đổi         | `audit_logs`                                                                                                          |
 
 ## 3. Quy ước group module khi code
 
@@ -181,18 +181,62 @@ roles (
 
 ### Catalog và pricing
 
+> Mọi gói bán (VPS, server, hosting, VIA, proxy, domain) đều là bản ghi trong `products`.
+> Mỗi sản phẩm có một `category_id` trỏ trực tiếp tới `product_categories`
+> (danh mục có thể phân cấp giống `post_categories`). Thuộc tính mở rộng lưu
+> ở `product_meta` theo `meta_key`/`meta_value` giống `post_meta`.
+> Danh mục dịch vụ (`kind = SERVICE`, ví dụ VPS) và danh mục nhà cung cấp
+> (`kind = PROVIDER`) là hai quan hệ độc lập. Nhóm gốc `Nhà cung cấp`
+> (`slug = nha-cung-cap`) có các danh mục con như Mobifone, VNPT. Khi tạo gói,
+> `provider_category_id` trỏ tới một danh mục con trong nhóm này; giao diện
+> không yêu cầu chọn lại danh mục dịch vụ VPS.
+> `domains`, `dns_records`,
+> `proxy_allocations`, `via_accounts` là tài nguyên đã cấp cho khách hàng sau
+> khi mua, không phải bảng gói sản phẩm nên vẫn cần tồn tại.
+
 ```sql
 products (
   id uuid primary key,
   code text unique not null,
-  category text not null, -- VPS, HOSTING, DEDICATED, VIA, PROXY, DOMAIN, ADDON
+  category_id uuid not null references product_categories(id),
+  provider_category_id uuid references product_categories(id),
   name text not null,
   description text,
-  status text not null, -- DRAFT, ACTIVE, ARCHIVED
-  metadata jsonb not null default '{}'
+  content text not null default '',
+  status text not null -- DRAFT, ACTIVE, ARCHIVED
 )
 
-plans (
+product_categories (
+  id uuid primary key,
+  parent_id uuid references product_categories(id),
+  name text not null,
+  slug text unique not null,
+  kind text not null default 'SERVICE', -- SERVICE hoặc PROVIDER
+  description text,
+  image_url text,
+  deleted_at timestamptz
+)
+
+product_tags (
+  id uuid primary key,
+  name text not null,
+  slug text unique not null,
+  description text,
+  created_at timestamptz not null,
+  updated_at timestamptz not null
+)
+
+product_meta (
+  id uuid primary key,
+  product_id uuid not null references products(id),
+  meta_key text not null,
+  meta_value jsonb not null,
+  value_type text,
+  is_public boolean not null default false,
+  unique (product_id, meta_key)
+)
+
+product_plans (
   id uuid primary key,
   product_id uuid references products(id),
   code text not null,
@@ -203,9 +247,9 @@ plans (
   unique (product_id, code)
 )
 
-prices (
+product_prices (
   id uuid primary key,
-  plan_id uuid references plans(id),
+  plan_id uuid references product_plans(id),
   currency char(3) not null,
   billing_cycle text not null, -- MONTH, QUARTER, YEAR, ONE_TIME
   amount_minor bigint not null,
@@ -215,7 +259,7 @@ prices (
   status text not null
 )
 
-addons (
+product_addons (
   id uuid primary key,
   product_id uuid references products(id),
   code text unique not null,
@@ -248,8 +292,8 @@ order_items (
   id uuid primary key,
   order_id uuid references orders(id),
   product_id uuid references products(id),
-  plan_id uuid references plans(id),
-  addon_id uuid references addons(id),
+  plan_id uuid references product_plans(id),
+  addon_id uuid references product_addons(id),
   quantity integer not null default 1,
   configuration jsonb not null default '{}',
   period_start timestamptz,
@@ -300,7 +344,7 @@ customer_services (
   organization_id uuid references organizations(id),
   order_item_id uuid references order_items(id),
   product_id uuid references products(id),
-  plan_id uuid references plans(id),
+  plan_id uuid references product_plans(id),
   service_code text unique not null,
   status text not null, -- PENDING, PROVISIONING, ACTIVE, SUSPENDED, EXPIRED, TERMINATED, ERROR
   provider_resource_id uuid references provider_resources(id),

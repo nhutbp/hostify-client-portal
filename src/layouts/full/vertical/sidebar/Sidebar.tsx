@@ -36,7 +36,9 @@ const CollapsibleMenuItem = ({
   const hasChildren = item.children && item.children.length > 0
   const isActive = item.active !== false && item.url === currentPath
   const hasActiveChild = item.children?.some(
-    (child) => child.active !== false && child.url === currentPath,
+    (child) =>
+      child.active !== false &&
+      (child.url === currentPath || currentPath.startsWith(`${child.url}/`)),
   )
 
   // Calculate total badge count for parent menu
@@ -55,7 +57,7 @@ const CollapsibleMenuItem = ({
         to={item.url}
         onClick={onClose}
         className={cn(
-          'relative flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-colors',
+          'relative flex items-center gap-3 rounded-lg px-3 py-2.5 text-base font-medium transition-colors',
           'hover:bg-primary/10 hover:text-primary',
           isActive
             ? 'bg-primary/10 text-primary before:absolute before:left-0 before:h-7 before:w-1 before:rounded-r-full before:bg-primary'
@@ -115,14 +117,17 @@ const CollapsibleMenuItem = ({
       >
         <div className="border-border ml-4 space-y-1 border-l pl-4">
           {item.children?.map((child) => {
-            const isChildActive = child.active !== false && child.url === currentPath
+            const isChildActive =
+              child.active !== false &&
+              (child.url === currentPath ||
+                currentPath.startsWith(`${child.url}/`))
             return (
               <Link
                 key={child.id}
                 to={child.url}
                 onClick={onClose}
                 className={cn(
-                  'relative flex items-center gap-2 rounded-lg px-3 py-2 text-sm transition-colors',
+                  'relative flex items-center gap-2 rounded-lg px-3 py-2 text-base transition-colors',
                   'hover:bg-primary/10 hover:text-primary',
                   isChildActive
                     ? 'bg-primary/10 text-primary font-medium before:absolute before:left-0 before:h-7 before:w-1 before:rounded-r-full before:bg-primary'
@@ -180,7 +185,12 @@ const SidebarLayout = ({ onClose }: { onClose?: () => void }) => {
     // Auto-expand menu containing current path on initial load
     const initialExpanded = new Set<string>()
     for (const item of SidebarContent) {
-      if (item.children?.some((child) => child.url === pathname)) {
+      if (
+        item.children?.some(
+          (child) =>
+            child.url === pathname || pathname.startsWith(`${child.url}/`),
+        )
+      ) {
         initialExpanded.add(item.id)
       }
     }
@@ -216,20 +226,20 @@ const SidebarLayout = ({ onClose }: { onClose?: () => void }) => {
     <aside
       className={cn(
         'border-border bg-sidebar fixed top-0 left-0 z-10 flex h-screen flex-col border-r transition-all duration-300',
-        isCollapsed ? 'w-20' : 'w-67.5',
+        isCollapsed ? 'w-20' : 'w-60',
       )}
     >
       {/* Logo */}
       <div
         className={cn(
-          'mt-5 flex h-20 items-center',
-          isCollapsed ? 'px-3' : 'px-6',
+          'flex h-[58px] items-center border-b border-[#e4ebf7]',
+          isCollapsed ? 'px-3' : 'px-5',
         )}
       >
         <Link
           to="/dashboard"
           className={cn(
-            'flex h-20 w-full items-center justify-center',
+            'flex h-[58px] w-full items-center justify-start',
             isCollapsed && 'px-1',
           )}
         >
@@ -245,12 +255,13 @@ const SidebarLayout = ({ onClose }: { onClose?: () => void }) => {
 
       {/* Navigation */}
       <SimpleBar className="flex-1 overflow-y-auto">
-        <nav className={cn('space-y-1', isCollapsed ? 'p-2' : 'p-4')}>
+        <nav className={cn('space-y-1', isCollapsed ? 'p-2' : 'p-3')}>
           {filteredSidebarContent.map((item, index) => (
             <div key={item.id}>
               {!isCollapsed &&
-                (index === 0 || item.section !== filteredSidebarContent[index - 1]?.section) && (
-                  <p className="text-muted-foreground mb-2 mt-5 px-3 text-[11px] font-semibold uppercase tracking-[0.08em] first:mt-0">
+                index !== 0 &&
+                item.section !== filteredSidebarContent[index - 1]?.section && (
+                  <p className="text-muted-foreground mb-2 mt-5 px-3 text-xs font-semibold uppercase tracking-[0.08em] first:mt-0">
                     {t(item.section ?? 'sidebar.sections.other')}
                   </p>
                 )}

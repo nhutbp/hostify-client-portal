@@ -186,6 +186,7 @@
   },
   "quickAccess": "Quick Access",
   "sidebar": {
+    "searchPlaceholder": "Search (packages, providers, servers, customers, ...)",
     "dashboard": "Overview",
     "sections": {
       "overview": "Overview",
@@ -205,6 +206,7 @@
     "proxy": "Proxy",
     "via": "VIA",
     "otherServices": "Other services",
+    "productProviders": "Providers",
     "media": "Media",
     "posts": "Posts",
     "allPosts": "All posts",

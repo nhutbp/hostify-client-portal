@@ -47,7 +47,7 @@ function Search() {
 
   return (
     <div className="relative w-full">
-      <div className="relative mx-auto flex items-center lg:w-xs">
+      <div className="relative mx-auto flex items-center lg:w-[464px]">
         <Icon
           icon="solar:magnifer-linear"
           width="18"
@@ -56,8 +56,8 @@ function Search() {
         />
 
         <Input
-          placeholder="Search...."
-          className="h-10! rounded-lg! py-2! pl-10"
+          placeholder={t('sidebar.searchPlaceholder')}
+          className="h-[34px]! rounded-lg! py-1! pl-10"
           required
           value={query}
           onChange={(e) => setQuery(e.target.value)}

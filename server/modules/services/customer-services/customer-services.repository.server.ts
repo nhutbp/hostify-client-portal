@@ -2,7 +2,7 @@ import { prisma } from '../../../db/prisma'
 import type { ListMyCustomerServicesInput } from './customer-services.schemas'
 
 const customerServiceInclude = {
-  product: { select: { id: true, code: true, category: true, name: true } },
+  product: { select: { id: true, code: true, categoryId: true, category: { select: { id: true, slug: true, name: true } }, name: true } },
   plan: { select: { id: true, code: true, name: true, features: true } },
   resource: {
     select: {

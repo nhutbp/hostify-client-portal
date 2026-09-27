@@ -518,21 +518,75 @@ model Membership {
 model Product {
   id               String            @id @db.Uuid
   code             String            @unique
-  category         String
+  categoryId       String            @map("category_id") @db.Uuid
+  providerCategoryId String?          @map("provider_category_id") @db.Uuid
   name             String
   description      String?
+  content          String            @default("")
   status           String            @default("DRAFT")
-  metadata         Json              @default("{}")
   createdAt        DateTime          @default(now()) @map("created_at")
   updatedAt        DateTime          @updatedAt @map("updated_at")
+  category         ProductCategory   @relation("ProductServiceCategory", fields: [categoryId], references: [id], onDelete: Restrict)
+  providerCategory ProductCategory?  @relation("ProductProviderCategory", fields: [providerCategoryId], references: [id], onDelete: Restrict)
   plans            Plan[]
   addons           Addon[]
   orderItems       OrderItem[]
   customerServices CustomerService[]
   cartItems        CartItem[]
+  metas            ProductMeta[]
 
-  @@index([category, status])
+  @@index([categoryId, status])
+  @@index([providerCategoryId])
   @@map("products")
+}
+
+model ProductCategory {
+  id          String                @id @db.Uuid
+  parentId    String?               @map("parent_id") @db.Uuid
+  parent      ProductCategory?      @relation("ProductCategoryTree", fields: [parentId], references: [id], onDelete: SetNull)
+  children    ProductCategory[]     @relation("ProductCategoryTree")
+  name        String
+  slug        String                @unique
+  kind        String                @default("SERVICE")
+  description String?
+  imageUrl    String?               @map("image_url")
+  createdAt   DateTime              @default(now()) @map("created_at")
+  updatedAt   DateTime              @updatedAt @map("updated_at")
+  deletedAt   DateTime?             @map("deleted_at")
+  products    Product[]             @relation("ProductServiceCategory")
+  providerProducts Product[]        @relation("ProductProviderCategory")
+
+  @@index([name])
+  @@index([kind, name])
+  @@index([parentId])
+  @@map("product_categories")
+}
+
+model ProductMeta {
+  id        String   @id @db.Uuid
+  productId String   @map("product_id") @db.Uuid
+  product   Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+  metaKey   String   @map("meta_key")
+  metaValue Json     @map("meta_value")
+  valueType String?  @map("value_type")
+  isPublic  Boolean  @default(false) @map("is_public")
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@unique([productId, metaKey])
+  @@index([productId])
+  @@map("product_meta")
+}
+
+model ProductTag {
+  id          String   @id @db.Uuid
+  name        String
+  slug        String   @unique
+  description String?
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+
+  @@map("product_tags")
 }
 
 model Plan {
@@ -553,7 +607,7 @@ model Plan {
 
   @@unique([productId, code])
   @@index([status, productId])
-  @@map("plans")
+  @@map("product_plans")
 }
 
 model Price {
@@ -571,7 +625,7 @@ model Price {
   plan          Plan      @relation(fields: [planId], references: [id], onDelete: Cascade)
 
   @@index([planId, status, effectiveFrom])
-  @@map("prices")
+  @@map("product_prices")
 }
 
 model Addon {
@@ -588,7 +642,7 @@ model Addon {
   cartItems  CartItem[]
 
   @@index([productId, status])
-  @@map("addons")
+  @@map("product_addons")
 }
 
 model Cart {

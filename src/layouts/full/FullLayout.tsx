@@ -10,12 +10,12 @@ const FullLayout: FC<{ children: ReactNode }> = ({ children }) => {
         <div className="hidden md:block">
           <Sidebar />
         </div>
-        <div className="body-wrapper dark:bg-dark min-w-0 w-full bg-white md:ml-[270px]">
+        <div className="body-wrapper dark:bg-dark min-w-0 flex-1 bg-white">
           {/* Top Header  */}
           <Header />
 
           {/* Body Content  */}
-          <div className="container mx-auto px-4 py-0 md:px-7 md:py-7">
+          <div className="w-full max-w-none px-4 py-0 md:px-7 md:py-7">
             <main className="min-w-0 grow">{children}</main>
           </div>
         </div>

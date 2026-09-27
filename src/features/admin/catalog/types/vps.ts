@@ -11,9 +11,3 @@ export type VpsPlan = {
   enabled: boolean
   color: string
 }
-
-export type ProductCategory = {
-  name: string
-  count: number
-  icon: 'server' | 'layers'
-}

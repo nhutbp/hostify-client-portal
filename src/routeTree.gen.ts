@@ -25,11 +25,14 @@ import { Route as DashboardDashboardPostsIndexRouteImport } from './routes/_dash
 import { Route as DashboardDashboardSettingsIndexRouteImport } from './routes/_dashboard/dashboard/settings/index'
 import { Route as DashboardDashboardUsersIndexRouteImport } from './routes/_dashboard/dashboard/users/index'
 import { Route as DashboardDashboardAppearanceMenuIndexRouteImport } from './routes/_dashboard/dashboard/appearance/menu/index'
+import { Route as DashboardDashboardCatalogProvidersIndexRouteImport } from './routes/_dashboard/dashboard/catalog/providers/index'
+import { Route as DashboardDashboardCatalogVpsIndexRouteImport } from './routes/_dashboard/dashboard/catalog/vps/index'
 import { Route as DashboardDashboardPostsCategoriesIndexRouteImport } from './routes/_dashboard/dashboard/posts/categories/index'
 import { Route as DashboardDashboardPostsNewIndexRouteImport } from './routes/_dashboard/dashboard/posts/new/index'
 import { Route as DashboardDashboardPostsPlatformsIndexRouteImport } from './routes/_dashboard/dashboard/posts/platforms/index'
 import { Route as DashboardDashboardUsersUserIdIndexRouteImport } from './routes/_dashboard/dashboard/users/$userId/index'
 import { Route as DashboardDashboardUsersRolesIndexRouteImport } from './routes/_dashboard/dashboard/users/roles/index'
+import { Route as DashboardDashboardCatalogVpsNewIndexRouteImport } from './routes/_dashboard/dashboard/catalog/vps/new/index'
 import { Route as DashboardDashboardPostsPostIdEditIndexRouteImport } from './routes/_dashboard/dashboard/posts/$postId/edit/index'
 
 const DashboardRoute = DashboardRouteImport.update({
@@ -118,6 +121,18 @@ const DashboardDashboardAppearanceMenuIndexRoute =
     path: '/dashboard/appearance/menu/',
     getParentRoute: () => DashboardRoute,
   } as any)
+const DashboardDashboardCatalogProvidersIndexRoute =
+  DashboardDashboardCatalogProvidersIndexRouteImport.update({
+    id: '/dashboard/catalog/providers/',
+    path: '/dashboard/catalog/providers/',
+    getParentRoute: () => DashboardRoute,
+  } as any)
+const DashboardDashboardCatalogVpsIndexRoute =
+  DashboardDashboardCatalogVpsIndexRouteImport.update({
+    id: '/dashboard/catalog/vps/',
+    path: '/dashboard/catalog/vps/',
+    getParentRoute: () => DashboardRoute,
+  } as any)
 const DashboardDashboardPostsCategoriesIndexRoute =
   DashboardDashboardPostsCategoriesIndexRouteImport.update({
     id: '/dashboard/posts/categories/',
@@ -148,6 +163,12 @@ const DashboardDashboardUsersRolesIndexRoute =
     path: '/dashboard/users/roles/',
     getParentRoute: () => DashboardRoute,
   } as any)
+const DashboardDashboardCatalogVpsNewIndexRoute =
+  DashboardDashboardCatalogVpsNewIndexRouteImport.update({
+    id: '/dashboard/catalog/vps/new/',
+    path: '/dashboard/catalog/vps/new/',
+    getParentRoute: () => DashboardRoute,
+  } as any)
 const DashboardDashboardPostsPostIdEditIndexRoute =
   DashboardDashboardPostsPostIdEditIndexRouteImport.update({
     id: '/dashboard/posts/$postId/edit/',
@@ -171,11 +192,14 @@ export interface FileRoutesByFullPath {
   '/dashboard/settings/': typeof DashboardDashboardSettingsIndexRoute
   '/dashboard/users/': typeof DashboardDashboardUsersIndexRoute
   '/dashboard/appearance/menu/': typeof DashboardDashboardAppearanceMenuIndexRoute
+  '/dashboard/catalog/providers/': typeof DashboardDashboardCatalogProvidersIndexRoute
+  '/dashboard/catalog/vps/': typeof DashboardDashboardCatalogVpsIndexRoute
   '/dashboard/posts/categories/': typeof DashboardDashboardPostsCategoriesIndexRoute
   '/dashboard/posts/new/': typeof DashboardDashboardPostsNewIndexRoute
   '/dashboard/posts/platforms/': typeof DashboardDashboardPostsPlatformsIndexRoute
   '/dashboard/users/$userId/': typeof DashboardDashboardUsersUserIdIndexRoute
   '/dashboard/users/roles/': typeof DashboardDashboardUsersRolesIndexRoute
+  '/dashboard/catalog/vps/new/': typeof DashboardDashboardCatalogVpsNewIndexRoute
   '/dashboard/posts/$postId/edit/': typeof DashboardDashboardPostsPostIdEditIndexRoute
 }
 export interface FileRoutesByTo {
@@ -194,11 +218,14 @@ export interface FileRoutesByTo {
   '/dashboard/settings': typeof DashboardDashboardSettingsIndexRoute
   '/dashboard/users': typeof DashboardDashboardUsersIndexRoute
   '/dashboard/appearance/menu': typeof DashboardDashboardAppearanceMenuIndexRoute
+  '/dashboard/catalog/providers': typeof DashboardDashboardCatalogProvidersIndexRoute
+  '/dashboard/catalog/vps': typeof DashboardDashboardCatalogVpsIndexRoute
   '/dashboard/posts/categories': typeof DashboardDashboardPostsCategoriesIndexRoute
   '/dashboard/posts/new': typeof DashboardDashboardPostsNewIndexRoute
   '/dashboard/posts/platforms': typeof DashboardDashboardPostsPlatformsIndexRoute
   '/dashboard/users/$userId': typeof DashboardDashboardUsersUserIdIndexRoute
   '/dashboard/users/roles': typeof DashboardDashboardUsersRolesIndexRoute
+  '/dashboard/catalog/vps/new': typeof DashboardDashboardCatalogVpsNewIndexRoute
   '/dashboard/posts/$postId/edit': typeof DashboardDashboardPostsPostIdEditIndexRoute
 }
 export interface FileRoutesById {
@@ -219,11 +246,14 @@ export interface FileRoutesById {
   '/_dashboard/dashboard/settings/': typeof DashboardDashboardSettingsIndexRoute
   '/_dashboard/dashboard/users/': typeof DashboardDashboardUsersIndexRoute
   '/_dashboard/dashboard/appearance/menu/': typeof DashboardDashboardAppearanceMenuIndexRoute
+  '/_dashboard/dashboard/catalog/providers/': typeof DashboardDashboardCatalogProvidersIndexRoute
+  '/_dashboard/dashboard/catalog/vps/': typeof DashboardDashboardCatalogVpsIndexRoute
   '/_dashboard/dashboard/posts/categories/': typeof DashboardDashboardPostsCategoriesIndexRoute
   '/_dashboard/dashboard/posts/new/': typeof DashboardDashboardPostsNewIndexRoute
   '/_dashboard/dashboard/posts/platforms/': typeof DashboardDashboardPostsPlatformsIndexRoute
   '/_dashboard/dashboard/users/$userId/': typeof DashboardDashboardUsersUserIdIndexRoute
   '/_dashboard/dashboard/users/roles/': typeof DashboardDashboardUsersRolesIndexRoute
+  '/_dashboard/dashboard/catalog/vps/new/': typeof DashboardDashboardCatalogVpsNewIndexRoute
   '/_dashboard/dashboard/posts/$postId/edit/': typeof DashboardDashboardPostsPostIdEditIndexRoute
 }
 export interface FileRouteTypes {
@@ -244,11 +274,14 @@ export interface FileRouteTypes {
     | '/dashboard/settings/'
     | '/dashboard/users/'
     | '/dashboard/appearance/menu/'
+    | '/dashboard/catalog/providers/'
+    | '/dashboard/catalog/vps/'
     | '/dashboard/posts/categories/'
     | '/dashboard/posts/new/'
     | '/dashboard/posts/platforms/'
     | '/dashboard/users/$userId/'
     | '/dashboard/users/roles/'
+    | '/dashboard/catalog/vps/new/'
     | '/dashboard/posts/$postId/edit/'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -267,11 +300,14 @@ export interface FileRouteTypes {
     | '/dashboard/settings'
     | '/dashboard/users'
     | '/dashboard/appearance/menu'
+    | '/dashboard/catalog/providers'
+    | '/dashboard/catalog/vps'
     | '/dashboard/posts/categories'
     | '/dashboard/posts/new'
     | '/dashboard/posts/platforms'
     | '/dashboard/users/$userId'
     | '/dashboard/users/roles'
+    | '/dashboard/catalog/vps/new'
     | '/dashboard/posts/$postId/edit'
   id:
     | '__root__'
@@ -291,11 +327,14 @@ export interface FileRouteTypes {
     | '/_dashboard/dashboard/settings/'
     | '/_dashboard/dashboard/users/'
     | '/_dashboard/dashboard/appearance/menu/'
+    | '/_dashboard/dashboard/catalog/providers/'
+    | '/_dashboard/dashboard/catalog/vps/'
     | '/_dashboard/dashboard/posts/categories/'
     | '/_dashboard/dashboard/posts/new/'
     | '/_dashboard/dashboard/posts/platforms/'
     | '/_dashboard/dashboard/users/$userId/'
     | '/_dashboard/dashboard/users/roles/'
+    | '/_dashboard/dashboard/catalog/vps/new/'
     | '/_dashboard/dashboard/posts/$postId/edit/'
   fileRoutesById: FileRoutesById
 }
@@ -423,6 +462,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DashboardDashboardAppearanceMenuIndexRouteImport
       parentRoute: typeof DashboardRoute
     }
+    '/_dashboard/dashboard/catalog/providers/': {
+      id: '/_dashboard/dashboard/catalog/providers/'
+      path: '/dashboard/catalog/providers'
+      fullPath: '/dashboard/catalog/providers/'
+      preLoaderRoute: typeof DashboardDashboardCatalogProvidersIndexRouteImport
+      parentRoute: typeof DashboardRoute
+    }
+    '/_dashboard/dashboard/catalog/vps/': {
+      id: '/_dashboard/dashboard/catalog/vps/'
+      path: '/dashboard/catalog/vps'
+      fullPath: '/dashboard/catalog/vps/'
+      preLoaderRoute: typeof DashboardDashboardCatalogVpsIndexRouteImport
+      parentRoute: typeof DashboardRoute
+    }
     '/_dashboard/dashboard/posts/categories/': {
       id: '/_dashboard/dashboard/posts/categories/'
       path: '/dashboard/posts/categories'
@@ -458,6 +511,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DashboardDashboardUsersRolesIndexRouteImport
       parentRoute: typeof DashboardRoute
     }
+    '/_dashboard/dashboard/catalog/vps/new/': {
+      id: '/_dashboard/dashboard/catalog/vps/new/'
+      path: '/dashboard/catalog/vps/new'
+      fullPath: '/dashboard/catalog/vps/new/'
+      preLoaderRoute: typeof DashboardDashboardCatalogVpsNewIndexRouteImport
+      parentRoute: typeof DashboardRoute
+    }
     '/_dashboard/dashboard/posts/$postId/edit/': {
       id: '/_dashboard/dashboard/posts/$postId/edit/'
       path: '/dashboard/posts/$postId/edit'
@@ -477,11 +537,14 @@ interface DashboardRouteChildren {
   DashboardDashboardSettingsIndexRoute: typeof DashboardDashboardSettingsIndexRoute
   DashboardDashboardUsersIndexRoute: typeof DashboardDashboardUsersIndexRoute
   DashboardDashboardAppearanceMenuIndexRoute: typeof DashboardDashboardAppearanceMenuIndexRoute
+  DashboardDashboardCatalogProvidersIndexRoute: typeof DashboardDashboardCatalogProvidersIndexRoute
+  DashboardDashboardCatalogVpsIndexRoute: typeof DashboardDashboardCatalogVpsIndexRoute
   DashboardDashboardPostsCategoriesIndexRoute: typeof DashboardDashboardPostsCategoriesIndexRoute
   DashboardDashboardPostsNewIndexRoute: typeof DashboardDashboardPostsNewIndexRoute
   DashboardDashboardPostsPlatformsIndexRoute: typeof DashboardDashboardPostsPlatformsIndexRoute
   DashboardDashboardUsersUserIdIndexRoute: typeof DashboardDashboardUsersUserIdIndexRoute
   DashboardDashboardUsersRolesIndexRoute: typeof DashboardDashboardUsersRolesIndexRoute
+  DashboardDashboardCatalogVpsNewIndexRoute: typeof DashboardDashboardCatalogVpsNewIndexRoute
   DashboardDashboardPostsPostIdEditIndexRoute: typeof DashboardDashboardPostsPostIdEditIndexRoute
 }
 
@@ -495,6 +558,10 @@ const DashboardRouteChildren: DashboardRouteChildren = {
   DashboardDashboardUsersIndexRoute: DashboardDashboardUsersIndexRoute,
   DashboardDashboardAppearanceMenuIndexRoute:
     DashboardDashboardAppearanceMenuIndexRoute,
+  DashboardDashboardCatalogProvidersIndexRoute:
+    DashboardDashboardCatalogProvidersIndexRoute,
+  DashboardDashboardCatalogVpsIndexRoute:
+    DashboardDashboardCatalogVpsIndexRoute,
   DashboardDashboardPostsCategoriesIndexRoute:
     DashboardDashboardPostsCategoriesIndexRoute,
   DashboardDashboardPostsNewIndexRoute: DashboardDashboardPostsNewIndexRoute,
@@ -504,6 +571,8 @@ const DashboardRouteChildren: DashboardRouteChildren = {
     DashboardDashboardUsersUserIdIndexRoute,
   DashboardDashboardUsersRolesIndexRoute:
     DashboardDashboardUsersRolesIndexRoute,
+  DashboardDashboardCatalogVpsNewIndexRoute:
+    DashboardDashboardCatalogVpsNewIndexRoute,
   DashboardDashboardPostsPostIdEditIndexRoute:
     DashboardDashboardPostsPostIdEditIndexRoute,
 }

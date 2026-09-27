@@ -1,0 +1,165 @@
+.vps-create-page {
+  background: #f2f8ff;
+}
+.vps-create-page .text-xs {
+  font-size: 14px;
+  line-height: 20px;
+}
+.vps-create-page .text-sm {
+  font-size: 16px;
+  line-height: 24px;
+}
+.vps-create-page [class~='text-[10px]'] {
+  font-size: 12px;
+  line-height: 16px;
+}
+.vps-create-page [class~='text-[11px]'] {
+  font-size: 13px;
+  line-height: 18px;
+}
+.vps-create-page [class~='text-[15px]'] {
+  font-size: 18px;
+  line-height: 24px;
+}
+.vps-create-page [class~='h-[30px]'] {
+  height: 36px;
+}
+.vps-create-page [class~='h-[26px]'] {
+  height: 32px;
+}
+.vps-create-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 10px;
+  align-items: start;
+}
+.vps-create-section {
+  border-radius: 10px;
+  background: #fff;
+  padding: 14px 17px;
+}
+.vps-create-section h2 {
+  margin-bottom: 14px;
+}
+.vps-provider-section {
+  padding-bottom: 7px;
+}
+.vps-provider-section h2 {
+  margin-bottom: 7px;
+}
+.vps-basic-columns {
+  display: grid;
+  grid-template-columns: minmax(0, 1.55fr) minmax(0, 1fr);
+  gap: 22px;
+}
+.vps-labeled-row {
+  display: grid;
+  grid-template-columns: 90px minmax(0, 1fr);
+  align-items: start;
+  gap: 10px;
+}
+.vps-labeled-row > label {
+  padding-top: 6px;
+  font-size: 14px;
+  line-height: 20px;
+}
+.vps-create-page .vps-labeled-row textarea {
+  padding-bottom: 20px;
+}
+.vps-hardware-grid {
+  display: grid;
+  grid-template-columns: 1.15fr 1.45fr 1.5fr 1.25fr 0.82fr;
+  gap: 20px;
+  align-items: start;
+}
+.vps-hardware-grid input[type='number']::-webkit-inner-spin-button,
+.vps-hardware-grid input[type='number']::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+.vps-pricing-grid {
+  display: grid;
+  grid-template-columns: 40% minmax(0, 1fr);
+  gap: 20px;
+  align-items: start;
+}
+.vps-pricing-row {
+  display: grid;
+  grid-template-columns: 84px minmax(0, 1fr) 88px minmax(0, 1fr) 22px;
+  gap: 6px;
+  align-items: center;
+  min-height: 40px;
+  padding: 1px 5px;
+  font-size: 13px;
+  line-height: 18px;
+}
+.vps-pricing-row:first-child {
+  min-height: 40px;
+}
+.vps-create-page input:not([type='checkbox']):not([type='radio']):not([type='file']),
+.vps-create-page select {
+  min-height: 36px;
+}
+.vps-create-page input:not([type='checkbox']):not([type='radio']),
+.vps-create-page select,
+.vps-create-page textarea {
+  border-color: #d6e2f6;
+}
+.vps-create-page input[type='checkbox'],
+.vps-create-page input[type='radio'] {
+  accent-color: #0959ed;
+}
+.vps-create-page input:focus-visible,
+.vps-create-page select:focus-visible,
+.vps-create-page textarea:focus-visible {
+  outline: 2px solid #b6d0ff;
+  outline-offset: 0;
+}
+.vps-create-switch {
+  position: relative;
+  display: inline-block;
+  width: 34px;
+  height: 19px;
+  border-radius: 99px;
+  background: #9badc7;
+  vertical-align: middle;
+}
+.vps-create-switch[data-on='true'] {
+  background: #075bea;
+}
+.vps-create-switch::after {
+  content: '';
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 13px;
+  height: 13px;
+  border-radius: 50%;
+  background: #fff;
+  transition: transform 0.15s;
+}
+.vps-create-switch[data-on='true']::after {
+  transform: translateX(15px);
+}
+@media (min-width: 1450px) {
+  .vps-create-grid {
+    grid-template-columns: minmax(0, 1fr) 395px;
+  }
+}
+@media (max-width: 1449px) {
+  .vps-create-page {
+    padding-bottom: 20px;
+  }
+}
+@media (max-width: 760px) {
+  .vps-basic-columns,
+  .vps-pricing-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .vps-labeled-row {
+    grid-template-columns: 86px minmax(0, 1fr);
+  }
+  .vps-hardware-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}

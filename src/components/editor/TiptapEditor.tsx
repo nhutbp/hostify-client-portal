@@ -40,7 +40,7 @@ import type { MediaLabels } from '@/features/admin/media/components/types'
 
 export const defaultTiptapContent = '<p>Nhập nội dung tại đây...</p>'
 
-const editorMediaLabels: MediaLabels = {
+export const editorMediaLabels: MediaLabels = {
   allFiles: 'Tất cả tệp',
   unclassified: 'Chưa phân loại',
   banner: 'Banner',

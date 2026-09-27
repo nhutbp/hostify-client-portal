@@ -184,6 +184,7 @@
   },
   "quickAccess": "Truy cập nhanh",
   "sidebar": {
+    "searchPlaceholder": "Tìm kiếm (gói, nhà cung cấp, server, khách hàng, ...)",
     "dashboard": "Tổng quan",
     "sections": {
       "overview": "Tổng quan",
@@ -203,6 +204,7 @@
     "proxy": "Proxy",
     "via": "VIA",
     "otherServices": "Dịch vụ khác",
+    "productProviders": "Nhà cung cấp",
     "media": "Media",
     "posts": "Bài viết",
     "allPosts": "Tất cả bài viết",

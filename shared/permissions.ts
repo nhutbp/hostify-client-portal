@@ -93,6 +93,17 @@ export const PERMISSION_MODULES = [
       },
     ],
   },
+  {
+    code: 'catalog',
+    name: 'Danh mục dịch vụ',
+    resources: [
+      {
+        code: 'product',
+        name: 'Gói dịch vụ',
+        actions: ['view', 'create', 'update', 'delete'],
+      },
+    ],
+  },
 ] as const
 
 export type PermissionModule = ModuleCode

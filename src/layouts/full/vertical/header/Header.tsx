@@ -62,7 +62,7 @@ const Header = () => {
           isSticky ? 'shadow-sm' : ''
         }`}
       >
-        <nav className="container mx-auto flex w-full items-center justify-between rounded-none bg-transparent px-5 py-2.5 sm:px-10 dark:bg-transparent">
+        <nav className="flex h-[58px] w-full items-center justify-between rounded-none bg-transparent px-4 py-0 dark:bg-transparent">
           {/* Mobile Toggle Icon */}
           <span
             onClick={() => setIsOpen(true)}
@@ -82,9 +82,15 @@ const Header = () => {
 
           <div className="hidden md:block">
             <div className="flex items-center gap-2">
-              <button type="button" className="relative rounded-full p-2 text-slate-600 hover:bg-blue-50 hover:text-blue-600" aria-label="Thông báo">
+              <button
+                type="button"
+                className="relative rounded-full p-2 text-slate-600 hover:bg-blue-50 hover:text-blue-600"
+                aria-label="Thông báo"
+              >
                 <Icon icon="solar:bell-linear" width="21" />
-                <span className="absolute right-0 top-0 flex size-4 items-center justify-center rounded-full bg-red-500 text-[9px] font-bold text-white">3</span>
+                <span className="absolute right-0 top-0 flex size-4 items-center justify-center rounded-full bg-red-500 text-[9px] font-bold text-white">
+                  3
+                </span>
               </button>
               {/* Language Switcher */}
               <LanguageSwitcher />
