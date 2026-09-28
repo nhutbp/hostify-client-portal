@@ -9,7 +9,7 @@ export default function ResetPasswordPage() {
   const token = search.token ?? ''
 
   if (isAuthenticated && !isLoading) {
-    return <Navigate to="/dashboard" />
+    return <Navigate to="/admin/dashboard" />
   }
 
   if (!token) {

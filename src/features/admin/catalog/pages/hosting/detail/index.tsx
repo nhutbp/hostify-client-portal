@@ -72,7 +72,7 @@ function PackageDetails({ product }: { product: HostingPackageDetail }) {
     <div className="space-y-5 pb-8 text-slate-900">
       <div>
         <Link
-          to="/dashboard/catalog/hosting"
+          to="/admin/dashboard/catalog/hosting"
           className="inline-flex items-center gap-2 text-sm font-medium text-blue-600 hover:underline"
         >
           <ArrowLeft className="size-4" /> {t('hosting.detail.back')}
@@ -91,7 +91,7 @@ function PackageDetails({ product }: { product: HostingPackageDetail }) {
                 : t('hosting.archived')}
           </span>
           <Link
-            to="/dashboard/catalog/hosting/$id/edit"
+            to="/admin/dashboard/catalog/hosting/$id/edit"
             params={{ id: product.id }}
             className="ml-auto inline-flex h-10 items-center gap-2 rounded-lg bg-blue-600 px-4 text-sm font-semibold text-white hover:bg-blue-700"
           >
@@ -272,7 +272,7 @@ export default function HostingPackageDetailPage({ id }: { id: string }) {
       <div role="alert" className="rounded-xl bg-white p-6 text-red-600">
         <p>{t('hosting.detail.loadFailed')}</p>
         <Link
-          to="/dashboard/catalog/hosting"
+          to="/admin/dashboard/catalog/hosting"
           className="mt-3 inline-block text-blue-600 hover:underline"
         >
           {t('hosting.detail.back')}

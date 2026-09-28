@@ -22,7 +22,7 @@ export function VpsPackageFormPage({
       >
         <span>VPS</span>
         <ChevronRight className="size-3" />
-        <Link to="/dashboard/catalog/vps" className="hover:text-blue-600">
+        <Link to="/admin/dashboard/catalog/vps" className="hover:text-blue-600">
           {t('vps.form.packageList')}
         </Link>
         <ChevronRight className="size-3" />

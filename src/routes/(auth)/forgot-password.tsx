@@ -9,7 +9,7 @@ export const Route = createFileRoute('/(auth)/forgot-password')({
     const user = unwrapSuccessResponse(await getCurrentUser())
     if (user) {
       throw redirect({
-        to: '/dashboard',
+        to: '/admin/dashboard',
       })
     }
     return null

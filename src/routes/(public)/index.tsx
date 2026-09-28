@@ -17,7 +17,7 @@ function HomeRoute() {
           {t('base.login')}
         </Link>
         <Link
-          to="/dashboard"
+          to="/admin/dashboard"
           className="rounded-lg bg-primary px-5 py-2 text-white"
         >
           {t('base.dashboard')}

@@ -19,7 +19,7 @@ export function Breadcrumb({ items, className = '' }: BreadcrumbProps) {
         {/* Home link */}
         <li>
           <Link
-            to="/dashboard"
+            to="/admin/dashboard"
             className="flex items-center gap-1 text-slate-400 transition-colors hover:text-orange-500 dark:text-slate-500 dark:hover:text-orange-400"
           >
             <Home className="h-4 w-4" />

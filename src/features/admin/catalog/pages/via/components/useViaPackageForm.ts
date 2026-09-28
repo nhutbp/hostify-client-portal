@@ -158,7 +158,7 @@ export function useViaPackageForm(initialPackage?: ViaPackageDetail) {
           })
           toast.success(t('via.edit.saved'))
           await navigate({
-            to: '/dashboard/catalog/via/$id',
+            to: '/admin/dashboard/catalog/via/$id',
             params: { id: initialPackage.id },
           })
         } else {
@@ -168,7 +168,7 @@ export function useViaPackageForm(initialPackage?: ViaPackageDetail) {
               parsed.data.status === 'ARCHIVED' ? 'DRAFT' : parsed.data.status,
           })
           toast.success(t('via.new.saved'))
-          await navigate({ to: '/dashboard/catalog/via' })
+          await navigate({ to: '/admin/dashboard/catalog/via' })
         }
       } catch (cause) {
         setError(

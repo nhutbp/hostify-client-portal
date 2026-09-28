@@ -171,7 +171,7 @@ export default function AdminUserDetailPage({ userId }: { userId: string }) {
             {t('breadcrumb')} / {user.displayName}
           </p>
           <Button asChild variant="outline" size="sm">
-            <Link to="/dashboard/users">
+            <Link to="/admin/dashboard/users">
               <ArrowLeft className="mr-2 size-4" />
               {t('detail.back')}
             </Link>

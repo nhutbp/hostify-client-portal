@@ -16,7 +16,7 @@ export default function EditProxyPackagePage({ id }: { id: string }) {
       <div role="alert" className="rounded-xl bg-white p-6 text-red-600">
         <p>{t('proxy.detail.loadFailed')}</p>
         <Link
-          to="/dashboard/catalog/proxy"
+          to="/admin/dashboard/catalog/proxy"
           className="mt-3 inline-block text-blue-600"
         >
           {t('proxy.detail.back')}

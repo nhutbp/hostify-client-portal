@@ -171,7 +171,7 @@ export default function NewPostPage({ postId }: { postId?: string }) {
       if (postId) await postService.update({ ...input, id: postId })
       else await postService.create(input)
       toast.success(t('saved'))
-      await navigate({ to: '/dashboard/posts' })
+      await navigate({ to: '/admin/dashboard/posts' })
     } catch (error) {
       toast.apiError(error, t('saveFailed'))
     }
@@ -199,7 +199,7 @@ export default function NewPostPage({ postId }: { postId?: string }) {
         <div className="flex gap-2">
           <Button
             variant="outline"
-            onClick={() => void navigate({ to: '/dashboard/posts' })}
+            onClick={() => void navigate({ to: '/admin/dashboard/posts' })}
           >
             {t('cancel')}
           </Button>

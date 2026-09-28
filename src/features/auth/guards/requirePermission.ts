@@ -9,7 +9,7 @@ export async function requirePermission(permission: PermissionActionCode) {
   if (!user) throw redirect({ to: '/login' })
   if (user.isSuperAdmin || user.permissionCodes.includes(permission)) return
 
-  throw redirect({ to: '/dashboard/forbidden' })
+  throw redirect({ to: '/admin/dashboard/forbidden' })
 }
 
 export async function requireUserDetailAccess(userId: string) {
@@ -23,5 +23,5 @@ export async function requireUserDetailAccess(userId: string) {
   )
     return
 
-  throw redirect({ to: '/dashboard/forbidden' })
+  throw redirect({ to: '/admin/dashboard/forbidden' })
 }

@@ -34,7 +34,7 @@ export function ProxyPlansTable({
                 </td>
                 <td className="px-4 py-4">
                   <Link
-                    to="/dashboard/catalog/proxy/$id"
+                    to="/admin/dashboard/catalog/proxy/$id"
                     params={{ id: item.id }}
                     className="font-semibold text-[#11184c] hover:text-blue-600 hover:underline"
                   >

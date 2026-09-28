@@ -73,7 +73,7 @@ export default function PostsPage() {
           <div className="min-w-0">
             {canUpdate ? (
               <Link
-                to="/dashboard/posts/$postId/edit"
+                to="/admin/dashboard/posts/$postId/edit"
                 params={{ postId: row.original.id }}
                 className="font-semibold hover:text-primary"
               >
@@ -129,7 +129,7 @@ export default function PostsPage() {
           {canUpdate && (
             <Button variant="ghost" className="size-9 p-0" asChild>
               <Link
-                to="/dashboard/posts/$postId/edit"
+                to="/admin/dashboard/posts/$postId/edit"
                 params={{ postId: row.original.id }}
               >
                 <Pencil className="size-4" />
@@ -153,7 +153,7 @@ export default function PostsPage() {
             <Button
               variant="outline"
               onClick={() =>
-                void navigate({ to: '/dashboard/posts/categories' })
+                void navigate({ to: '/admin/dashboard/posts/categories' })
               }
             >
               {t('categories')}
@@ -161,7 +161,7 @@ export default function PostsPage() {
           )}
           {canCreate && (
             <Button
-              onClick={() => void navigate({ to: '/dashboard/posts/new' })}
+              onClick={() => void navigate({ to: '/admin/dashboard/posts/new' })}
             >
               <Plus />
               {t('create')}

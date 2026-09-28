@@ -335,7 +335,7 @@ export default function AdminUsersPage() {
                 onStatusChange={changeStatus}
                 onEdit={(user) =>
                   navigate({
-                    to: '/dashboard/users/$userId',
+                    to: '/admin/dashboard/users/$userId',
                     params: { userId: user.id },
                   })
                 }

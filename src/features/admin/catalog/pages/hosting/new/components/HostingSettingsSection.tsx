@@ -126,8 +126,8 @@ export function HostingSettingsSection({
           <Link
             to={
               initialPackageId
-                ? '/dashboard/catalog/hosting/$id'
-                : '/dashboard/catalog/hosting'
+                ? '/admin/dashboard/catalog/hosting/$id'
+                : '/admin/dashboard/catalog/hosting'
             }
             params={initialPackageId ? { id: initialPackageId } : undefined}
             className="inline-flex h-10 flex-1 items-center justify-center rounded-md border border-[#d5e1f2] bg-white px-4 text-sm font-medium text-[#11184c]"

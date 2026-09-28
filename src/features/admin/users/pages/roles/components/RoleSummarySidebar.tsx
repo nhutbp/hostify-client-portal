@@ -64,7 +64,7 @@ export function RoleSummarySidebar({
           {selected?.users.slice(0, 5).map((user) => (
             <Link
               key={user.id}
-              to="/dashboard/users/$userId"
+              to="/admin/dashboard/users/$userId"
               params={{ userId: user.id }}
               className="flex items-center gap-2.5 rounded-md p-1 hover:bg-primary-50"
             >

@@ -161,7 +161,7 @@ export function useProxyPackageForm(initialPackage?: ProxyPackageDetail) {
           })
           toast.success(t('proxy.edit.saved'))
           await navigate({
-            to: '/dashboard/catalog/proxy/$id',
+            to: '/admin/dashboard/catalog/proxy/$id',
             params: { id: initialPackage.id },
           })
         } else {
@@ -171,7 +171,7 @@ export function useProxyPackageForm(initialPackage?: ProxyPackageDetail) {
               parsed.data.status === 'ARCHIVED' ? 'DRAFT' : parsed.data.status,
           })
           toast.success(t('proxy.new.saved'))
-          await navigate({ to: '/dashboard/catalog/proxy' })
+          await navigate({ to: '/admin/dashboard/catalog/proxy' })
         }
       } catch (cause) {
         setError(

@@ -131,7 +131,7 @@ export function usePhysicalPackageForm(initialPackage?: PhysicalPackageDetail) {
           })
           toast.success(t('physical.edit.saved'))
           await navigate({
-            to: '/dashboard/catalog/physical/$id',
+            to: '/admin/dashboard/catalog/physical/$id',
             params: { id: initialPackage.id },
           })
         } else {
@@ -141,7 +141,7 @@ export function usePhysicalPackageForm(initialPackage?: PhysicalPackageDetail) {
               parsed.data.status === 'ARCHIVED' ? 'DRAFT' : parsed.data.status,
           })
           toast.success(t('physical.new.saved'))
-          await navigate({ to: '/dashboard/catalog/physical' })
+          await navigate({ to: '/admin/dashboard/catalog/physical' })
         }
       } catch (cause) {
         setError(

@@ -16,7 +16,7 @@ export default function EditViaPackagePage({ id }: { id: string }) {
       <div role="alert" className="rounded-xl bg-white p-6 text-red-600">
         <p>{t('via.detail.loadFailed')}</p>
         <Link
-          to="/dashboard/catalog/via"
+          to="/admin/dashboard/catalog/via"
           className="mt-3 inline-block text-blue-600"
         >
           {t('via.detail.back')}

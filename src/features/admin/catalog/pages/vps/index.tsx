@@ -60,7 +60,7 @@ export default function AdminVpsPackagesPage() {
           </p>
         </div>
         <Link
-          to="/dashboard/catalog/vps/new"
+          to="/admin/dashboard/catalog/vps/new"
           className="inline-flex h-10 items-center gap-2 rounded-lg bg-blue-600 px-4 text-base font-semibold text-white shadow-sm hover:bg-blue-700"
         >
           <Plus className="size-4" /> {t('vps.add')}

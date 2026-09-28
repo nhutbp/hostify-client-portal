@@ -18,7 +18,7 @@ export default function EditVpsPackagePage({ id }: { id: string }) {
       <div role="alert" className="rounded-xl bg-white p-6 text-red-600">
         <p>{t('vps.detail.loadFailed')}</p>
         <Link
-          to="/dashboard/catalog/vps"
+          to="/admin/dashboard/catalog/vps"
           className="mt-3 inline-block text-blue-600 hover:underline"
         >
           {t('vps.detail.back')}

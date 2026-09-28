@@ -12,7 +12,7 @@ export default function LoginPage() {
   if (isAuthenticated && !isLoading) {
     const redirectTo = user
       ? getAuthenticatedRedirect(user, returnUrl)
-      : '/dashboard'
+      : '/admin/dashboard'
     return <Navigate to={redirectTo} />
   }
 

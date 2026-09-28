@@ -175,13 +175,13 @@ export function useHostingPackageForm(initialPackage?: HostingPackageDetail) {
           })
           toast.success(t('hosting.edit.saved'))
           await navigate({
-            to: '/dashboard/catalog/hosting/$id',
+            to: '/admin/dashboard/catalog/hosting/$id',
             params: { id: initialPackage.id },
           })
         } else {
           await createPackage.mutateAsync(parsed.data)
           toast.success(t('hosting.new.saved'))
-          await navigate({ to: '/dashboard/catalog/hosting' })
+          await navigate({ to: '/admin/dashboard/catalog/hosting' })
         }
       } catch (cause) {
         setError(

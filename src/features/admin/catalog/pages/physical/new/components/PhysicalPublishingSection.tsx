@@ -127,8 +127,8 @@ export function PhysicalPublishingSection({
           <Link
             to={
               initialPackageId
-                ? '/dashboard/catalog/physical/$id'
-                : '/dashboard/catalog/physical'
+                ? '/admin/dashboard/catalog/physical/$id'
+                : '/admin/dashboard/catalog/physical'
             }
             params={initialPackageId ? { id: initialPackageId } : undefined}
             className="inline-flex h-10 flex-1 items-center justify-center rounded-md border border-[#d5e1f2] px-3 text-sm font-medium"

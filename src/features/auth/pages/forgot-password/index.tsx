@@ -7,7 +7,7 @@ export default function ForgotPasswordPage() {
   const { isAuthenticated, isLoading } = useAuth()
 
   if (isAuthenticated && !isLoading) {
-    return <Navigate to="/dashboard" />
+    return <Navigate to="/admin/dashboard" />
   }
 
   return (

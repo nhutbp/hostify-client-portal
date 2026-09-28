@@ -237,7 +237,7 @@ const SidebarLayout = ({ onClose }: { onClose?: () => void }) => {
         )}
       >
         <Link
-          to="/dashboard"
+          to="/admin/dashboard"
           className={cn(
             'flex h-[58px] w-full items-center justify-start',
             isCollapsed && 'px-1',

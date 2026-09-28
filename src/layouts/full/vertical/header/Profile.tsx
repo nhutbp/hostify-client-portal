@@ -81,9 +81,9 @@ const Profile = () => {
               asChild
               className="bg-hover group/link flex w-full cursor-pointer items-center justify-between px-4 py-2"
             >
-              {items.url === '/dashboard/profile' && user?.id ? (
+              {items.url === '/admin/dashboard/profile' && user?.id ? (
                 <Link
-                  to="/dashboard/users/$userId"
+                  to="/admin/dashboard/users/$userId"
                   params={{ userId: user.id }}
                 >
                   <ProfileMenuContent items={items} t={t} />

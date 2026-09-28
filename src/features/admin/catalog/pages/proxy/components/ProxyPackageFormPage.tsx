@@ -35,7 +35,7 @@ export function ProxyPackageFormPage({
       <header className="mb-5 flex flex-wrap items-center gap-4">
         <Link
           to={
-            isEdit ? '/dashboard/catalog/proxy/$id' : '/dashboard/catalog/proxy'
+            isEdit ? '/admin/dashboard/catalog/proxy/$id' : '/admin/dashboard/catalog/proxy'
           }
           params={initialPackage ? { id: initialPackage.id } : undefined}
           aria-label={t('proxy.new.cancel')}

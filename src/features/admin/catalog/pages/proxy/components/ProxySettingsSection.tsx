@@ -52,8 +52,8 @@ export function ProxySettingsSection({
         <Link
           to={
             initialPackageId
-              ? '/dashboard/catalog/proxy/$id'
-              : '/dashboard/catalog/proxy'
+              ? '/admin/dashboard/catalog/proxy/$id'
+              : '/admin/dashboard/catalog/proxy'
           }
           params={initialPackageId ? { id: initialPackageId } : undefined}
           className="inline-flex h-10 flex-1 items-center justify-center rounded-md border border-[#d5e1f2] bg-white px-4 text-sm font-medium text-[#11184c]"

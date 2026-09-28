@@ -6,5 +6,5 @@ export function getAuthenticatedRedirect(
 ) {
   if (!user.canAccessDashboard) return '/account'
 
-  return returnUrl?.startsWith('/') ? returnUrl : '/dashboard'
+  return returnUrl?.startsWith('/') ? returnUrl : '/admin/dashboard'
 }

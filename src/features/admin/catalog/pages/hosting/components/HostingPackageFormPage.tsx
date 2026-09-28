@@ -44,8 +44,8 @@ export function HostingPackageFormPage({
           <Link
             to={
               isEdit
-                ? '/dashboard/catalog/hosting/$id'
-                : '/dashboard/catalog/hosting'
+                ? '/admin/dashboard/catalog/hosting/$id'
+                : '/admin/dashboard/catalog/hosting'
             }
             params={initialPackage ? { id: initialPackage.id } : undefined}
             aria-label={t('hosting.new.cancel')}

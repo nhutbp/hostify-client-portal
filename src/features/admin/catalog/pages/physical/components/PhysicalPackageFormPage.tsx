@@ -42,8 +42,8 @@ export function PhysicalPackageFormPage({
         <Link
           to={
             isEdit
-              ? '/dashboard/catalog/physical/$id'
-              : '/dashboard/catalog/physical'
+              ? '/admin/dashboard/catalog/physical/$id'
+              : '/admin/dashboard/catalog/physical'
           }
           params={initialPackage ? { id: initialPackage.id } : undefined}
           aria-label={t('physical.new.cancel')}

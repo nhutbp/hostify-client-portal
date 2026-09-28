@@ -15,7 +15,7 @@ export const Route = createFileRoute('/(auth)/verify-email')({
     const user = unwrapSuccessResponse(await getCurrentUser())
     if (user) {
       throw redirect({
-        to: '/dashboard',
+        to: '/admin/dashboard',
       })
     }
 

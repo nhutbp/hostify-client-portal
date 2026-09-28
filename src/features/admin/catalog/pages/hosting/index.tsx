@@ -49,7 +49,7 @@ export default function AdminHostingPackagesPage() {
           </p>
         </div>
         <Link
-          to="/dashboard/catalog/hosting/new"
+          to="/admin/dashboard/catalog/hosting/new"
           className="inline-flex h-10 items-center gap-2 rounded-lg bg-blue-600 px-4 text-sm font-semibold text-white hover:bg-blue-700"
         >
           <Plus className="size-4" /> {t('hosting.new.create')}

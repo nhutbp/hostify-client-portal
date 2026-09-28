@@ -43,7 +43,7 @@ export function VpsPlansTable({
                 <td className="px-3 py-3">
                   <span className="block font-bold text-[#11184c]">
                     <Link
-                      to="/dashboard/catalog/vps/$id"
+                      to="/admin/dashboard/catalog/vps/$id"
                       params={{ id: item.id }}
                       className="hover:text-blue-600 hover:underline focus-visible:rounded focus-visible:outline-2 focus-visible:outline-blue-600"
                     >

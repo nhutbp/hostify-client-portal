@@ -69,7 +69,7 @@ function Details({ product }: { product: ViaPackageDetail }) {
     <div className="space-y-5 pb-8 text-slate-900">
       <div>
         <Link
-          to="/dashboard/catalog/via"
+          to="/admin/dashboard/catalog/via"
           className="inline-flex items-center gap-2 text-sm font-medium text-blue-600 hover:underline"
         >
           <ArrowLeft className="size-4" />
@@ -91,7 +91,7 @@ function Details({ product }: { product: ViaPackageDetail }) {
             )}
           </span>
           <Link
-            to="/dashboard/catalog/via/$id/edit"
+            to="/admin/dashboard/catalog/via/$id/edit"
             params={{ id: product.id }}
             className="ml-auto inline-flex h-10 items-center gap-2 rounded-lg bg-blue-600 px-4 text-sm font-semibold text-white"
           >
@@ -223,7 +223,7 @@ export default function ViaPackageDetailPage({ id }: { id: string }) {
       <div role="alert" className="rounded-xl bg-white p-6 text-red-600">
         <p>{t('via.detail.loadFailed')}</p>
         <Link
-          to="/dashboard/catalog/via"
+          to="/admin/dashboard/catalog/via"
           className="mt-3 inline-block text-blue-600"
         >
           {t('via.detail.back')}

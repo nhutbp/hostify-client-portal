@@ -7,7 +7,7 @@ export default function RegisterPage() {
   const { isAuthenticated, isLoading } = useAuth()
 
   if (isAuthenticated && !isLoading) {
-    return <Navigate to="/dashboard" />
+    return <Navigate to="/admin/dashboard" />
   }
 
   return (

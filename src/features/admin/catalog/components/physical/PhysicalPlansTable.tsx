@@ -40,7 +40,7 @@ export function PhysicalPlansTable({
                 <td className="px-3 py-3 text-slate-500">{from + index}</td>
                 <td className="px-3 py-3">
                   <Link
-                    to="/dashboard/catalog/physical/$id"
+                    to="/admin/dashboard/catalog/physical/$id"
                     params={{ id: item.id }}
                     className="font-semibold text-[#11184c] hover:text-blue-600 hover:underline"
                   >

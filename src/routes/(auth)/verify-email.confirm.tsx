@@ -42,7 +42,7 @@ export const Route = createFileRoute('/(auth)/verify-email/confirm')({
     })
 
     throw redirect({
-      to: '/dashboard',
+      to: '/admin/dashboard',
     })
   },
 })

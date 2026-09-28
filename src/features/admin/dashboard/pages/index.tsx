@@ -15,13 +15,13 @@ export default function DashboardPage() {
         </p>
       </div>
       <div className="flex flex-wrap gap-3">
-        <Link to="/dashboard/users" className="rounded-lg border px-4 py-3">
+        <Link to="/admin/dashboard/users" className="rounded-lg border px-4 py-3">
           {t('base.users')}
         </Link>
-        <Link to="/dashboard/media" className="rounded-lg border px-4 py-3">
+        <Link to="/admin/dashboard/media" className="rounded-lg border px-4 py-3">
           {t('base.media')}
         </Link>
-        <Link to="/dashboard/settings" className="rounded-lg border px-4 py-3">
+        <Link to="/admin/dashboard/settings" className="rounded-lg border px-4 py-3">
           {t('base.settings')}
         </Link>
       </div>

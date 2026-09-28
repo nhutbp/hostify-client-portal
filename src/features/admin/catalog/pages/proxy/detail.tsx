@@ -58,7 +58,7 @@ function Details({ product }: { product: ProxyPackageDetail }) {
     <div className="space-y-5 pb-8 text-slate-900">
       <div>
         <Link
-          to="/dashboard/catalog/proxy"
+          to="/admin/dashboard/catalog/proxy"
           className="inline-flex items-center gap-2 text-sm font-medium text-blue-600 hover:underline"
         >
           <ArrowLeft className="size-4" />
@@ -80,7 +80,7 @@ function Details({ product }: { product: ProxyPackageDetail }) {
             )}
           </span>
           <Link
-            to="/dashboard/catalog/proxy/$id/edit"
+            to="/admin/dashboard/catalog/proxy/$id/edit"
             params={{ id: product.id }}
             className="ml-auto inline-flex h-10 items-center gap-2 rounded-lg bg-blue-600 px-4 text-sm font-semibold text-white"
           >
@@ -218,7 +218,7 @@ export default function ProxyPackageDetailPage({ id }: { id: string }) {
       <div role="alert" className="rounded-xl bg-white p-6 text-red-600">
         <p>{t('proxy.detail.loadFailed')}</p>
         <Link
-          to="/dashboard/catalog/proxy"
+          to="/admin/dashboard/catalog/proxy"
           className="mt-3 inline-block text-blue-600"
         >
           {t('proxy.detail.back')}

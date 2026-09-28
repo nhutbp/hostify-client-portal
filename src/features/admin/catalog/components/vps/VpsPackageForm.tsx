@@ -331,13 +331,13 @@ export function VpsPackageForm({
         await updatePackage.mutateAsync({ ...input, id: initialPackage.id })
         toast.success(t('vps.form.updated'))
         await navigate({
-          to: '/dashboard/catalog/vps/$id',
+          to: '/admin/dashboard/catalog/vps/$id',
           params: { id: initialPackage.id },
         })
       } else {
         await createPackage.mutateAsync(input)
         toast.success(t('vps.form.created'))
-        await navigate({ to: '/dashboard/catalog/vps' })
+        await navigate({ to: '/admin/dashboard/catalog/vps' })
       }
     } catch (cause) {
       setError(
@@ -771,10 +771,10 @@ export function VpsPackageForm({
               navigate(
                 initialPackage
                   ? {
-                      to: '/dashboard/catalog/vps/$id',
+                      to: '/admin/dashboard/catalog/vps/$id',
                       params: { id: initialPackage.id },
                     }
-                  : { to: '/dashboard/catalog/vps' },
+                  : { to: '/admin/dashboard/catalog/vps' },
               )
             }
             onSaveDraft={() => submit('DRAFT')}

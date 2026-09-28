@@ -23,7 +23,7 @@ function entityHref(row: AuditRow) {
   if (!identifier) return null
   switch (row.entityType) {
     case 'user.user':
-      return `/dashboard/users/${identifier}`
+      return `/admin/dashboard/users/${identifier}`
     default:
       return null
   }
@@ -63,7 +63,7 @@ export default function AuditLogsPage() {
           if (!row.actor) return 'System'
           return (
             <Link
-              to="/dashboard/users/$userId"
+              to="/admin/dashboard/users/$userId"
               params={{ userId: row.actor.id }}
               className="font-medium text-primary hover:underline"
             >

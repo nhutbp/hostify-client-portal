@@ -34,7 +34,7 @@ export function ViaPackageFormPage({
       </p>
       <header className="mb-5 flex flex-wrap items-center gap-4">
         <Link
-          to={isEdit ? '/dashboard/catalog/via/$id' : '/dashboard/catalog/via'}
+          to={isEdit ? '/admin/dashboard/catalog/via/$id' : '/admin/dashboard/catalog/via'}
           params={initialPackage ? { id: initialPackage.id } : undefined}
           aria-label={t('via.new.cancel')}
           className="flex size-11 items-center justify-center rounded-md border border-[#d5e1f2] bg-white"

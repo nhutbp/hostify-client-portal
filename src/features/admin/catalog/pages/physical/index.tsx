@@ -47,7 +47,7 @@ export default function AdminPhysicalPackagesPage() {
           </p>
         </div>
         <Link
-          to="/dashboard/catalog/physical/new"
+          to="/admin/dashboard/catalog/physical/new"
           className="inline-flex h-10 items-center gap-2 rounded-lg bg-blue-600 px-4 text-sm font-semibold text-white hover:bg-blue-700"
         >
           <Plus className="size-4" />

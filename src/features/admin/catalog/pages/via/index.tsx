@@ -46,7 +46,7 @@ export default function AdminViaPackagesPage() {
           </p>
         </div>
         <Link
-          to="/dashboard/catalog/via/new"
+          to="/admin/dashboard/catalog/via/new"
           className="inline-flex h-10 items-center gap-2 rounded-lg bg-blue-600 px-4 text-sm font-semibold text-white hover:bg-blue-700"
         >
           <Plus className="size-4" />

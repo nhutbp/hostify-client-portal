@@ -7,15 +7,15 @@ interface SearchType {
 const SearchLinks: SearchType[] = [
   {
     title: 'Dashboard',
-    href: '/dashboard',
+    href: '/admin/dashboard',
   },
   {
     title: 'Profile',
-    href: '/dashboard/profile',
+    href: '/admin/dashboard/profile',
   },
   {
     title: 'Settings',
-    href: '/dashboard/settings',
+    href: '/admin/dashboard/settings',
   },
 ]
 
@@ -44,7 +44,7 @@ const profileDD: ProfileType[] = [
     titleKey: 'profile.myProfile',
     subtitle: 'Account settings',
     icon: 'tabler:user',
-    url: '/dashboard/profile',
+    url: '/admin/dashboard/profile',
   },
 ]
 
