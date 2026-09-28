@@ -652,6 +652,7 @@ model Cart {
   organizationId String?    @map("organization_id") @db.Uuid
   status         String     @default("ACTIVE")
   currency       String     @default("VND") @db.Char(3)
+  couponCode     String?    @map("coupon_code")
   createdAt      DateTime   @default(now()) @map("created_at")
   updatedAt      DateTime   @updatedAt @map("updated_at")
   user           User       @relation(fields: [userId], references: [id], onDelete: Cascade)
@@ -687,6 +688,10 @@ model Order {
   userId           String            @map("user_id") @db.Uuid
   status           String            @default("DRAFT")
   currency         String            @default("VND") @db.Char(3)
+  paymentMethod    String?           @map("payment_method")
+  couponCode       String?           @map("coupon_code")
+  customerNote     String?           @map("customer_note")
+  termsAcceptedAt  DateTime?         @map("terms_accepted_at")
   subtotalMinor    BigInt            @map("subtotal_minor")
   discountMinor    BigInt            @default(0) @map("discount_minor")
   taxMinor         BigInt            @default(0) @map("tax_minor")

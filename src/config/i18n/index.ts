@@ -16,6 +16,8 @@ import adminUsersEn from '@/features/admin/users/i18n/en.json'
 import adminUsersVi from '@/features/admin/users/i18n/vi.json'
 import catalogEn from '@/features/admin/catalog/i18n/en.json'
 import catalogVi from '@/features/admin/catalog/i18n/vi.json'
+import adminOrdersEn from '@/features/admin/orders/i18n/en.json'
+import adminOrdersVi from '@/features/admin/orders/i18n/vi.json'
 import i18n from 'i18next'
 
 export const LANGUAGES = {
@@ -52,6 +54,7 @@ i18n.use(initReactI18next).init({
       appearance: appearanceVi,
       adminUsers: adminUsersVi,
       catalog: catalogVi,
+      adminOrders: adminOrdersVi,
     },
     en: {
       translation: en,
@@ -62,6 +65,7 @@ i18n.use(initReactI18next).init({
       appearance: appearanceEn,
       adminUsers: adminUsersEn,
       catalog: catalogEn,
+      adminOrders: adminOrdersEn,
     },
   },
   lng: getSavedLanguage(),

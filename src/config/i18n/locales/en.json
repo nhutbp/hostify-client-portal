@@ -193,6 +193,7 @@
       "products": "Products / Services",
       "content": "Content",
       "customers": "Customers",
+      "management": "Management",
       "system": "System",
       "other": "Other"
     },
@@ -222,6 +223,7 @@
     "postCategories": "Post categories",
     "postPlatforms": "Post platforms",
     "userManagement": "User Management",
+    "orders": "Orders",
     "userList": "User list",
     "rolePermissions": "Roles & permissions",
     "settings": "Settings",

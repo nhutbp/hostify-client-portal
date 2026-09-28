@@ -9,6 +9,7 @@ export const MODULE_CODES = {
   USERS: 'user',
   SYSTEM: 'system',
   CATALOG: 'catalog',
+  COMMERCE: 'commerce',
 } as const satisfies Record<string, ModuleCode>
 
 export function moduleResource<TModule extends ModuleCode>(
@@ -54,7 +55,20 @@ export const PERMISSION_CODES = {
     'view',
   ),
   CATALOG_PRODUCT_VIEW: permissionCode(MODULE_CODES.CATALOG, 'product', 'view'),
-  CATALOG_PRODUCT_CREATE: permissionCode(MODULE_CODES.CATALOG, 'product', 'create'),
-  CATALOG_PRODUCT_UPDATE: permissionCode(MODULE_CODES.CATALOG, 'product', 'update'),
-  CATALOG_PRODUCT_DELETE: permissionCode(MODULE_CODES.CATALOG, 'product', 'delete'),
+  CATALOG_PRODUCT_CREATE: permissionCode(
+    MODULE_CODES.CATALOG,
+    'product',
+    'create',
+  ),
+  CATALOG_PRODUCT_UPDATE: permissionCode(
+    MODULE_CODES.CATALOG,
+    'product',
+    'update',
+  ),
+  CATALOG_PRODUCT_DELETE: permissionCode(
+    MODULE_CODES.CATALOG,
+    'product',
+    'delete',
+  ),
+  COMMERCE_ORDER_VIEW: permissionCode(MODULE_CODES.COMMERCE, 'order', 'view'),
 } as const

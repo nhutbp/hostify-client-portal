@@ -16,42 +16,53 @@ import { Route as authRegisterRouteImport } from './routes/(auth)/register'
 import { Route as authResetPasswordRouteImport } from './routes/(auth)/reset-password'
 import { Route as authVerifyEmailRouteImport } from './routes/(auth)/verify-email'
 import { Route as publicIndexRouteImport } from './routes/(public)/index'
+import { Route as DashboardAdminRouteImport } from './routes/_dashboard/admin'
+import { Route as DashboardCustomerRouteImport } from './routes/_dashboard/customer'
 import { Route as authVerifyEmailConfirmRouteImport } from './routes/(auth)/verify-email.confirm'
-import { Route as DashboardDashboardIndexRouteImport } from './routes/_dashboard/dashboard/index'
-import { Route as DashboardDashboardForbiddenRouteImport } from './routes/_dashboard/dashboard/forbidden'
-import { Route as DashboardDashboardAuditLogsIndexRouteImport } from './routes/_dashboard/dashboard/audit-logs/index'
-import { Route as DashboardDashboardMediaIndexRouteImport } from './routes/_dashboard/dashboard/media/index'
-import { Route as DashboardDashboardPostsIndexRouteImport } from './routes/_dashboard/dashboard/posts/index'
-import { Route as DashboardDashboardSettingsIndexRouteImport } from './routes/_dashboard/dashboard/settings/index'
-import { Route as DashboardDashboardUsersIndexRouteImport } from './routes/_dashboard/dashboard/users/index'
-import { Route as DashboardDashboardAppearanceMenuIndexRouteImport } from './routes/_dashboard/dashboard/appearance/menu/index'
-import { Route as DashboardDashboardCatalogHostingIndexRouteImport } from './routes/_dashboard/dashboard/catalog/hosting/index'
-import { Route as DashboardDashboardCatalogPhysicalIndexRouteImport } from './routes/_dashboard/dashboard/catalog/physical/index'
-import { Route as DashboardDashboardCatalogProvidersIndexRouteImport } from './routes/_dashboard/dashboard/catalog/providers/index'
-import { Route as DashboardDashboardCatalogProxyIndexRouteImport } from './routes/_dashboard/dashboard/catalog/proxy/index'
-import { Route as DashboardDashboardCatalogProxyNewRouteImport } from './routes/_dashboard/dashboard/catalog/proxy/new'
-import { Route as DashboardDashboardCatalogViaIndexRouteImport } from './routes/_dashboard/dashboard/catalog/via/index'
-import { Route as DashboardDashboardCatalogViaNewRouteImport } from './routes/_dashboard/dashboard/catalog/via/new'
-import { Route as DashboardDashboardCatalogVpsIndexRouteImport } from './routes/_dashboard/dashboard/catalog/vps/index'
-import { Route as DashboardDashboardPostsCategoriesIndexRouteImport } from './routes/_dashboard/dashboard/posts/categories/index'
-import { Route as DashboardDashboardPostsNewIndexRouteImport } from './routes/_dashboard/dashboard/posts/new/index'
-import { Route as DashboardDashboardPostsPlatformsIndexRouteImport } from './routes/_dashboard/dashboard/posts/platforms/index'
-import { Route as DashboardDashboardUsersUserIdIndexRouteImport } from './routes/_dashboard/dashboard/users/$userId/index'
-import { Route as DashboardDashboardUsersRolesIndexRouteImport } from './routes/_dashboard/dashboard/users/roles/index'
-import { Route as DashboardDashboardCatalogHostingIdIndexRouteImport } from './routes/_dashboard/dashboard/catalog/hosting/$id/index'
-import { Route as DashboardDashboardCatalogHostingNewIndexRouteImport } from './routes/_dashboard/dashboard/catalog/hosting/new/index'
-import { Route as DashboardDashboardCatalogPhysicalIdIndexRouteImport } from './routes/_dashboard/dashboard/catalog/physical/$id/index'
-import { Route as DashboardDashboardCatalogPhysicalNewIndexRouteImport } from './routes/_dashboard/dashboard/catalog/physical/new/index'
-import { Route as DashboardDashboardCatalogProxyIdIndexRouteImport } from './routes/_dashboard/dashboard/catalog/proxy/$id/index'
-import { Route as DashboardDashboardCatalogViaIdIndexRouteImport } from './routes/_dashboard/dashboard/catalog/via/$id/index'
-import { Route as DashboardDashboardCatalogVpsIdIndexRouteImport } from './routes/_dashboard/dashboard/catalog/vps/$id/index'
-import { Route as DashboardDashboardCatalogVpsNewIndexRouteImport } from './routes/_dashboard/dashboard/catalog/vps/new/index'
-import { Route as DashboardDashboardPostsPostIdEditIndexRouteImport } from './routes/_dashboard/dashboard/posts/$postId/edit/index'
-import { Route as DashboardDashboardCatalogHostingIdEditIndexRouteImport } from './routes/_dashboard/dashboard/catalog/hosting/$id/edit/index'
-import { Route as DashboardDashboardCatalogPhysicalIdEditIndexRouteImport } from './routes/_dashboard/dashboard/catalog/physical/$id/edit/index'
-import { Route as DashboardDashboardCatalogProxyIdEditIndexRouteImport } from './routes/_dashboard/dashboard/catalog/proxy/$id/edit/index'
-import { Route as DashboardDashboardCatalogViaIdEditIndexRouteImport } from './routes/_dashboard/dashboard/catalog/via/$id/edit/index'
-import { Route as DashboardDashboardCatalogVpsIdEditIndexRouteImport } from './routes/_dashboard/dashboard/catalog/vps/$id/edit/index'
+import { Route as DashboardAdminDashboardIndexRouteImport } from './routes/_dashboard/admin/dashboard/index'
+import { Route as DashboardAdminDashboardForbiddenRouteImport } from './routes/_dashboard/admin/dashboard/forbidden'
+import { Route as DashboardCustomerDashboardIndexRouteImport } from './routes/_dashboard/customer/dashboard/index'
+import { Route as DashboardAdminDashboardAuditLogsIndexRouteImport } from './routes/_dashboard/admin/dashboard/audit-logs/index'
+import { Route as DashboardAdminDashboardMediaIndexRouteImport } from './routes/_dashboard/admin/dashboard/media/index'
+import { Route as DashboardAdminDashboardOrdersIndexRouteImport } from './routes/_dashboard/admin/dashboard/orders/index'
+import { Route as DashboardAdminDashboardPostsIndexRouteImport } from './routes/_dashboard/admin/dashboard/posts/index'
+import { Route as DashboardAdminDashboardSettingsIndexRouteImport } from './routes/_dashboard/admin/dashboard/settings/index'
+import { Route as DashboardAdminDashboardUsersIndexRouteImport } from './routes/_dashboard/admin/dashboard/users/index'
+import { Route as DashboardCustomerDashboardBuyIndexRouteImport } from './routes/_dashboard/customer/dashboard/buy/index'
+import { Route as DashboardCustomerDashboardCartIndexRouteImport } from './routes/_dashboard/customer/dashboard/cart/index'
+import { Route as DashboardCustomerDashboardCheckoutIndexRouteImport } from './routes/_dashboard/customer/dashboard/checkout/index'
+import { Route as DashboardCustomerDashboardOrdersIndexRouteImport } from './routes/_dashboard/customer/dashboard/orders/index'
+import { Route as DashboardCustomerDashboardOrdersIdRouteImport } from './routes/_dashboard/customer/dashboard/orders/$id'
+import { Route as DashboardCustomerDashboardServicesIndexRouteImport } from './routes/_dashboard/customer/dashboard/services/index'
+import { Route as DashboardCustomerDashboardServicesIdRouteImport } from './routes/_dashboard/customer/dashboard/services/$id'
+import { Route as DashboardAdminDashboardAppearanceMenuIndexRouteImport } from './routes/_dashboard/admin/dashboard/appearance/menu/index'
+import { Route as DashboardAdminDashboardCatalogHostingIndexRouteImport } from './routes/_dashboard/admin/dashboard/catalog/hosting/index'
+import { Route as DashboardAdminDashboardCatalogPhysicalIndexRouteImport } from './routes/_dashboard/admin/dashboard/catalog/physical/index'
+import { Route as DashboardAdminDashboardCatalogProvidersIndexRouteImport } from './routes/_dashboard/admin/dashboard/catalog/providers/index'
+import { Route as DashboardAdminDashboardCatalogProxyIndexRouteImport } from './routes/_dashboard/admin/dashboard/catalog/proxy/index'
+import { Route as DashboardAdminDashboardCatalogProxyNewRouteImport } from './routes/_dashboard/admin/dashboard/catalog/proxy/new'
+import { Route as DashboardAdminDashboardCatalogViaIndexRouteImport } from './routes/_dashboard/admin/dashboard/catalog/via/index'
+import { Route as DashboardAdminDashboardCatalogViaNewRouteImport } from './routes/_dashboard/admin/dashboard/catalog/via/new'
+import { Route as DashboardAdminDashboardCatalogVpsIndexRouteImport } from './routes/_dashboard/admin/dashboard/catalog/vps/index'
+import { Route as DashboardAdminDashboardPostsCategoriesIndexRouteImport } from './routes/_dashboard/admin/dashboard/posts/categories/index'
+import { Route as DashboardAdminDashboardPostsNewIndexRouteImport } from './routes/_dashboard/admin/dashboard/posts/new/index'
+import { Route as DashboardAdminDashboardPostsPlatformsIndexRouteImport } from './routes/_dashboard/admin/dashboard/posts/platforms/index'
+import { Route as DashboardAdminDashboardUsersUserIdIndexRouteImport } from './routes/_dashboard/admin/dashboard/users/$userId/index'
+import { Route as DashboardAdminDashboardUsersRolesIndexRouteImport } from './routes/_dashboard/admin/dashboard/users/roles/index'
+import { Route as DashboardAdminDashboardCatalogHostingIdIndexRouteImport } from './routes/_dashboard/admin/dashboard/catalog/hosting/$id/index'
+import { Route as DashboardAdminDashboardCatalogHostingNewIndexRouteImport } from './routes/_dashboard/admin/dashboard/catalog/hosting/new/index'
+import { Route as DashboardAdminDashboardCatalogPhysicalIdIndexRouteImport } from './routes/_dashboard/admin/dashboard/catalog/physical/$id/index'
+import { Route as DashboardAdminDashboardCatalogPhysicalNewIndexRouteImport } from './routes/_dashboard/admin/dashboard/catalog/physical/new/index'
+import { Route as DashboardAdminDashboardCatalogProxyIdIndexRouteImport } from './routes/_dashboard/admin/dashboard/catalog/proxy/$id/index'
+import { Route as DashboardAdminDashboardCatalogViaIdIndexRouteImport } from './routes/_dashboard/admin/dashboard/catalog/via/$id/index'
+import { Route as DashboardAdminDashboardCatalogVpsIdIndexRouteImport } from './routes/_dashboard/admin/dashboard/catalog/vps/$id/index'
+import { Route as DashboardAdminDashboardCatalogVpsNewIndexRouteImport } from './routes/_dashboard/admin/dashboard/catalog/vps/new/index'
+import { Route as DashboardAdminDashboardPostsPostIdEditIndexRouteImport } from './routes/_dashboard/admin/dashboard/posts/$postId/edit/index'
+import { Route as DashboardAdminDashboardCatalogHostingIdEditIndexRouteImport } from './routes/_dashboard/admin/dashboard/catalog/hosting/$id/edit/index'
+import { Route as DashboardAdminDashboardCatalogPhysicalIdEditIndexRouteImport } from './routes/_dashboard/admin/dashboard/catalog/physical/$id/edit/index'
+import { Route as DashboardAdminDashboardCatalogProxyIdEditIndexRouteImport } from './routes/_dashboard/admin/dashboard/catalog/proxy/$id/edit/index'
+import { Route as DashboardAdminDashboardCatalogViaIdEditIndexRouteImport } from './routes/_dashboard/admin/dashboard/catalog/via/$id/edit/index'
+import { Route as DashboardAdminDashboardCatalogVpsIdEditIndexRouteImport } from './routes/_dashboard/admin/dashboard/catalog/vps/$id/edit/index'
 
 const DashboardRoute = DashboardRouteImport.update({
   id: '/_dashboard',
@@ -87,219 +98,284 @@ const publicIndexRoute = publicIndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const DashboardAdminRoute = DashboardAdminRouteImport.update({
+  id: '/admin',
+  path: '/admin',
+  getParentRoute: () => DashboardRoute,
+} as any)
+const DashboardCustomerRoute = DashboardCustomerRouteImport.update({
+  id: '/customer',
+  path: '/customer',
+  getParentRoute: () => DashboardRoute,
+} as any)
 const authVerifyEmailConfirmRoute = authVerifyEmailConfirmRouteImport.update({
   id: '/confirm',
   path: '/confirm',
   getParentRoute: () => authVerifyEmailRoute,
 } as any)
-const DashboardDashboardIndexRoute = DashboardDashboardIndexRouteImport.update({
-  id: '/dashboard/',
-  path: '/dashboard/',
-  getParentRoute: () => DashboardRoute,
-} as any)
-const DashboardDashboardForbiddenRoute =
-  DashboardDashboardForbiddenRouteImport.update({
+const DashboardAdminDashboardIndexRoute =
+  DashboardAdminDashboardIndexRouteImport.update({
+    id: '/dashboard/',
+    path: '/dashboard/',
+    getParentRoute: () => DashboardAdminRoute,
+  } as any)
+const DashboardAdminDashboardForbiddenRoute =
+  DashboardAdminDashboardForbiddenRouteImport.update({
     id: '/dashboard/forbidden',
     path: '/dashboard/forbidden',
-    getParentRoute: () => DashboardRoute,
+    getParentRoute: () => DashboardAdminRoute,
   } as any)
-const DashboardDashboardAuditLogsIndexRoute =
-  DashboardDashboardAuditLogsIndexRouteImport.update({
+const DashboardCustomerDashboardIndexRoute =
+  DashboardCustomerDashboardIndexRouteImport.update({
+    id: '/dashboard/',
+    path: '/dashboard/',
+    getParentRoute: () => DashboardCustomerRoute,
+  } as any)
+const DashboardAdminDashboardAuditLogsIndexRoute =
+  DashboardAdminDashboardAuditLogsIndexRouteImport.update({
     id: '/dashboard/audit-logs/',
     path: '/dashboard/audit-logs/',
-    getParentRoute: () => DashboardRoute,
+    getParentRoute: () => DashboardAdminRoute,
   } as any)
-const DashboardDashboardMediaIndexRoute =
-  DashboardDashboardMediaIndexRouteImport.update({
+const DashboardAdminDashboardMediaIndexRoute =
+  DashboardAdminDashboardMediaIndexRouteImport.update({
     id: '/dashboard/media/',
     path: '/dashboard/media/',
-    getParentRoute: () => DashboardRoute,
+    getParentRoute: () => DashboardAdminRoute,
   } as any)
-const DashboardDashboardPostsIndexRoute =
-  DashboardDashboardPostsIndexRouteImport.update({
+const DashboardAdminDashboardOrdersIndexRoute =
+  DashboardAdminDashboardOrdersIndexRouteImport.update({
+    id: '/dashboard/orders/',
+    path: '/dashboard/orders/',
+    getParentRoute: () => DashboardAdminRoute,
+  } as any)
+const DashboardAdminDashboardPostsIndexRoute =
+  DashboardAdminDashboardPostsIndexRouteImport.update({
     id: '/dashboard/posts/',
     path: '/dashboard/posts/',
-    getParentRoute: () => DashboardRoute,
+    getParentRoute: () => DashboardAdminRoute,
   } as any)
-const DashboardDashboardSettingsIndexRoute =
-  DashboardDashboardSettingsIndexRouteImport.update({
+const DashboardAdminDashboardSettingsIndexRoute =
+  DashboardAdminDashboardSettingsIndexRouteImport.update({
     id: '/dashboard/settings/',
     path: '/dashboard/settings/',
-    getParentRoute: () => DashboardRoute,
+    getParentRoute: () => DashboardAdminRoute,
   } as any)
-const DashboardDashboardUsersIndexRoute =
-  DashboardDashboardUsersIndexRouteImport.update({
+const DashboardAdminDashboardUsersIndexRoute =
+  DashboardAdminDashboardUsersIndexRouteImport.update({
     id: '/dashboard/users/',
     path: '/dashboard/users/',
-    getParentRoute: () => DashboardRoute,
+    getParentRoute: () => DashboardAdminRoute,
   } as any)
-const DashboardDashboardAppearanceMenuIndexRoute =
-  DashboardDashboardAppearanceMenuIndexRouteImport.update({
+const DashboardCustomerDashboardBuyIndexRoute =
+  DashboardCustomerDashboardBuyIndexRouteImport.update({
+    id: '/dashboard/buy/',
+    path: '/dashboard/buy/',
+    getParentRoute: () => DashboardCustomerRoute,
+  } as any)
+const DashboardCustomerDashboardCartIndexRoute =
+  DashboardCustomerDashboardCartIndexRouteImport.update({
+    id: '/dashboard/cart/',
+    path: '/dashboard/cart/',
+    getParentRoute: () => DashboardCustomerRoute,
+  } as any)
+const DashboardCustomerDashboardCheckoutIndexRoute =
+  DashboardCustomerDashboardCheckoutIndexRouteImport.update({
+    id: '/dashboard/checkout/',
+    path: '/dashboard/checkout/',
+    getParentRoute: () => DashboardCustomerRoute,
+  } as any)
+const DashboardCustomerDashboardOrdersIndexRoute =
+  DashboardCustomerDashboardOrdersIndexRouteImport.update({
+    id: '/dashboard/orders/',
+    path: '/dashboard/orders/',
+    getParentRoute: () => DashboardCustomerRoute,
+  } as any)
+const DashboardCustomerDashboardOrdersIdRoute =
+  DashboardCustomerDashboardOrdersIdRouteImport.update({
+    id: '/dashboard/orders/$id',
+    path: '/dashboard/orders/$id',
+    getParentRoute: () => DashboardCustomerRoute,
+  } as any)
+const DashboardCustomerDashboardServicesIndexRoute =
+  DashboardCustomerDashboardServicesIndexRouteImport.update({
+    id: '/dashboard/services/',
+    path: '/dashboard/services/',
+    getParentRoute: () => DashboardCustomerRoute,
+  } as any)
+const DashboardCustomerDashboardServicesIdRoute =
+  DashboardCustomerDashboardServicesIdRouteImport.update({
+    id: '/dashboard/services/$id',
+    path: '/dashboard/services/$id',
+    getParentRoute: () => DashboardCustomerRoute,
+  } as any)
+const DashboardAdminDashboardAppearanceMenuIndexRoute =
+  DashboardAdminDashboardAppearanceMenuIndexRouteImport.update({
     id: '/dashboard/appearance/menu/',
     path: '/dashboard/appearance/menu/',
-    getParentRoute: () => DashboardRoute,
+    getParentRoute: () => DashboardAdminRoute,
   } as any)
-const DashboardDashboardCatalogHostingIndexRoute =
-  DashboardDashboardCatalogHostingIndexRouteImport.update({
+const DashboardAdminDashboardCatalogHostingIndexRoute =
+  DashboardAdminDashboardCatalogHostingIndexRouteImport.update({
     id: '/dashboard/catalog/hosting/',
     path: '/dashboard/catalog/hosting/',
-    getParentRoute: () => DashboardRoute,
+    getParentRoute: () => DashboardAdminRoute,
   } as any)
-const DashboardDashboardCatalogPhysicalIndexRoute =
-  DashboardDashboardCatalogPhysicalIndexRouteImport.update({
+const DashboardAdminDashboardCatalogPhysicalIndexRoute =
+  DashboardAdminDashboardCatalogPhysicalIndexRouteImport.update({
     id: '/dashboard/catalog/physical/',
     path: '/dashboard/catalog/physical/',
-    getParentRoute: () => DashboardRoute,
+    getParentRoute: () => DashboardAdminRoute,
   } as any)
-const DashboardDashboardCatalogProvidersIndexRoute =
-  DashboardDashboardCatalogProvidersIndexRouteImport.update({
+const DashboardAdminDashboardCatalogProvidersIndexRoute =
+  DashboardAdminDashboardCatalogProvidersIndexRouteImport.update({
     id: '/dashboard/catalog/providers/',
     path: '/dashboard/catalog/providers/',
-    getParentRoute: () => DashboardRoute,
+    getParentRoute: () => DashboardAdminRoute,
   } as any)
-const DashboardDashboardCatalogProxyIndexRoute =
-  DashboardDashboardCatalogProxyIndexRouteImport.update({
+const DashboardAdminDashboardCatalogProxyIndexRoute =
+  DashboardAdminDashboardCatalogProxyIndexRouteImport.update({
     id: '/dashboard/catalog/proxy/',
     path: '/dashboard/catalog/proxy/',
-    getParentRoute: () => DashboardRoute,
+    getParentRoute: () => DashboardAdminRoute,
   } as any)
-const DashboardDashboardCatalogProxyNewRoute =
-  DashboardDashboardCatalogProxyNewRouteImport.update({
+const DashboardAdminDashboardCatalogProxyNewRoute =
+  DashboardAdminDashboardCatalogProxyNewRouteImport.update({
     id: '/dashboard/catalog/proxy/new',
     path: '/dashboard/catalog/proxy/new',
-    getParentRoute: () => DashboardRoute,
+    getParentRoute: () => DashboardAdminRoute,
   } as any)
-const DashboardDashboardCatalogViaIndexRoute =
-  DashboardDashboardCatalogViaIndexRouteImport.update({
+const DashboardAdminDashboardCatalogViaIndexRoute =
+  DashboardAdminDashboardCatalogViaIndexRouteImport.update({
     id: '/dashboard/catalog/via/',
     path: '/dashboard/catalog/via/',
-    getParentRoute: () => DashboardRoute,
+    getParentRoute: () => DashboardAdminRoute,
   } as any)
-const DashboardDashboardCatalogViaNewRoute =
-  DashboardDashboardCatalogViaNewRouteImport.update({
+const DashboardAdminDashboardCatalogViaNewRoute =
+  DashboardAdminDashboardCatalogViaNewRouteImport.update({
     id: '/dashboard/catalog/via/new',
     path: '/dashboard/catalog/via/new',
-    getParentRoute: () => DashboardRoute,
+    getParentRoute: () => DashboardAdminRoute,
   } as any)
-const DashboardDashboardCatalogVpsIndexRoute =
-  DashboardDashboardCatalogVpsIndexRouteImport.update({
+const DashboardAdminDashboardCatalogVpsIndexRoute =
+  DashboardAdminDashboardCatalogVpsIndexRouteImport.update({
     id: '/dashboard/catalog/vps/',
     path: '/dashboard/catalog/vps/',
-    getParentRoute: () => DashboardRoute,
+    getParentRoute: () => DashboardAdminRoute,
   } as any)
-const DashboardDashboardPostsCategoriesIndexRoute =
-  DashboardDashboardPostsCategoriesIndexRouteImport.update({
+const DashboardAdminDashboardPostsCategoriesIndexRoute =
+  DashboardAdminDashboardPostsCategoriesIndexRouteImport.update({
     id: '/dashboard/posts/categories/',
     path: '/dashboard/posts/categories/',
-    getParentRoute: () => DashboardRoute,
+    getParentRoute: () => DashboardAdminRoute,
   } as any)
-const DashboardDashboardPostsNewIndexRoute =
-  DashboardDashboardPostsNewIndexRouteImport.update({
+const DashboardAdminDashboardPostsNewIndexRoute =
+  DashboardAdminDashboardPostsNewIndexRouteImport.update({
     id: '/dashboard/posts/new/',
     path: '/dashboard/posts/new/',
-    getParentRoute: () => DashboardRoute,
+    getParentRoute: () => DashboardAdminRoute,
   } as any)
-const DashboardDashboardPostsPlatformsIndexRoute =
-  DashboardDashboardPostsPlatformsIndexRouteImport.update({
+const DashboardAdminDashboardPostsPlatformsIndexRoute =
+  DashboardAdminDashboardPostsPlatformsIndexRouteImport.update({
     id: '/dashboard/posts/platforms/',
     path: '/dashboard/posts/platforms/',
-    getParentRoute: () => DashboardRoute,
+    getParentRoute: () => DashboardAdminRoute,
   } as any)
-const DashboardDashboardUsersUserIdIndexRoute =
-  DashboardDashboardUsersUserIdIndexRouteImport.update({
+const DashboardAdminDashboardUsersUserIdIndexRoute =
+  DashboardAdminDashboardUsersUserIdIndexRouteImport.update({
     id: '/dashboard/users/$userId/',
     path: '/dashboard/users/$userId/',
-    getParentRoute: () => DashboardRoute,
+    getParentRoute: () => DashboardAdminRoute,
   } as any)
-const DashboardDashboardUsersRolesIndexRoute =
-  DashboardDashboardUsersRolesIndexRouteImport.update({
+const DashboardAdminDashboardUsersRolesIndexRoute =
+  DashboardAdminDashboardUsersRolesIndexRouteImport.update({
     id: '/dashboard/users/roles/',
     path: '/dashboard/users/roles/',
-    getParentRoute: () => DashboardRoute,
+    getParentRoute: () => DashboardAdminRoute,
   } as any)
-const DashboardDashboardCatalogHostingIdIndexRoute =
-  DashboardDashboardCatalogHostingIdIndexRouteImport.update({
+const DashboardAdminDashboardCatalogHostingIdIndexRoute =
+  DashboardAdminDashboardCatalogHostingIdIndexRouteImport.update({
     id: '/dashboard/catalog/hosting/$id/',
     path: '/dashboard/catalog/hosting/$id/',
-    getParentRoute: () => DashboardRoute,
+    getParentRoute: () => DashboardAdminRoute,
   } as any)
-const DashboardDashboardCatalogHostingNewIndexRoute =
-  DashboardDashboardCatalogHostingNewIndexRouteImport.update({
+const DashboardAdminDashboardCatalogHostingNewIndexRoute =
+  DashboardAdminDashboardCatalogHostingNewIndexRouteImport.update({
     id: '/dashboard/catalog/hosting/new/',
     path: '/dashboard/catalog/hosting/new/',
-    getParentRoute: () => DashboardRoute,
+    getParentRoute: () => DashboardAdminRoute,
   } as any)
-const DashboardDashboardCatalogPhysicalIdIndexRoute =
-  DashboardDashboardCatalogPhysicalIdIndexRouteImport.update({
+const DashboardAdminDashboardCatalogPhysicalIdIndexRoute =
+  DashboardAdminDashboardCatalogPhysicalIdIndexRouteImport.update({
     id: '/dashboard/catalog/physical/$id/',
     path: '/dashboard/catalog/physical/$id/',
-    getParentRoute: () => DashboardRoute,
+    getParentRoute: () => DashboardAdminRoute,
   } as any)
-const DashboardDashboardCatalogPhysicalNewIndexRoute =
-  DashboardDashboardCatalogPhysicalNewIndexRouteImport.update({
+const DashboardAdminDashboardCatalogPhysicalNewIndexRoute =
+  DashboardAdminDashboardCatalogPhysicalNewIndexRouteImport.update({
     id: '/dashboard/catalog/physical/new/',
     path: '/dashboard/catalog/physical/new/',
-    getParentRoute: () => DashboardRoute,
+    getParentRoute: () => DashboardAdminRoute,
   } as any)
-const DashboardDashboardCatalogProxyIdIndexRoute =
-  DashboardDashboardCatalogProxyIdIndexRouteImport.update({
+const DashboardAdminDashboardCatalogProxyIdIndexRoute =
+  DashboardAdminDashboardCatalogProxyIdIndexRouteImport.update({
     id: '/dashboard/catalog/proxy/$id/',
     path: '/dashboard/catalog/proxy/$id/',
-    getParentRoute: () => DashboardRoute,
+    getParentRoute: () => DashboardAdminRoute,
   } as any)
-const DashboardDashboardCatalogViaIdIndexRoute =
-  DashboardDashboardCatalogViaIdIndexRouteImport.update({
+const DashboardAdminDashboardCatalogViaIdIndexRoute =
+  DashboardAdminDashboardCatalogViaIdIndexRouteImport.update({
     id: '/dashboard/catalog/via/$id/',
     path: '/dashboard/catalog/via/$id/',
-    getParentRoute: () => DashboardRoute,
+    getParentRoute: () => DashboardAdminRoute,
   } as any)
-const DashboardDashboardCatalogVpsIdIndexRoute =
-  DashboardDashboardCatalogVpsIdIndexRouteImport.update({
+const DashboardAdminDashboardCatalogVpsIdIndexRoute =
+  DashboardAdminDashboardCatalogVpsIdIndexRouteImport.update({
     id: '/dashboard/catalog/vps/$id/',
     path: '/dashboard/catalog/vps/$id/',
-    getParentRoute: () => DashboardRoute,
+    getParentRoute: () => DashboardAdminRoute,
   } as any)
-const DashboardDashboardCatalogVpsNewIndexRoute =
-  DashboardDashboardCatalogVpsNewIndexRouteImport.update({
+const DashboardAdminDashboardCatalogVpsNewIndexRoute =
+  DashboardAdminDashboardCatalogVpsNewIndexRouteImport.update({
     id: '/dashboard/catalog/vps/new/',
     path: '/dashboard/catalog/vps/new/',
-    getParentRoute: () => DashboardRoute,
+    getParentRoute: () => DashboardAdminRoute,
   } as any)
-const DashboardDashboardPostsPostIdEditIndexRoute =
-  DashboardDashboardPostsPostIdEditIndexRouteImport.update({
+const DashboardAdminDashboardPostsPostIdEditIndexRoute =
+  DashboardAdminDashboardPostsPostIdEditIndexRouteImport.update({
     id: '/dashboard/posts/$postId/edit/',
     path: '/dashboard/posts/$postId/edit/',
-    getParentRoute: () => DashboardRoute,
+    getParentRoute: () => DashboardAdminRoute,
   } as any)
-const DashboardDashboardCatalogHostingIdEditIndexRoute =
-  DashboardDashboardCatalogHostingIdEditIndexRouteImport.update({
+const DashboardAdminDashboardCatalogHostingIdEditIndexRoute =
+  DashboardAdminDashboardCatalogHostingIdEditIndexRouteImport.update({
     id: '/dashboard/catalog/hosting/$id/edit/',
     path: '/dashboard/catalog/hosting/$id/edit/',
-    getParentRoute: () => DashboardRoute,
+    getParentRoute: () => DashboardAdminRoute,
   } as any)
-const DashboardDashboardCatalogPhysicalIdEditIndexRoute =
-  DashboardDashboardCatalogPhysicalIdEditIndexRouteImport.update({
+const DashboardAdminDashboardCatalogPhysicalIdEditIndexRoute =
+  DashboardAdminDashboardCatalogPhysicalIdEditIndexRouteImport.update({
     id: '/dashboard/catalog/physical/$id/edit/',
     path: '/dashboard/catalog/physical/$id/edit/',
-    getParentRoute: () => DashboardRoute,
+    getParentRoute: () => DashboardAdminRoute,
   } as any)
-const DashboardDashboardCatalogProxyIdEditIndexRoute =
-  DashboardDashboardCatalogProxyIdEditIndexRouteImport.update({
+const DashboardAdminDashboardCatalogProxyIdEditIndexRoute =
+  DashboardAdminDashboardCatalogProxyIdEditIndexRouteImport.update({
     id: '/dashboard/catalog/proxy/$id/edit/',
     path: '/dashboard/catalog/proxy/$id/edit/',
-    getParentRoute: () => DashboardRoute,
+    getParentRoute: () => DashboardAdminRoute,
   } as any)
-const DashboardDashboardCatalogViaIdEditIndexRoute =
-  DashboardDashboardCatalogViaIdEditIndexRouteImport.update({
+const DashboardAdminDashboardCatalogViaIdEditIndexRoute =
+  DashboardAdminDashboardCatalogViaIdEditIndexRouteImport.update({
     id: '/dashboard/catalog/via/$id/edit/',
     path: '/dashboard/catalog/via/$id/edit/',
-    getParentRoute: () => DashboardRoute,
+    getParentRoute: () => DashboardAdminRoute,
   } as any)
-const DashboardDashboardCatalogVpsIdEditIndexRoute =
-  DashboardDashboardCatalogVpsIdEditIndexRouteImport.update({
+const DashboardAdminDashboardCatalogVpsIdEditIndexRoute =
+  DashboardAdminDashboardCatalogVpsIdEditIndexRouteImport.update({
     id: '/dashboard/catalog/vps/$id/edit/',
     path: '/dashboard/catalog/vps/$id/edit/',
-    getParentRoute: () => DashboardRoute,
+    getParentRoute: () => DashboardAdminRoute,
   } as any)
 
 export interface FileRoutesByFullPath {
@@ -309,42 +385,53 @@ export interface FileRoutesByFullPath {
   '/register': typeof authRegisterRoute
   '/reset-password': typeof authResetPasswordRoute
   '/verify-email': typeof authVerifyEmailRouteWithChildren
+  '/admin': typeof DashboardAdminRouteWithChildren
+  '/customer': typeof DashboardCustomerRouteWithChildren
   '/verify-email/confirm': typeof authVerifyEmailConfirmRoute
-  '/dashboard/forbidden': typeof DashboardDashboardForbiddenRoute
-  '/dashboard/': typeof DashboardDashboardIndexRoute
-  '/dashboard/audit-logs/': typeof DashboardDashboardAuditLogsIndexRoute
-  '/dashboard/media/': typeof DashboardDashboardMediaIndexRoute
-  '/dashboard/posts/': typeof DashboardDashboardPostsIndexRoute
-  '/dashboard/settings/': typeof DashboardDashboardSettingsIndexRoute
-  '/dashboard/users/': typeof DashboardDashboardUsersIndexRoute
-  '/dashboard/catalog/proxy/new': typeof DashboardDashboardCatalogProxyNewRoute
-  '/dashboard/catalog/via/new': typeof DashboardDashboardCatalogViaNewRoute
-  '/dashboard/appearance/menu/': typeof DashboardDashboardAppearanceMenuIndexRoute
-  '/dashboard/catalog/hosting/': typeof DashboardDashboardCatalogHostingIndexRoute
-  '/dashboard/catalog/physical/': typeof DashboardDashboardCatalogPhysicalIndexRoute
-  '/dashboard/catalog/providers/': typeof DashboardDashboardCatalogProvidersIndexRoute
-  '/dashboard/catalog/proxy/': typeof DashboardDashboardCatalogProxyIndexRoute
-  '/dashboard/catalog/via/': typeof DashboardDashboardCatalogViaIndexRoute
-  '/dashboard/catalog/vps/': typeof DashboardDashboardCatalogVpsIndexRoute
-  '/dashboard/posts/categories/': typeof DashboardDashboardPostsCategoriesIndexRoute
-  '/dashboard/posts/new/': typeof DashboardDashboardPostsNewIndexRoute
-  '/dashboard/posts/platforms/': typeof DashboardDashboardPostsPlatformsIndexRoute
-  '/dashboard/users/$userId/': typeof DashboardDashboardUsersUserIdIndexRoute
-  '/dashboard/users/roles/': typeof DashboardDashboardUsersRolesIndexRoute
-  '/dashboard/catalog/hosting/$id/': typeof DashboardDashboardCatalogHostingIdIndexRoute
-  '/dashboard/catalog/hosting/new/': typeof DashboardDashboardCatalogHostingNewIndexRoute
-  '/dashboard/catalog/physical/$id/': typeof DashboardDashboardCatalogPhysicalIdIndexRoute
-  '/dashboard/catalog/physical/new/': typeof DashboardDashboardCatalogPhysicalNewIndexRoute
-  '/dashboard/catalog/proxy/$id/': typeof DashboardDashboardCatalogProxyIdIndexRoute
-  '/dashboard/catalog/via/$id/': typeof DashboardDashboardCatalogViaIdIndexRoute
-  '/dashboard/catalog/vps/$id/': typeof DashboardDashboardCatalogVpsIdIndexRoute
-  '/dashboard/catalog/vps/new/': typeof DashboardDashboardCatalogVpsNewIndexRoute
-  '/dashboard/posts/$postId/edit/': typeof DashboardDashboardPostsPostIdEditIndexRoute
-  '/dashboard/catalog/hosting/$id/edit/': typeof DashboardDashboardCatalogHostingIdEditIndexRoute
-  '/dashboard/catalog/physical/$id/edit/': typeof DashboardDashboardCatalogPhysicalIdEditIndexRoute
-  '/dashboard/catalog/proxy/$id/edit/': typeof DashboardDashboardCatalogProxyIdEditIndexRoute
-  '/dashboard/catalog/via/$id/edit/': typeof DashboardDashboardCatalogViaIdEditIndexRoute
-  '/dashboard/catalog/vps/$id/edit/': typeof DashboardDashboardCatalogVpsIdEditIndexRoute
+  '/admin/dashboard/forbidden': typeof DashboardAdminDashboardForbiddenRoute
+  '/admin/dashboard/': typeof DashboardAdminDashboardIndexRoute
+  '/customer/dashboard/': typeof DashboardCustomerDashboardIndexRoute
+  '/customer/dashboard/orders/$id': typeof DashboardCustomerDashboardOrdersIdRoute
+  '/customer/dashboard/services/$id': typeof DashboardCustomerDashboardServicesIdRoute
+  '/admin/dashboard/audit-logs/': typeof DashboardAdminDashboardAuditLogsIndexRoute
+  '/admin/dashboard/media/': typeof DashboardAdminDashboardMediaIndexRoute
+  '/admin/dashboard/orders/': typeof DashboardAdminDashboardOrdersIndexRoute
+  '/admin/dashboard/posts/': typeof DashboardAdminDashboardPostsIndexRoute
+  '/admin/dashboard/settings/': typeof DashboardAdminDashboardSettingsIndexRoute
+  '/admin/dashboard/users/': typeof DashboardAdminDashboardUsersIndexRoute
+  '/customer/dashboard/buy/': typeof DashboardCustomerDashboardBuyIndexRoute
+  '/customer/dashboard/cart/': typeof DashboardCustomerDashboardCartIndexRoute
+  '/customer/dashboard/checkout/': typeof DashboardCustomerDashboardCheckoutIndexRoute
+  '/customer/dashboard/orders/': typeof DashboardCustomerDashboardOrdersIndexRoute
+  '/customer/dashboard/services/': typeof DashboardCustomerDashboardServicesIndexRoute
+  '/admin/dashboard/catalog/proxy/new': typeof DashboardAdminDashboardCatalogProxyNewRoute
+  '/admin/dashboard/catalog/via/new': typeof DashboardAdminDashboardCatalogViaNewRoute
+  '/admin/dashboard/appearance/menu/': typeof DashboardAdminDashboardAppearanceMenuIndexRoute
+  '/admin/dashboard/catalog/hosting/': typeof DashboardAdminDashboardCatalogHostingIndexRoute
+  '/admin/dashboard/catalog/physical/': typeof DashboardAdminDashboardCatalogPhysicalIndexRoute
+  '/admin/dashboard/catalog/providers/': typeof DashboardAdminDashboardCatalogProvidersIndexRoute
+  '/admin/dashboard/catalog/proxy/': typeof DashboardAdminDashboardCatalogProxyIndexRoute
+  '/admin/dashboard/catalog/via/': typeof DashboardAdminDashboardCatalogViaIndexRoute
+  '/admin/dashboard/catalog/vps/': typeof DashboardAdminDashboardCatalogVpsIndexRoute
+  '/admin/dashboard/posts/categories/': typeof DashboardAdminDashboardPostsCategoriesIndexRoute
+  '/admin/dashboard/posts/new/': typeof DashboardAdminDashboardPostsNewIndexRoute
+  '/admin/dashboard/posts/platforms/': typeof DashboardAdminDashboardPostsPlatformsIndexRoute
+  '/admin/dashboard/users/$userId/': typeof DashboardAdminDashboardUsersUserIdIndexRoute
+  '/admin/dashboard/users/roles/': typeof DashboardAdminDashboardUsersRolesIndexRoute
+  '/admin/dashboard/catalog/hosting/$id/': typeof DashboardAdminDashboardCatalogHostingIdIndexRoute
+  '/admin/dashboard/catalog/hosting/new/': typeof DashboardAdminDashboardCatalogHostingNewIndexRoute
+  '/admin/dashboard/catalog/physical/$id/': typeof DashboardAdminDashboardCatalogPhysicalIdIndexRoute
+  '/admin/dashboard/catalog/physical/new/': typeof DashboardAdminDashboardCatalogPhysicalNewIndexRoute
+  '/admin/dashboard/catalog/proxy/$id/': typeof DashboardAdminDashboardCatalogProxyIdIndexRoute
+  '/admin/dashboard/catalog/via/$id/': typeof DashboardAdminDashboardCatalogViaIdIndexRoute
+  '/admin/dashboard/catalog/vps/$id/': typeof DashboardAdminDashboardCatalogVpsIdIndexRoute
+  '/admin/dashboard/catalog/vps/new/': typeof DashboardAdminDashboardCatalogVpsNewIndexRoute
+  '/admin/dashboard/posts/$postId/edit/': typeof DashboardAdminDashboardPostsPostIdEditIndexRoute
+  '/admin/dashboard/catalog/hosting/$id/edit/': typeof DashboardAdminDashboardCatalogHostingIdEditIndexRoute
+  '/admin/dashboard/catalog/physical/$id/edit/': typeof DashboardAdminDashboardCatalogPhysicalIdEditIndexRoute
+  '/admin/dashboard/catalog/proxy/$id/edit/': typeof DashboardAdminDashboardCatalogProxyIdEditIndexRoute
+  '/admin/dashboard/catalog/via/$id/edit/': typeof DashboardAdminDashboardCatalogViaIdEditIndexRoute
+  '/admin/dashboard/catalog/vps/$id/edit/': typeof DashboardAdminDashboardCatalogVpsIdEditIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof publicIndexRoute
@@ -353,42 +440,53 @@ export interface FileRoutesByTo {
   '/register': typeof authRegisterRoute
   '/reset-password': typeof authResetPasswordRoute
   '/verify-email': typeof authVerifyEmailRouteWithChildren
+  '/admin': typeof DashboardAdminRouteWithChildren
+  '/customer': typeof DashboardCustomerRouteWithChildren
   '/verify-email/confirm': typeof authVerifyEmailConfirmRoute
-  '/dashboard/forbidden': typeof DashboardDashboardForbiddenRoute
-  '/dashboard': typeof DashboardDashboardIndexRoute
-  '/dashboard/audit-logs': typeof DashboardDashboardAuditLogsIndexRoute
-  '/dashboard/media': typeof DashboardDashboardMediaIndexRoute
-  '/dashboard/posts': typeof DashboardDashboardPostsIndexRoute
-  '/dashboard/settings': typeof DashboardDashboardSettingsIndexRoute
-  '/dashboard/users': typeof DashboardDashboardUsersIndexRoute
-  '/dashboard/catalog/proxy/new': typeof DashboardDashboardCatalogProxyNewRoute
-  '/dashboard/catalog/via/new': typeof DashboardDashboardCatalogViaNewRoute
-  '/dashboard/appearance/menu': typeof DashboardDashboardAppearanceMenuIndexRoute
-  '/dashboard/catalog/hosting': typeof DashboardDashboardCatalogHostingIndexRoute
-  '/dashboard/catalog/physical': typeof DashboardDashboardCatalogPhysicalIndexRoute
-  '/dashboard/catalog/providers': typeof DashboardDashboardCatalogProvidersIndexRoute
-  '/dashboard/catalog/proxy': typeof DashboardDashboardCatalogProxyIndexRoute
-  '/dashboard/catalog/via': typeof DashboardDashboardCatalogViaIndexRoute
-  '/dashboard/catalog/vps': typeof DashboardDashboardCatalogVpsIndexRoute
-  '/dashboard/posts/categories': typeof DashboardDashboardPostsCategoriesIndexRoute
-  '/dashboard/posts/new': typeof DashboardDashboardPostsNewIndexRoute
-  '/dashboard/posts/platforms': typeof DashboardDashboardPostsPlatformsIndexRoute
-  '/dashboard/users/$userId': typeof DashboardDashboardUsersUserIdIndexRoute
-  '/dashboard/users/roles': typeof DashboardDashboardUsersRolesIndexRoute
-  '/dashboard/catalog/hosting/$id': typeof DashboardDashboardCatalogHostingIdIndexRoute
-  '/dashboard/catalog/hosting/new': typeof DashboardDashboardCatalogHostingNewIndexRoute
-  '/dashboard/catalog/physical/$id': typeof DashboardDashboardCatalogPhysicalIdIndexRoute
-  '/dashboard/catalog/physical/new': typeof DashboardDashboardCatalogPhysicalNewIndexRoute
-  '/dashboard/catalog/proxy/$id': typeof DashboardDashboardCatalogProxyIdIndexRoute
-  '/dashboard/catalog/via/$id': typeof DashboardDashboardCatalogViaIdIndexRoute
-  '/dashboard/catalog/vps/$id': typeof DashboardDashboardCatalogVpsIdIndexRoute
-  '/dashboard/catalog/vps/new': typeof DashboardDashboardCatalogVpsNewIndexRoute
-  '/dashboard/posts/$postId/edit': typeof DashboardDashboardPostsPostIdEditIndexRoute
-  '/dashboard/catalog/hosting/$id/edit': typeof DashboardDashboardCatalogHostingIdEditIndexRoute
-  '/dashboard/catalog/physical/$id/edit': typeof DashboardDashboardCatalogPhysicalIdEditIndexRoute
-  '/dashboard/catalog/proxy/$id/edit': typeof DashboardDashboardCatalogProxyIdEditIndexRoute
-  '/dashboard/catalog/via/$id/edit': typeof DashboardDashboardCatalogViaIdEditIndexRoute
-  '/dashboard/catalog/vps/$id/edit': typeof DashboardDashboardCatalogVpsIdEditIndexRoute
+  '/admin/dashboard/forbidden': typeof DashboardAdminDashboardForbiddenRoute
+  '/admin/dashboard': typeof DashboardAdminDashboardIndexRoute
+  '/customer/dashboard': typeof DashboardCustomerDashboardIndexRoute
+  '/customer/dashboard/orders/$id': typeof DashboardCustomerDashboardOrdersIdRoute
+  '/customer/dashboard/services/$id': typeof DashboardCustomerDashboardServicesIdRoute
+  '/admin/dashboard/audit-logs': typeof DashboardAdminDashboardAuditLogsIndexRoute
+  '/admin/dashboard/media': typeof DashboardAdminDashboardMediaIndexRoute
+  '/admin/dashboard/orders': typeof DashboardAdminDashboardOrdersIndexRoute
+  '/admin/dashboard/posts': typeof DashboardAdminDashboardPostsIndexRoute
+  '/admin/dashboard/settings': typeof DashboardAdminDashboardSettingsIndexRoute
+  '/admin/dashboard/users': typeof DashboardAdminDashboardUsersIndexRoute
+  '/customer/dashboard/buy': typeof DashboardCustomerDashboardBuyIndexRoute
+  '/customer/dashboard/cart': typeof DashboardCustomerDashboardCartIndexRoute
+  '/customer/dashboard/checkout': typeof DashboardCustomerDashboardCheckoutIndexRoute
+  '/customer/dashboard/orders': typeof DashboardCustomerDashboardOrdersIndexRoute
+  '/customer/dashboard/services': typeof DashboardCustomerDashboardServicesIndexRoute
+  '/admin/dashboard/catalog/proxy/new': typeof DashboardAdminDashboardCatalogProxyNewRoute
+  '/admin/dashboard/catalog/via/new': typeof DashboardAdminDashboardCatalogViaNewRoute
+  '/admin/dashboard/appearance/menu': typeof DashboardAdminDashboardAppearanceMenuIndexRoute
+  '/admin/dashboard/catalog/hosting': typeof DashboardAdminDashboardCatalogHostingIndexRoute
+  '/admin/dashboard/catalog/physical': typeof DashboardAdminDashboardCatalogPhysicalIndexRoute
+  '/admin/dashboard/catalog/providers': typeof DashboardAdminDashboardCatalogProvidersIndexRoute
+  '/admin/dashboard/catalog/proxy': typeof DashboardAdminDashboardCatalogProxyIndexRoute
+  '/admin/dashboard/catalog/via': typeof DashboardAdminDashboardCatalogViaIndexRoute
+  '/admin/dashboard/catalog/vps': typeof DashboardAdminDashboardCatalogVpsIndexRoute
+  '/admin/dashboard/posts/categories': typeof DashboardAdminDashboardPostsCategoriesIndexRoute
+  '/admin/dashboard/posts/new': typeof DashboardAdminDashboardPostsNewIndexRoute
+  '/admin/dashboard/posts/platforms': typeof DashboardAdminDashboardPostsPlatformsIndexRoute
+  '/admin/dashboard/users/$userId': typeof DashboardAdminDashboardUsersUserIdIndexRoute
+  '/admin/dashboard/users/roles': typeof DashboardAdminDashboardUsersRolesIndexRoute
+  '/admin/dashboard/catalog/hosting/$id': typeof DashboardAdminDashboardCatalogHostingIdIndexRoute
+  '/admin/dashboard/catalog/hosting/new': typeof DashboardAdminDashboardCatalogHostingNewIndexRoute
+  '/admin/dashboard/catalog/physical/$id': typeof DashboardAdminDashboardCatalogPhysicalIdIndexRoute
+  '/admin/dashboard/catalog/physical/new': typeof DashboardAdminDashboardCatalogPhysicalNewIndexRoute
+  '/admin/dashboard/catalog/proxy/$id': typeof DashboardAdminDashboardCatalogProxyIdIndexRoute
+  '/admin/dashboard/catalog/via/$id': typeof DashboardAdminDashboardCatalogViaIdIndexRoute
+  '/admin/dashboard/catalog/vps/$id': typeof DashboardAdminDashboardCatalogVpsIdIndexRoute
+  '/admin/dashboard/catalog/vps/new': typeof DashboardAdminDashboardCatalogVpsNewIndexRoute
+  '/admin/dashboard/posts/$postId/edit': typeof DashboardAdminDashboardPostsPostIdEditIndexRoute
+  '/admin/dashboard/catalog/hosting/$id/edit': typeof DashboardAdminDashboardCatalogHostingIdEditIndexRoute
+  '/admin/dashboard/catalog/physical/$id/edit': typeof DashboardAdminDashboardCatalogPhysicalIdEditIndexRoute
+  '/admin/dashboard/catalog/proxy/$id/edit': typeof DashboardAdminDashboardCatalogProxyIdEditIndexRoute
+  '/admin/dashboard/catalog/via/$id/edit': typeof DashboardAdminDashboardCatalogViaIdEditIndexRoute
+  '/admin/dashboard/catalog/vps/$id/edit': typeof DashboardAdminDashboardCatalogVpsIdEditIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -398,43 +496,54 @@ export interface FileRoutesById {
   '/(auth)/register': typeof authRegisterRoute
   '/(auth)/reset-password': typeof authResetPasswordRoute
   '/(auth)/verify-email': typeof authVerifyEmailRouteWithChildren
+  '/_dashboard/admin': typeof DashboardAdminRouteWithChildren
+  '/_dashboard/customer': typeof DashboardCustomerRouteWithChildren
   '/(public)/': typeof publicIndexRoute
   '/(auth)/verify-email/confirm': typeof authVerifyEmailConfirmRoute
-  '/_dashboard/dashboard/forbidden': typeof DashboardDashboardForbiddenRoute
-  '/_dashboard/dashboard/': typeof DashboardDashboardIndexRoute
-  '/_dashboard/dashboard/audit-logs/': typeof DashboardDashboardAuditLogsIndexRoute
-  '/_dashboard/dashboard/media/': typeof DashboardDashboardMediaIndexRoute
-  '/_dashboard/dashboard/posts/': typeof DashboardDashboardPostsIndexRoute
-  '/_dashboard/dashboard/settings/': typeof DashboardDashboardSettingsIndexRoute
-  '/_dashboard/dashboard/users/': typeof DashboardDashboardUsersIndexRoute
-  '/_dashboard/dashboard/catalog/proxy/new': typeof DashboardDashboardCatalogProxyNewRoute
-  '/_dashboard/dashboard/catalog/via/new': typeof DashboardDashboardCatalogViaNewRoute
-  '/_dashboard/dashboard/appearance/menu/': typeof DashboardDashboardAppearanceMenuIndexRoute
-  '/_dashboard/dashboard/catalog/hosting/': typeof DashboardDashboardCatalogHostingIndexRoute
-  '/_dashboard/dashboard/catalog/physical/': typeof DashboardDashboardCatalogPhysicalIndexRoute
-  '/_dashboard/dashboard/catalog/providers/': typeof DashboardDashboardCatalogProvidersIndexRoute
-  '/_dashboard/dashboard/catalog/proxy/': typeof DashboardDashboardCatalogProxyIndexRoute
-  '/_dashboard/dashboard/catalog/via/': typeof DashboardDashboardCatalogViaIndexRoute
-  '/_dashboard/dashboard/catalog/vps/': typeof DashboardDashboardCatalogVpsIndexRoute
-  '/_dashboard/dashboard/posts/categories/': typeof DashboardDashboardPostsCategoriesIndexRoute
-  '/_dashboard/dashboard/posts/new/': typeof DashboardDashboardPostsNewIndexRoute
-  '/_dashboard/dashboard/posts/platforms/': typeof DashboardDashboardPostsPlatformsIndexRoute
-  '/_dashboard/dashboard/users/$userId/': typeof DashboardDashboardUsersUserIdIndexRoute
-  '/_dashboard/dashboard/users/roles/': typeof DashboardDashboardUsersRolesIndexRoute
-  '/_dashboard/dashboard/catalog/hosting/$id/': typeof DashboardDashboardCatalogHostingIdIndexRoute
-  '/_dashboard/dashboard/catalog/hosting/new/': typeof DashboardDashboardCatalogHostingNewIndexRoute
-  '/_dashboard/dashboard/catalog/physical/$id/': typeof DashboardDashboardCatalogPhysicalIdIndexRoute
-  '/_dashboard/dashboard/catalog/physical/new/': typeof DashboardDashboardCatalogPhysicalNewIndexRoute
-  '/_dashboard/dashboard/catalog/proxy/$id/': typeof DashboardDashboardCatalogProxyIdIndexRoute
-  '/_dashboard/dashboard/catalog/via/$id/': typeof DashboardDashboardCatalogViaIdIndexRoute
-  '/_dashboard/dashboard/catalog/vps/$id/': typeof DashboardDashboardCatalogVpsIdIndexRoute
-  '/_dashboard/dashboard/catalog/vps/new/': typeof DashboardDashboardCatalogVpsNewIndexRoute
-  '/_dashboard/dashboard/posts/$postId/edit/': typeof DashboardDashboardPostsPostIdEditIndexRoute
-  '/_dashboard/dashboard/catalog/hosting/$id/edit/': typeof DashboardDashboardCatalogHostingIdEditIndexRoute
-  '/_dashboard/dashboard/catalog/physical/$id/edit/': typeof DashboardDashboardCatalogPhysicalIdEditIndexRoute
-  '/_dashboard/dashboard/catalog/proxy/$id/edit/': typeof DashboardDashboardCatalogProxyIdEditIndexRoute
-  '/_dashboard/dashboard/catalog/via/$id/edit/': typeof DashboardDashboardCatalogViaIdEditIndexRoute
-  '/_dashboard/dashboard/catalog/vps/$id/edit/': typeof DashboardDashboardCatalogVpsIdEditIndexRoute
+  '/_dashboard/admin/dashboard/forbidden': typeof DashboardAdminDashboardForbiddenRoute
+  '/_dashboard/admin/dashboard/': typeof DashboardAdminDashboardIndexRoute
+  '/_dashboard/customer/dashboard/': typeof DashboardCustomerDashboardIndexRoute
+  '/_dashboard/customer/dashboard/orders/$id': typeof DashboardCustomerDashboardOrdersIdRoute
+  '/_dashboard/customer/dashboard/services/$id': typeof DashboardCustomerDashboardServicesIdRoute
+  '/_dashboard/admin/dashboard/audit-logs/': typeof DashboardAdminDashboardAuditLogsIndexRoute
+  '/_dashboard/admin/dashboard/media/': typeof DashboardAdminDashboardMediaIndexRoute
+  '/_dashboard/admin/dashboard/orders/': typeof DashboardAdminDashboardOrdersIndexRoute
+  '/_dashboard/admin/dashboard/posts/': typeof DashboardAdminDashboardPostsIndexRoute
+  '/_dashboard/admin/dashboard/settings/': typeof DashboardAdminDashboardSettingsIndexRoute
+  '/_dashboard/admin/dashboard/users/': typeof DashboardAdminDashboardUsersIndexRoute
+  '/_dashboard/customer/dashboard/buy/': typeof DashboardCustomerDashboardBuyIndexRoute
+  '/_dashboard/customer/dashboard/cart/': typeof DashboardCustomerDashboardCartIndexRoute
+  '/_dashboard/customer/dashboard/checkout/': typeof DashboardCustomerDashboardCheckoutIndexRoute
+  '/_dashboard/customer/dashboard/orders/': typeof DashboardCustomerDashboardOrdersIndexRoute
+  '/_dashboard/customer/dashboard/services/': typeof DashboardCustomerDashboardServicesIndexRoute
+  '/_dashboard/admin/dashboard/catalog/proxy/new': typeof DashboardAdminDashboardCatalogProxyNewRoute
+  '/_dashboard/admin/dashboard/catalog/via/new': typeof DashboardAdminDashboardCatalogViaNewRoute
+  '/_dashboard/admin/dashboard/appearance/menu/': typeof DashboardAdminDashboardAppearanceMenuIndexRoute
+  '/_dashboard/admin/dashboard/catalog/hosting/': typeof DashboardAdminDashboardCatalogHostingIndexRoute
+  '/_dashboard/admin/dashboard/catalog/physical/': typeof DashboardAdminDashboardCatalogPhysicalIndexRoute
+  '/_dashboard/admin/dashboard/catalog/providers/': typeof DashboardAdminDashboardCatalogProvidersIndexRoute
+  '/_dashboard/admin/dashboard/catalog/proxy/': typeof DashboardAdminDashboardCatalogProxyIndexRoute
+  '/_dashboard/admin/dashboard/catalog/via/': typeof DashboardAdminDashboardCatalogViaIndexRoute
+  '/_dashboard/admin/dashboard/catalog/vps/': typeof DashboardAdminDashboardCatalogVpsIndexRoute
+  '/_dashboard/admin/dashboard/posts/categories/': typeof DashboardAdminDashboardPostsCategoriesIndexRoute
+  '/_dashboard/admin/dashboard/posts/new/': typeof DashboardAdminDashboardPostsNewIndexRoute
+  '/_dashboard/admin/dashboard/posts/platforms/': typeof DashboardAdminDashboardPostsPlatformsIndexRoute
+  '/_dashboard/admin/dashboard/users/$userId/': typeof DashboardAdminDashboardUsersUserIdIndexRoute
+  '/_dashboard/admin/dashboard/users/roles/': typeof DashboardAdminDashboardUsersRolesIndexRoute
+  '/_dashboard/admin/dashboard/catalog/hosting/$id/': typeof DashboardAdminDashboardCatalogHostingIdIndexRoute
+  '/_dashboard/admin/dashboard/catalog/hosting/new/': typeof DashboardAdminDashboardCatalogHostingNewIndexRoute
+  '/_dashboard/admin/dashboard/catalog/physical/$id/': typeof DashboardAdminDashboardCatalogPhysicalIdIndexRoute
+  '/_dashboard/admin/dashboard/catalog/physical/new/': typeof DashboardAdminDashboardCatalogPhysicalNewIndexRoute
+  '/_dashboard/admin/dashboard/catalog/proxy/$id/': typeof DashboardAdminDashboardCatalogProxyIdIndexRoute
+  '/_dashboard/admin/dashboard/catalog/via/$id/': typeof DashboardAdminDashboardCatalogViaIdIndexRoute
+  '/_dashboard/admin/dashboard/catalog/vps/$id/': typeof DashboardAdminDashboardCatalogVpsIdIndexRoute
+  '/_dashboard/admin/dashboard/catalog/vps/new/': typeof DashboardAdminDashboardCatalogVpsNewIndexRoute
+  '/_dashboard/admin/dashboard/posts/$postId/edit/': typeof DashboardAdminDashboardPostsPostIdEditIndexRoute
+  '/_dashboard/admin/dashboard/catalog/hosting/$id/edit/': typeof DashboardAdminDashboardCatalogHostingIdEditIndexRoute
+  '/_dashboard/admin/dashboard/catalog/physical/$id/edit/': typeof DashboardAdminDashboardCatalogPhysicalIdEditIndexRoute
+  '/_dashboard/admin/dashboard/catalog/proxy/$id/edit/': typeof DashboardAdminDashboardCatalogProxyIdEditIndexRoute
+  '/_dashboard/admin/dashboard/catalog/via/$id/edit/': typeof DashboardAdminDashboardCatalogViaIdEditIndexRoute
+  '/_dashboard/admin/dashboard/catalog/vps/$id/edit/': typeof DashboardAdminDashboardCatalogVpsIdEditIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -445,42 +554,53 @@ export interface FileRouteTypes {
     | '/register'
     | '/reset-password'
     | '/verify-email'
+    | '/admin'
+    | '/customer'
     | '/verify-email/confirm'
-    | '/dashboard/forbidden'
-    | '/dashboard/'
-    | '/dashboard/audit-logs/'
-    | '/dashboard/media/'
-    | '/dashboard/posts/'
-    | '/dashboard/settings/'
-    | '/dashboard/users/'
-    | '/dashboard/catalog/proxy/new'
-    | '/dashboard/catalog/via/new'
-    | '/dashboard/appearance/menu/'
-    | '/dashboard/catalog/hosting/'
-    | '/dashboard/catalog/physical/'
-    | '/dashboard/catalog/providers/'
-    | '/dashboard/catalog/proxy/'
-    | '/dashboard/catalog/via/'
-    | '/dashboard/catalog/vps/'
-    | '/dashboard/posts/categories/'
-    | '/dashboard/posts/new/'
-    | '/dashboard/posts/platforms/'
-    | '/dashboard/users/$userId/'
-    | '/dashboard/users/roles/'
-    | '/dashboard/catalog/hosting/$id/'
-    | '/dashboard/catalog/hosting/new/'
-    | '/dashboard/catalog/physical/$id/'
-    | '/dashboard/catalog/physical/new/'
-    | '/dashboard/catalog/proxy/$id/'
-    | '/dashboard/catalog/via/$id/'
-    | '/dashboard/catalog/vps/$id/'
-    | '/dashboard/catalog/vps/new/'
-    | '/dashboard/posts/$postId/edit/'
-    | '/dashboard/catalog/hosting/$id/edit/'
-    | '/dashboard/catalog/physical/$id/edit/'
-    | '/dashboard/catalog/proxy/$id/edit/'
-    | '/dashboard/catalog/via/$id/edit/'
-    | '/dashboard/catalog/vps/$id/edit/'
+    | '/admin/dashboard/forbidden'
+    | '/admin/dashboard/'
+    | '/customer/dashboard/'
+    | '/customer/dashboard/orders/$id'
+    | '/customer/dashboard/services/$id'
+    | '/admin/dashboard/audit-logs/'
+    | '/admin/dashboard/media/'
+    | '/admin/dashboard/orders/'
+    | '/admin/dashboard/posts/'
+    | '/admin/dashboard/settings/'
+    | '/admin/dashboard/users/'
+    | '/customer/dashboard/buy/'
+    | '/customer/dashboard/cart/'
+    | '/customer/dashboard/checkout/'
+    | '/customer/dashboard/orders/'
+    | '/customer/dashboard/services/'
+    | '/admin/dashboard/catalog/proxy/new'
+    | '/admin/dashboard/catalog/via/new'
+    | '/admin/dashboard/appearance/menu/'
+    | '/admin/dashboard/catalog/hosting/'
+    | '/admin/dashboard/catalog/physical/'
+    | '/admin/dashboard/catalog/providers/'
+    | '/admin/dashboard/catalog/proxy/'
+    | '/admin/dashboard/catalog/via/'
+    | '/admin/dashboard/catalog/vps/'
+    | '/admin/dashboard/posts/categories/'
+    | '/admin/dashboard/posts/new/'
+    | '/admin/dashboard/posts/platforms/'
+    | '/admin/dashboard/users/$userId/'
+    | '/admin/dashboard/users/roles/'
+    | '/admin/dashboard/catalog/hosting/$id/'
+    | '/admin/dashboard/catalog/hosting/new/'
+    | '/admin/dashboard/catalog/physical/$id/'
+    | '/admin/dashboard/catalog/physical/new/'
+    | '/admin/dashboard/catalog/proxy/$id/'
+    | '/admin/dashboard/catalog/via/$id/'
+    | '/admin/dashboard/catalog/vps/$id/'
+    | '/admin/dashboard/catalog/vps/new/'
+    | '/admin/dashboard/posts/$postId/edit/'
+    | '/admin/dashboard/catalog/hosting/$id/edit/'
+    | '/admin/dashboard/catalog/physical/$id/edit/'
+    | '/admin/dashboard/catalog/proxy/$id/edit/'
+    | '/admin/dashboard/catalog/via/$id/edit/'
+    | '/admin/dashboard/catalog/vps/$id/edit/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -489,42 +609,53 @@ export interface FileRouteTypes {
     | '/register'
     | '/reset-password'
     | '/verify-email'
+    | '/admin'
+    | '/customer'
     | '/verify-email/confirm'
-    | '/dashboard/forbidden'
-    | '/dashboard'
-    | '/dashboard/audit-logs'
-    | '/dashboard/media'
-    | '/dashboard/posts'
-    | '/dashboard/settings'
-    | '/dashboard/users'
-    | '/dashboard/catalog/proxy/new'
-    | '/dashboard/catalog/via/new'
-    | '/dashboard/appearance/menu'
-    | '/dashboard/catalog/hosting'
-    | '/dashboard/catalog/physical'
-    | '/dashboard/catalog/providers'
-    | '/dashboard/catalog/proxy'
-    | '/dashboard/catalog/via'
-    | '/dashboard/catalog/vps'
-    | '/dashboard/posts/categories'
-    | '/dashboard/posts/new'
-    | '/dashboard/posts/platforms'
-    | '/dashboard/users/$userId'
-    | '/dashboard/users/roles'
-    | '/dashboard/catalog/hosting/$id'
-    | '/dashboard/catalog/hosting/new'
-    | '/dashboard/catalog/physical/$id'
-    | '/dashboard/catalog/physical/new'
-    | '/dashboard/catalog/proxy/$id'
-    | '/dashboard/catalog/via/$id'
-    | '/dashboard/catalog/vps/$id'
-    | '/dashboard/catalog/vps/new'
-    | '/dashboard/posts/$postId/edit'
-    | '/dashboard/catalog/hosting/$id/edit'
-    | '/dashboard/catalog/physical/$id/edit'
-    | '/dashboard/catalog/proxy/$id/edit'
-    | '/dashboard/catalog/via/$id/edit'
-    | '/dashboard/catalog/vps/$id/edit'
+    | '/admin/dashboard/forbidden'
+    | '/admin/dashboard'
+    | '/customer/dashboard'
+    | '/customer/dashboard/orders/$id'
+    | '/customer/dashboard/services/$id'
+    | '/admin/dashboard/audit-logs'
+    | '/admin/dashboard/media'
+    | '/admin/dashboard/orders'
+    | '/admin/dashboard/posts'
+    | '/admin/dashboard/settings'
+    | '/admin/dashboard/users'
+    | '/customer/dashboard/buy'
+    | '/customer/dashboard/cart'
+    | '/customer/dashboard/checkout'
+    | '/customer/dashboard/orders'
+    | '/customer/dashboard/services'
+    | '/admin/dashboard/catalog/proxy/new'
+    | '/admin/dashboard/catalog/via/new'
+    | '/admin/dashboard/appearance/menu'
+    | '/admin/dashboard/catalog/hosting'
+    | '/admin/dashboard/catalog/physical'
+    | '/admin/dashboard/catalog/providers'
+    | '/admin/dashboard/catalog/proxy'
+    | '/admin/dashboard/catalog/via'
+    | '/admin/dashboard/catalog/vps'
+    | '/admin/dashboard/posts/categories'
+    | '/admin/dashboard/posts/new'
+    | '/admin/dashboard/posts/platforms'
+    | '/admin/dashboard/users/$userId'
+    | '/admin/dashboard/users/roles'
+    | '/admin/dashboard/catalog/hosting/$id'
+    | '/admin/dashboard/catalog/hosting/new'
+    | '/admin/dashboard/catalog/physical/$id'
+    | '/admin/dashboard/catalog/physical/new'
+    | '/admin/dashboard/catalog/proxy/$id'
+    | '/admin/dashboard/catalog/via/$id'
+    | '/admin/dashboard/catalog/vps/$id'
+    | '/admin/dashboard/catalog/vps/new'
+    | '/admin/dashboard/posts/$postId/edit'
+    | '/admin/dashboard/catalog/hosting/$id/edit'
+    | '/admin/dashboard/catalog/physical/$id/edit'
+    | '/admin/dashboard/catalog/proxy/$id/edit'
+    | '/admin/dashboard/catalog/via/$id/edit'
+    | '/admin/dashboard/catalog/vps/$id/edit'
   id:
     | '__root__'
     | '/_dashboard'
@@ -533,43 +664,54 @@ export interface FileRouteTypes {
     | '/(auth)/register'
     | '/(auth)/reset-password'
     | '/(auth)/verify-email'
+    | '/_dashboard/admin'
+    | '/_dashboard/customer'
     | '/(public)/'
     | '/(auth)/verify-email/confirm'
-    | '/_dashboard/dashboard/forbidden'
-    | '/_dashboard/dashboard/'
-    | '/_dashboard/dashboard/audit-logs/'
-    | '/_dashboard/dashboard/media/'
-    | '/_dashboard/dashboard/posts/'
-    | '/_dashboard/dashboard/settings/'
-    | '/_dashboard/dashboard/users/'
-    | '/_dashboard/dashboard/catalog/proxy/new'
-    | '/_dashboard/dashboard/catalog/via/new'
-    | '/_dashboard/dashboard/appearance/menu/'
-    | '/_dashboard/dashboard/catalog/hosting/'
-    | '/_dashboard/dashboard/catalog/physical/'
-    | '/_dashboard/dashboard/catalog/providers/'
-    | '/_dashboard/dashboard/catalog/proxy/'
-    | '/_dashboard/dashboard/catalog/via/'
-    | '/_dashboard/dashboard/catalog/vps/'
-    | '/_dashboard/dashboard/posts/categories/'
-    | '/_dashboard/dashboard/posts/new/'
-    | '/_dashboard/dashboard/posts/platforms/'
-    | '/_dashboard/dashboard/users/$userId/'
-    | '/_dashboard/dashboard/users/roles/'
-    | '/_dashboard/dashboard/catalog/hosting/$id/'
-    | '/_dashboard/dashboard/catalog/hosting/new/'
-    | '/_dashboard/dashboard/catalog/physical/$id/'
-    | '/_dashboard/dashboard/catalog/physical/new/'
-    | '/_dashboard/dashboard/catalog/proxy/$id/'
-    | '/_dashboard/dashboard/catalog/via/$id/'
-    | '/_dashboard/dashboard/catalog/vps/$id/'
-    | '/_dashboard/dashboard/catalog/vps/new/'
-    | '/_dashboard/dashboard/posts/$postId/edit/'
-    | '/_dashboard/dashboard/catalog/hosting/$id/edit/'
-    | '/_dashboard/dashboard/catalog/physical/$id/edit/'
-    | '/_dashboard/dashboard/catalog/proxy/$id/edit/'
-    | '/_dashboard/dashboard/catalog/via/$id/edit/'
-    | '/_dashboard/dashboard/catalog/vps/$id/edit/'
+    | '/_dashboard/admin/dashboard/forbidden'
+    | '/_dashboard/admin/dashboard/'
+    | '/_dashboard/customer/dashboard/'
+    | '/_dashboard/customer/dashboard/orders/$id'
+    | '/_dashboard/customer/dashboard/services/$id'
+    | '/_dashboard/admin/dashboard/audit-logs/'
+    | '/_dashboard/admin/dashboard/media/'
+    | '/_dashboard/admin/dashboard/orders/'
+    | '/_dashboard/admin/dashboard/posts/'
+    | '/_dashboard/admin/dashboard/settings/'
+    | '/_dashboard/admin/dashboard/users/'
+    | '/_dashboard/customer/dashboard/buy/'
+    | '/_dashboard/customer/dashboard/cart/'
+    | '/_dashboard/customer/dashboard/checkout/'
+    | '/_dashboard/customer/dashboard/orders/'
+    | '/_dashboard/customer/dashboard/services/'
+    | '/_dashboard/admin/dashboard/catalog/proxy/new'
+    | '/_dashboard/admin/dashboard/catalog/via/new'
+    | '/_dashboard/admin/dashboard/appearance/menu/'
+    | '/_dashboard/admin/dashboard/catalog/hosting/'
+    | '/_dashboard/admin/dashboard/catalog/physical/'
+    | '/_dashboard/admin/dashboard/catalog/providers/'
+    | '/_dashboard/admin/dashboard/catalog/proxy/'
+    | '/_dashboard/admin/dashboard/catalog/via/'
+    | '/_dashboard/admin/dashboard/catalog/vps/'
+    | '/_dashboard/admin/dashboard/posts/categories/'
+    | '/_dashboard/admin/dashboard/posts/new/'
+    | '/_dashboard/admin/dashboard/posts/platforms/'
+    | '/_dashboard/admin/dashboard/users/$userId/'
+    | '/_dashboard/admin/dashboard/users/roles/'
+    | '/_dashboard/admin/dashboard/catalog/hosting/$id/'
+    | '/_dashboard/admin/dashboard/catalog/hosting/new/'
+    | '/_dashboard/admin/dashboard/catalog/physical/$id/'
+    | '/_dashboard/admin/dashboard/catalog/physical/new/'
+    | '/_dashboard/admin/dashboard/catalog/proxy/$id/'
+    | '/_dashboard/admin/dashboard/catalog/via/$id/'
+    | '/_dashboard/admin/dashboard/catalog/vps/$id/'
+    | '/_dashboard/admin/dashboard/catalog/vps/new/'
+    | '/_dashboard/admin/dashboard/posts/$postId/edit/'
+    | '/_dashboard/admin/dashboard/catalog/hosting/$id/edit/'
+    | '/_dashboard/admin/dashboard/catalog/physical/$id/edit/'
+    | '/_dashboard/admin/dashboard/catalog/proxy/$id/edit/'
+    | '/_dashboard/admin/dashboard/catalog/via/$id/edit/'
+    | '/_dashboard/admin/dashboard/catalog/vps/$id/edit/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -633,6 +775,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof publicIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_dashboard/admin': {
+      id: '/_dashboard/admin'
+      path: '/admin'
+      fullPath: '/admin'
+      preLoaderRoute: typeof DashboardAdminRouteImport
+      parentRoute: typeof DashboardRoute
+    }
+    '/_dashboard/customer': {
+      id: '/_dashboard/customer'
+      path: '/customer'
+      fullPath: '/customer'
+      preLoaderRoute: typeof DashboardCustomerRouteImport
+      parentRoute: typeof DashboardRoute
+    }
     '/(auth)/verify-email/confirm': {
       id: '/(auth)/verify-email/confirm'
       path: '/confirm'
@@ -640,354 +796,473 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof authVerifyEmailConfirmRouteImport
       parentRoute: typeof authVerifyEmailRoute
     }
-    '/_dashboard/dashboard/': {
-      id: '/_dashboard/dashboard/'
+    '/_dashboard/admin/dashboard/': {
+      id: '/_dashboard/admin/dashboard/'
       path: '/dashboard'
-      fullPath: '/dashboard/'
-      preLoaderRoute: typeof DashboardDashboardIndexRouteImport
-      parentRoute: typeof DashboardRoute
+      fullPath: '/admin/dashboard/'
+      preLoaderRoute: typeof DashboardAdminDashboardIndexRouteImport
+      parentRoute: typeof DashboardAdminRoute
     }
-    '/_dashboard/dashboard/forbidden': {
-      id: '/_dashboard/dashboard/forbidden'
+    '/_dashboard/admin/dashboard/forbidden': {
+      id: '/_dashboard/admin/dashboard/forbidden'
       path: '/dashboard/forbidden'
-      fullPath: '/dashboard/forbidden'
-      preLoaderRoute: typeof DashboardDashboardForbiddenRouteImport
-      parentRoute: typeof DashboardRoute
+      fullPath: '/admin/dashboard/forbidden'
+      preLoaderRoute: typeof DashboardAdminDashboardForbiddenRouteImport
+      parentRoute: typeof DashboardAdminRoute
     }
-    '/_dashboard/dashboard/audit-logs/': {
-      id: '/_dashboard/dashboard/audit-logs/'
+    '/_dashboard/customer/dashboard/': {
+      id: '/_dashboard/customer/dashboard/'
+      path: '/dashboard'
+      fullPath: '/customer/dashboard/'
+      preLoaderRoute: typeof DashboardCustomerDashboardIndexRouteImport
+      parentRoute: typeof DashboardCustomerRoute
+    }
+    '/_dashboard/admin/dashboard/audit-logs/': {
+      id: '/_dashboard/admin/dashboard/audit-logs/'
       path: '/dashboard/audit-logs'
-      fullPath: '/dashboard/audit-logs/'
-      preLoaderRoute: typeof DashboardDashboardAuditLogsIndexRouteImport
-      parentRoute: typeof DashboardRoute
+      fullPath: '/admin/dashboard/audit-logs/'
+      preLoaderRoute: typeof DashboardAdminDashboardAuditLogsIndexRouteImport
+      parentRoute: typeof DashboardAdminRoute
     }
-    '/_dashboard/dashboard/media/': {
-      id: '/_dashboard/dashboard/media/'
+    '/_dashboard/admin/dashboard/media/': {
+      id: '/_dashboard/admin/dashboard/media/'
       path: '/dashboard/media'
-      fullPath: '/dashboard/media/'
-      preLoaderRoute: typeof DashboardDashboardMediaIndexRouteImport
-      parentRoute: typeof DashboardRoute
+      fullPath: '/admin/dashboard/media/'
+      preLoaderRoute: typeof DashboardAdminDashboardMediaIndexRouteImport
+      parentRoute: typeof DashboardAdminRoute
     }
-    '/_dashboard/dashboard/posts/': {
-      id: '/_dashboard/dashboard/posts/'
+    '/_dashboard/admin/dashboard/orders/': {
+      id: '/_dashboard/admin/dashboard/orders/'
+      path: '/dashboard/orders'
+      fullPath: '/admin/dashboard/orders/'
+      preLoaderRoute: typeof DashboardAdminDashboardOrdersIndexRouteImport
+      parentRoute: typeof DashboardAdminRoute
+    }
+    '/_dashboard/admin/dashboard/posts/': {
+      id: '/_dashboard/admin/dashboard/posts/'
       path: '/dashboard/posts'
-      fullPath: '/dashboard/posts/'
-      preLoaderRoute: typeof DashboardDashboardPostsIndexRouteImport
-      parentRoute: typeof DashboardRoute
+      fullPath: '/admin/dashboard/posts/'
+      preLoaderRoute: typeof DashboardAdminDashboardPostsIndexRouteImport
+      parentRoute: typeof DashboardAdminRoute
     }
-    '/_dashboard/dashboard/settings/': {
-      id: '/_dashboard/dashboard/settings/'
+    '/_dashboard/admin/dashboard/settings/': {
+      id: '/_dashboard/admin/dashboard/settings/'
       path: '/dashboard/settings'
-      fullPath: '/dashboard/settings/'
-      preLoaderRoute: typeof DashboardDashboardSettingsIndexRouteImport
-      parentRoute: typeof DashboardRoute
+      fullPath: '/admin/dashboard/settings/'
+      preLoaderRoute: typeof DashboardAdminDashboardSettingsIndexRouteImport
+      parentRoute: typeof DashboardAdminRoute
     }
-    '/_dashboard/dashboard/users/': {
-      id: '/_dashboard/dashboard/users/'
+    '/_dashboard/admin/dashboard/users/': {
+      id: '/_dashboard/admin/dashboard/users/'
       path: '/dashboard/users'
-      fullPath: '/dashboard/users/'
-      preLoaderRoute: typeof DashboardDashboardUsersIndexRouteImport
-      parentRoute: typeof DashboardRoute
+      fullPath: '/admin/dashboard/users/'
+      preLoaderRoute: typeof DashboardAdminDashboardUsersIndexRouteImport
+      parentRoute: typeof DashboardAdminRoute
     }
-    '/_dashboard/dashboard/appearance/menu/': {
-      id: '/_dashboard/dashboard/appearance/menu/'
+    '/_dashboard/customer/dashboard/buy/': {
+      id: '/_dashboard/customer/dashboard/buy/'
+      path: '/dashboard/buy'
+      fullPath: '/customer/dashboard/buy/'
+      preLoaderRoute: typeof DashboardCustomerDashboardBuyIndexRouteImport
+      parentRoute: typeof DashboardCustomerRoute
+    }
+    '/_dashboard/customer/dashboard/cart/': {
+      id: '/_dashboard/customer/dashboard/cart/'
+      path: '/dashboard/cart'
+      fullPath: '/customer/dashboard/cart/'
+      preLoaderRoute: typeof DashboardCustomerDashboardCartIndexRouteImport
+      parentRoute: typeof DashboardCustomerRoute
+    }
+    '/_dashboard/customer/dashboard/checkout/': {
+      id: '/_dashboard/customer/dashboard/checkout/'
+      path: '/dashboard/checkout'
+      fullPath: '/customer/dashboard/checkout/'
+      preLoaderRoute: typeof DashboardCustomerDashboardCheckoutIndexRouteImport
+      parentRoute: typeof DashboardCustomerRoute
+    }
+    '/_dashboard/customer/dashboard/orders/': {
+      id: '/_dashboard/customer/dashboard/orders/'
+      path: '/dashboard/orders'
+      fullPath: '/customer/dashboard/orders/'
+      preLoaderRoute: typeof DashboardCustomerDashboardOrdersIndexRouteImport
+      parentRoute: typeof DashboardCustomerRoute
+    }
+    '/_dashboard/customer/dashboard/orders/$id': {
+      id: '/_dashboard/customer/dashboard/orders/$id'
+      path: '/dashboard/orders/$id'
+      fullPath: '/customer/dashboard/orders/$id'
+      preLoaderRoute: typeof DashboardCustomerDashboardOrdersIdRouteImport
+      parentRoute: typeof DashboardCustomerRoute
+    }
+    '/_dashboard/customer/dashboard/services/': {
+      id: '/_dashboard/customer/dashboard/services/'
+      path: '/dashboard/services'
+      fullPath: '/customer/dashboard/services/'
+      preLoaderRoute: typeof DashboardCustomerDashboardServicesIndexRouteImport
+      parentRoute: typeof DashboardCustomerRoute
+    }
+    '/_dashboard/customer/dashboard/services/$id': {
+      id: '/_dashboard/customer/dashboard/services/$id'
+      path: '/dashboard/services/$id'
+      fullPath: '/customer/dashboard/services/$id'
+      preLoaderRoute: typeof DashboardCustomerDashboardServicesIdRouteImport
+      parentRoute: typeof DashboardCustomerRoute
+    }
+    '/_dashboard/admin/dashboard/appearance/menu/': {
+      id: '/_dashboard/admin/dashboard/appearance/menu/'
       path: '/dashboard/appearance/menu'
-      fullPath: '/dashboard/appearance/menu/'
-      preLoaderRoute: typeof DashboardDashboardAppearanceMenuIndexRouteImport
-      parentRoute: typeof DashboardRoute
+      fullPath: '/admin/dashboard/appearance/menu/'
+      preLoaderRoute: typeof DashboardAdminDashboardAppearanceMenuIndexRouteImport
+      parentRoute: typeof DashboardAdminRoute
     }
-    '/_dashboard/dashboard/catalog/hosting/': {
-      id: '/_dashboard/dashboard/catalog/hosting/'
+    '/_dashboard/admin/dashboard/catalog/hosting/': {
+      id: '/_dashboard/admin/dashboard/catalog/hosting/'
       path: '/dashboard/catalog/hosting'
-      fullPath: '/dashboard/catalog/hosting/'
-      preLoaderRoute: typeof DashboardDashboardCatalogHostingIndexRouteImport
-      parentRoute: typeof DashboardRoute
+      fullPath: '/admin/dashboard/catalog/hosting/'
+      preLoaderRoute: typeof DashboardAdminDashboardCatalogHostingIndexRouteImport
+      parentRoute: typeof DashboardAdminRoute
     }
-    '/_dashboard/dashboard/catalog/physical/': {
-      id: '/_dashboard/dashboard/catalog/physical/'
+    '/_dashboard/admin/dashboard/catalog/physical/': {
+      id: '/_dashboard/admin/dashboard/catalog/physical/'
       path: '/dashboard/catalog/physical'
-      fullPath: '/dashboard/catalog/physical/'
-      preLoaderRoute: typeof DashboardDashboardCatalogPhysicalIndexRouteImport
-      parentRoute: typeof DashboardRoute
+      fullPath: '/admin/dashboard/catalog/physical/'
+      preLoaderRoute: typeof DashboardAdminDashboardCatalogPhysicalIndexRouteImport
+      parentRoute: typeof DashboardAdminRoute
     }
-    '/_dashboard/dashboard/catalog/providers/': {
-      id: '/_dashboard/dashboard/catalog/providers/'
+    '/_dashboard/admin/dashboard/catalog/providers/': {
+      id: '/_dashboard/admin/dashboard/catalog/providers/'
       path: '/dashboard/catalog/providers'
-      fullPath: '/dashboard/catalog/providers/'
-      preLoaderRoute: typeof DashboardDashboardCatalogProvidersIndexRouteImport
-      parentRoute: typeof DashboardRoute
+      fullPath: '/admin/dashboard/catalog/providers/'
+      preLoaderRoute: typeof DashboardAdminDashboardCatalogProvidersIndexRouteImport
+      parentRoute: typeof DashboardAdminRoute
     }
-    '/_dashboard/dashboard/catalog/proxy/': {
-      id: '/_dashboard/dashboard/catalog/proxy/'
+    '/_dashboard/admin/dashboard/catalog/proxy/': {
+      id: '/_dashboard/admin/dashboard/catalog/proxy/'
       path: '/dashboard/catalog/proxy'
-      fullPath: '/dashboard/catalog/proxy/'
-      preLoaderRoute: typeof DashboardDashboardCatalogProxyIndexRouteImport
-      parentRoute: typeof DashboardRoute
+      fullPath: '/admin/dashboard/catalog/proxy/'
+      preLoaderRoute: typeof DashboardAdminDashboardCatalogProxyIndexRouteImport
+      parentRoute: typeof DashboardAdminRoute
     }
-    '/_dashboard/dashboard/catalog/proxy/new': {
-      id: '/_dashboard/dashboard/catalog/proxy/new'
+    '/_dashboard/admin/dashboard/catalog/proxy/new': {
+      id: '/_dashboard/admin/dashboard/catalog/proxy/new'
       path: '/dashboard/catalog/proxy/new'
-      fullPath: '/dashboard/catalog/proxy/new'
-      preLoaderRoute: typeof DashboardDashboardCatalogProxyNewRouteImport
-      parentRoute: typeof DashboardRoute
+      fullPath: '/admin/dashboard/catalog/proxy/new'
+      preLoaderRoute: typeof DashboardAdminDashboardCatalogProxyNewRouteImport
+      parentRoute: typeof DashboardAdminRoute
     }
-    '/_dashboard/dashboard/catalog/via/': {
-      id: '/_dashboard/dashboard/catalog/via/'
+    '/_dashboard/admin/dashboard/catalog/via/': {
+      id: '/_dashboard/admin/dashboard/catalog/via/'
       path: '/dashboard/catalog/via'
-      fullPath: '/dashboard/catalog/via/'
-      preLoaderRoute: typeof DashboardDashboardCatalogViaIndexRouteImport
-      parentRoute: typeof DashboardRoute
+      fullPath: '/admin/dashboard/catalog/via/'
+      preLoaderRoute: typeof DashboardAdminDashboardCatalogViaIndexRouteImport
+      parentRoute: typeof DashboardAdminRoute
     }
-    '/_dashboard/dashboard/catalog/via/new': {
-      id: '/_dashboard/dashboard/catalog/via/new'
+    '/_dashboard/admin/dashboard/catalog/via/new': {
+      id: '/_dashboard/admin/dashboard/catalog/via/new'
       path: '/dashboard/catalog/via/new'
-      fullPath: '/dashboard/catalog/via/new'
-      preLoaderRoute: typeof DashboardDashboardCatalogViaNewRouteImport
-      parentRoute: typeof DashboardRoute
+      fullPath: '/admin/dashboard/catalog/via/new'
+      preLoaderRoute: typeof DashboardAdminDashboardCatalogViaNewRouteImport
+      parentRoute: typeof DashboardAdminRoute
     }
-    '/_dashboard/dashboard/catalog/vps/': {
-      id: '/_dashboard/dashboard/catalog/vps/'
+    '/_dashboard/admin/dashboard/catalog/vps/': {
+      id: '/_dashboard/admin/dashboard/catalog/vps/'
       path: '/dashboard/catalog/vps'
-      fullPath: '/dashboard/catalog/vps/'
-      preLoaderRoute: typeof DashboardDashboardCatalogVpsIndexRouteImport
-      parentRoute: typeof DashboardRoute
+      fullPath: '/admin/dashboard/catalog/vps/'
+      preLoaderRoute: typeof DashboardAdminDashboardCatalogVpsIndexRouteImport
+      parentRoute: typeof DashboardAdminRoute
     }
-    '/_dashboard/dashboard/posts/categories/': {
-      id: '/_dashboard/dashboard/posts/categories/'
+    '/_dashboard/admin/dashboard/posts/categories/': {
+      id: '/_dashboard/admin/dashboard/posts/categories/'
       path: '/dashboard/posts/categories'
-      fullPath: '/dashboard/posts/categories/'
-      preLoaderRoute: typeof DashboardDashboardPostsCategoriesIndexRouteImport
-      parentRoute: typeof DashboardRoute
+      fullPath: '/admin/dashboard/posts/categories/'
+      preLoaderRoute: typeof DashboardAdminDashboardPostsCategoriesIndexRouteImport
+      parentRoute: typeof DashboardAdminRoute
     }
-    '/_dashboard/dashboard/posts/new/': {
-      id: '/_dashboard/dashboard/posts/new/'
+    '/_dashboard/admin/dashboard/posts/new/': {
+      id: '/_dashboard/admin/dashboard/posts/new/'
       path: '/dashboard/posts/new'
-      fullPath: '/dashboard/posts/new/'
-      preLoaderRoute: typeof DashboardDashboardPostsNewIndexRouteImport
-      parentRoute: typeof DashboardRoute
+      fullPath: '/admin/dashboard/posts/new/'
+      preLoaderRoute: typeof DashboardAdminDashboardPostsNewIndexRouteImport
+      parentRoute: typeof DashboardAdminRoute
     }
-    '/_dashboard/dashboard/posts/platforms/': {
-      id: '/_dashboard/dashboard/posts/platforms/'
+    '/_dashboard/admin/dashboard/posts/platforms/': {
+      id: '/_dashboard/admin/dashboard/posts/platforms/'
       path: '/dashboard/posts/platforms'
-      fullPath: '/dashboard/posts/platforms/'
-      preLoaderRoute: typeof DashboardDashboardPostsPlatformsIndexRouteImport
-      parentRoute: typeof DashboardRoute
+      fullPath: '/admin/dashboard/posts/platforms/'
+      preLoaderRoute: typeof DashboardAdminDashboardPostsPlatformsIndexRouteImport
+      parentRoute: typeof DashboardAdminRoute
     }
-    '/_dashboard/dashboard/users/$userId/': {
-      id: '/_dashboard/dashboard/users/$userId/'
+    '/_dashboard/admin/dashboard/users/$userId/': {
+      id: '/_dashboard/admin/dashboard/users/$userId/'
       path: '/dashboard/users/$userId'
-      fullPath: '/dashboard/users/$userId/'
-      preLoaderRoute: typeof DashboardDashboardUsersUserIdIndexRouteImport
-      parentRoute: typeof DashboardRoute
+      fullPath: '/admin/dashboard/users/$userId/'
+      preLoaderRoute: typeof DashboardAdminDashboardUsersUserIdIndexRouteImport
+      parentRoute: typeof DashboardAdminRoute
     }
-    '/_dashboard/dashboard/users/roles/': {
-      id: '/_dashboard/dashboard/users/roles/'
+    '/_dashboard/admin/dashboard/users/roles/': {
+      id: '/_dashboard/admin/dashboard/users/roles/'
       path: '/dashboard/users/roles'
-      fullPath: '/dashboard/users/roles/'
-      preLoaderRoute: typeof DashboardDashboardUsersRolesIndexRouteImport
-      parentRoute: typeof DashboardRoute
+      fullPath: '/admin/dashboard/users/roles/'
+      preLoaderRoute: typeof DashboardAdminDashboardUsersRolesIndexRouteImport
+      parentRoute: typeof DashboardAdminRoute
     }
-    '/_dashboard/dashboard/catalog/hosting/$id/': {
-      id: '/_dashboard/dashboard/catalog/hosting/$id/'
+    '/_dashboard/admin/dashboard/catalog/hosting/$id/': {
+      id: '/_dashboard/admin/dashboard/catalog/hosting/$id/'
       path: '/dashboard/catalog/hosting/$id'
-      fullPath: '/dashboard/catalog/hosting/$id/'
-      preLoaderRoute: typeof DashboardDashboardCatalogHostingIdIndexRouteImport
-      parentRoute: typeof DashboardRoute
+      fullPath: '/admin/dashboard/catalog/hosting/$id/'
+      preLoaderRoute: typeof DashboardAdminDashboardCatalogHostingIdIndexRouteImport
+      parentRoute: typeof DashboardAdminRoute
     }
-    '/_dashboard/dashboard/catalog/hosting/new/': {
-      id: '/_dashboard/dashboard/catalog/hosting/new/'
+    '/_dashboard/admin/dashboard/catalog/hosting/new/': {
+      id: '/_dashboard/admin/dashboard/catalog/hosting/new/'
       path: '/dashboard/catalog/hosting/new'
-      fullPath: '/dashboard/catalog/hosting/new/'
-      preLoaderRoute: typeof DashboardDashboardCatalogHostingNewIndexRouteImport
-      parentRoute: typeof DashboardRoute
+      fullPath: '/admin/dashboard/catalog/hosting/new/'
+      preLoaderRoute: typeof DashboardAdminDashboardCatalogHostingNewIndexRouteImport
+      parentRoute: typeof DashboardAdminRoute
     }
-    '/_dashboard/dashboard/catalog/physical/$id/': {
-      id: '/_dashboard/dashboard/catalog/physical/$id/'
+    '/_dashboard/admin/dashboard/catalog/physical/$id/': {
+      id: '/_dashboard/admin/dashboard/catalog/physical/$id/'
       path: '/dashboard/catalog/physical/$id'
-      fullPath: '/dashboard/catalog/physical/$id/'
-      preLoaderRoute: typeof DashboardDashboardCatalogPhysicalIdIndexRouteImport
-      parentRoute: typeof DashboardRoute
+      fullPath: '/admin/dashboard/catalog/physical/$id/'
+      preLoaderRoute: typeof DashboardAdminDashboardCatalogPhysicalIdIndexRouteImport
+      parentRoute: typeof DashboardAdminRoute
     }
-    '/_dashboard/dashboard/catalog/physical/new/': {
-      id: '/_dashboard/dashboard/catalog/physical/new/'
+    '/_dashboard/admin/dashboard/catalog/physical/new/': {
+      id: '/_dashboard/admin/dashboard/catalog/physical/new/'
       path: '/dashboard/catalog/physical/new'
-      fullPath: '/dashboard/catalog/physical/new/'
-      preLoaderRoute: typeof DashboardDashboardCatalogPhysicalNewIndexRouteImport
-      parentRoute: typeof DashboardRoute
+      fullPath: '/admin/dashboard/catalog/physical/new/'
+      preLoaderRoute: typeof DashboardAdminDashboardCatalogPhysicalNewIndexRouteImport
+      parentRoute: typeof DashboardAdminRoute
     }
-    '/_dashboard/dashboard/catalog/proxy/$id/': {
-      id: '/_dashboard/dashboard/catalog/proxy/$id/'
+    '/_dashboard/admin/dashboard/catalog/proxy/$id/': {
+      id: '/_dashboard/admin/dashboard/catalog/proxy/$id/'
       path: '/dashboard/catalog/proxy/$id'
-      fullPath: '/dashboard/catalog/proxy/$id/'
-      preLoaderRoute: typeof DashboardDashboardCatalogProxyIdIndexRouteImport
-      parentRoute: typeof DashboardRoute
+      fullPath: '/admin/dashboard/catalog/proxy/$id/'
+      preLoaderRoute: typeof DashboardAdminDashboardCatalogProxyIdIndexRouteImport
+      parentRoute: typeof DashboardAdminRoute
     }
-    '/_dashboard/dashboard/catalog/via/$id/': {
-      id: '/_dashboard/dashboard/catalog/via/$id/'
+    '/_dashboard/admin/dashboard/catalog/via/$id/': {
+      id: '/_dashboard/admin/dashboard/catalog/via/$id/'
       path: '/dashboard/catalog/via/$id'
-      fullPath: '/dashboard/catalog/via/$id/'
-      preLoaderRoute: typeof DashboardDashboardCatalogViaIdIndexRouteImport
-      parentRoute: typeof DashboardRoute
+      fullPath: '/admin/dashboard/catalog/via/$id/'
+      preLoaderRoute: typeof DashboardAdminDashboardCatalogViaIdIndexRouteImport
+      parentRoute: typeof DashboardAdminRoute
     }
-    '/_dashboard/dashboard/catalog/vps/$id/': {
-      id: '/_dashboard/dashboard/catalog/vps/$id/'
+    '/_dashboard/admin/dashboard/catalog/vps/$id/': {
+      id: '/_dashboard/admin/dashboard/catalog/vps/$id/'
       path: '/dashboard/catalog/vps/$id'
-      fullPath: '/dashboard/catalog/vps/$id/'
-      preLoaderRoute: typeof DashboardDashboardCatalogVpsIdIndexRouteImport
-      parentRoute: typeof DashboardRoute
+      fullPath: '/admin/dashboard/catalog/vps/$id/'
+      preLoaderRoute: typeof DashboardAdminDashboardCatalogVpsIdIndexRouteImport
+      parentRoute: typeof DashboardAdminRoute
     }
-    '/_dashboard/dashboard/catalog/vps/new/': {
-      id: '/_dashboard/dashboard/catalog/vps/new/'
+    '/_dashboard/admin/dashboard/catalog/vps/new/': {
+      id: '/_dashboard/admin/dashboard/catalog/vps/new/'
       path: '/dashboard/catalog/vps/new'
-      fullPath: '/dashboard/catalog/vps/new/'
-      preLoaderRoute: typeof DashboardDashboardCatalogVpsNewIndexRouteImport
-      parentRoute: typeof DashboardRoute
+      fullPath: '/admin/dashboard/catalog/vps/new/'
+      preLoaderRoute: typeof DashboardAdminDashboardCatalogVpsNewIndexRouteImport
+      parentRoute: typeof DashboardAdminRoute
     }
-    '/_dashboard/dashboard/posts/$postId/edit/': {
-      id: '/_dashboard/dashboard/posts/$postId/edit/'
+    '/_dashboard/admin/dashboard/posts/$postId/edit/': {
+      id: '/_dashboard/admin/dashboard/posts/$postId/edit/'
       path: '/dashboard/posts/$postId/edit'
-      fullPath: '/dashboard/posts/$postId/edit/'
-      preLoaderRoute: typeof DashboardDashboardPostsPostIdEditIndexRouteImport
-      parentRoute: typeof DashboardRoute
+      fullPath: '/admin/dashboard/posts/$postId/edit/'
+      preLoaderRoute: typeof DashboardAdminDashboardPostsPostIdEditIndexRouteImport
+      parentRoute: typeof DashboardAdminRoute
     }
-    '/_dashboard/dashboard/catalog/hosting/$id/edit/': {
-      id: '/_dashboard/dashboard/catalog/hosting/$id/edit/'
+    '/_dashboard/admin/dashboard/catalog/hosting/$id/edit/': {
+      id: '/_dashboard/admin/dashboard/catalog/hosting/$id/edit/'
       path: '/dashboard/catalog/hosting/$id/edit'
-      fullPath: '/dashboard/catalog/hosting/$id/edit/'
-      preLoaderRoute: typeof DashboardDashboardCatalogHostingIdEditIndexRouteImport
-      parentRoute: typeof DashboardRoute
+      fullPath: '/admin/dashboard/catalog/hosting/$id/edit/'
+      preLoaderRoute: typeof DashboardAdminDashboardCatalogHostingIdEditIndexRouteImport
+      parentRoute: typeof DashboardAdminRoute
     }
-    '/_dashboard/dashboard/catalog/physical/$id/edit/': {
-      id: '/_dashboard/dashboard/catalog/physical/$id/edit/'
+    '/_dashboard/admin/dashboard/catalog/physical/$id/edit/': {
+      id: '/_dashboard/admin/dashboard/catalog/physical/$id/edit/'
       path: '/dashboard/catalog/physical/$id/edit'
-      fullPath: '/dashboard/catalog/physical/$id/edit/'
-      preLoaderRoute: typeof DashboardDashboardCatalogPhysicalIdEditIndexRouteImport
-      parentRoute: typeof DashboardRoute
+      fullPath: '/admin/dashboard/catalog/physical/$id/edit/'
+      preLoaderRoute: typeof DashboardAdminDashboardCatalogPhysicalIdEditIndexRouteImport
+      parentRoute: typeof DashboardAdminRoute
     }
-    '/_dashboard/dashboard/catalog/proxy/$id/edit/': {
-      id: '/_dashboard/dashboard/catalog/proxy/$id/edit/'
+    '/_dashboard/admin/dashboard/catalog/proxy/$id/edit/': {
+      id: '/_dashboard/admin/dashboard/catalog/proxy/$id/edit/'
       path: '/dashboard/catalog/proxy/$id/edit'
-      fullPath: '/dashboard/catalog/proxy/$id/edit/'
-      preLoaderRoute: typeof DashboardDashboardCatalogProxyIdEditIndexRouteImport
-      parentRoute: typeof DashboardRoute
+      fullPath: '/admin/dashboard/catalog/proxy/$id/edit/'
+      preLoaderRoute: typeof DashboardAdminDashboardCatalogProxyIdEditIndexRouteImport
+      parentRoute: typeof DashboardAdminRoute
     }
-    '/_dashboard/dashboard/catalog/via/$id/edit/': {
-      id: '/_dashboard/dashboard/catalog/via/$id/edit/'
+    '/_dashboard/admin/dashboard/catalog/via/$id/edit/': {
+      id: '/_dashboard/admin/dashboard/catalog/via/$id/edit/'
       path: '/dashboard/catalog/via/$id/edit'
-      fullPath: '/dashboard/catalog/via/$id/edit/'
-      preLoaderRoute: typeof DashboardDashboardCatalogViaIdEditIndexRouteImport
-      parentRoute: typeof DashboardRoute
+      fullPath: '/admin/dashboard/catalog/via/$id/edit/'
+      preLoaderRoute: typeof DashboardAdminDashboardCatalogViaIdEditIndexRouteImport
+      parentRoute: typeof DashboardAdminRoute
     }
-    '/_dashboard/dashboard/catalog/vps/$id/edit/': {
-      id: '/_dashboard/dashboard/catalog/vps/$id/edit/'
+    '/_dashboard/admin/dashboard/catalog/vps/$id/edit/': {
+      id: '/_dashboard/admin/dashboard/catalog/vps/$id/edit/'
       path: '/dashboard/catalog/vps/$id/edit'
-      fullPath: '/dashboard/catalog/vps/$id/edit/'
-      preLoaderRoute: typeof DashboardDashboardCatalogVpsIdEditIndexRouteImport
-      parentRoute: typeof DashboardRoute
+      fullPath: '/admin/dashboard/catalog/vps/$id/edit/'
+      preLoaderRoute: typeof DashboardAdminDashboardCatalogVpsIdEditIndexRouteImport
+      parentRoute: typeof DashboardAdminRoute
     }
   }
 }
 
+interface DashboardAdminRouteChildren {
+  DashboardAdminDashboardForbiddenRoute: typeof DashboardAdminDashboardForbiddenRoute
+  DashboardAdminDashboardIndexRoute: typeof DashboardAdminDashboardIndexRoute
+  DashboardAdminDashboardAuditLogsIndexRoute: typeof DashboardAdminDashboardAuditLogsIndexRoute
+  DashboardAdminDashboardMediaIndexRoute: typeof DashboardAdminDashboardMediaIndexRoute
+  DashboardAdminDashboardOrdersIndexRoute: typeof DashboardAdminDashboardOrdersIndexRoute
+  DashboardAdminDashboardPostsIndexRoute: typeof DashboardAdminDashboardPostsIndexRoute
+  DashboardAdminDashboardSettingsIndexRoute: typeof DashboardAdminDashboardSettingsIndexRoute
+  DashboardAdminDashboardUsersIndexRoute: typeof DashboardAdminDashboardUsersIndexRoute
+  DashboardAdminDashboardCatalogProxyNewRoute: typeof DashboardAdminDashboardCatalogProxyNewRoute
+  DashboardAdminDashboardCatalogViaNewRoute: typeof DashboardAdminDashboardCatalogViaNewRoute
+  DashboardAdminDashboardAppearanceMenuIndexRoute: typeof DashboardAdminDashboardAppearanceMenuIndexRoute
+  DashboardAdminDashboardCatalogHostingIndexRoute: typeof DashboardAdminDashboardCatalogHostingIndexRoute
+  DashboardAdminDashboardCatalogPhysicalIndexRoute: typeof DashboardAdminDashboardCatalogPhysicalIndexRoute
+  DashboardAdminDashboardCatalogProvidersIndexRoute: typeof DashboardAdminDashboardCatalogProvidersIndexRoute
+  DashboardAdminDashboardCatalogProxyIndexRoute: typeof DashboardAdminDashboardCatalogProxyIndexRoute
+  DashboardAdminDashboardCatalogViaIndexRoute: typeof DashboardAdminDashboardCatalogViaIndexRoute
+  DashboardAdminDashboardCatalogVpsIndexRoute: typeof DashboardAdminDashboardCatalogVpsIndexRoute
+  DashboardAdminDashboardPostsCategoriesIndexRoute: typeof DashboardAdminDashboardPostsCategoriesIndexRoute
+  DashboardAdminDashboardPostsNewIndexRoute: typeof DashboardAdminDashboardPostsNewIndexRoute
+  DashboardAdminDashboardPostsPlatformsIndexRoute: typeof DashboardAdminDashboardPostsPlatformsIndexRoute
+  DashboardAdminDashboardUsersUserIdIndexRoute: typeof DashboardAdminDashboardUsersUserIdIndexRoute
+  DashboardAdminDashboardUsersRolesIndexRoute: typeof DashboardAdminDashboardUsersRolesIndexRoute
+  DashboardAdminDashboardCatalogHostingIdIndexRoute: typeof DashboardAdminDashboardCatalogHostingIdIndexRoute
+  DashboardAdminDashboardCatalogHostingNewIndexRoute: typeof DashboardAdminDashboardCatalogHostingNewIndexRoute
+  DashboardAdminDashboardCatalogPhysicalIdIndexRoute: typeof DashboardAdminDashboardCatalogPhysicalIdIndexRoute
+  DashboardAdminDashboardCatalogPhysicalNewIndexRoute: typeof DashboardAdminDashboardCatalogPhysicalNewIndexRoute
+  DashboardAdminDashboardCatalogProxyIdIndexRoute: typeof DashboardAdminDashboardCatalogProxyIdIndexRoute
+  DashboardAdminDashboardCatalogViaIdIndexRoute: typeof DashboardAdminDashboardCatalogViaIdIndexRoute
+  DashboardAdminDashboardCatalogVpsIdIndexRoute: typeof DashboardAdminDashboardCatalogVpsIdIndexRoute
+  DashboardAdminDashboardCatalogVpsNewIndexRoute: typeof DashboardAdminDashboardCatalogVpsNewIndexRoute
+  DashboardAdminDashboardPostsPostIdEditIndexRoute: typeof DashboardAdminDashboardPostsPostIdEditIndexRoute
+  DashboardAdminDashboardCatalogHostingIdEditIndexRoute: typeof DashboardAdminDashboardCatalogHostingIdEditIndexRoute
+  DashboardAdminDashboardCatalogPhysicalIdEditIndexRoute: typeof DashboardAdminDashboardCatalogPhysicalIdEditIndexRoute
+  DashboardAdminDashboardCatalogProxyIdEditIndexRoute: typeof DashboardAdminDashboardCatalogProxyIdEditIndexRoute
+  DashboardAdminDashboardCatalogViaIdEditIndexRoute: typeof DashboardAdminDashboardCatalogViaIdEditIndexRoute
+  DashboardAdminDashboardCatalogVpsIdEditIndexRoute: typeof DashboardAdminDashboardCatalogVpsIdEditIndexRoute
+}
+
+const DashboardAdminRouteChildren: DashboardAdminRouteChildren = {
+  DashboardAdminDashboardForbiddenRoute: DashboardAdminDashboardForbiddenRoute,
+  DashboardAdminDashboardIndexRoute: DashboardAdminDashboardIndexRoute,
+  DashboardAdminDashboardAuditLogsIndexRoute:
+    DashboardAdminDashboardAuditLogsIndexRoute,
+  DashboardAdminDashboardMediaIndexRoute:
+    DashboardAdminDashboardMediaIndexRoute,
+  DashboardAdminDashboardOrdersIndexRoute:
+    DashboardAdminDashboardOrdersIndexRoute,
+  DashboardAdminDashboardPostsIndexRoute:
+    DashboardAdminDashboardPostsIndexRoute,
+  DashboardAdminDashboardSettingsIndexRoute:
+    DashboardAdminDashboardSettingsIndexRoute,
+  DashboardAdminDashboardUsersIndexRoute:
+    DashboardAdminDashboardUsersIndexRoute,
+  DashboardAdminDashboardCatalogProxyNewRoute:
+    DashboardAdminDashboardCatalogProxyNewRoute,
+  DashboardAdminDashboardCatalogViaNewRoute:
+    DashboardAdminDashboardCatalogViaNewRoute,
+  DashboardAdminDashboardAppearanceMenuIndexRoute:
+    DashboardAdminDashboardAppearanceMenuIndexRoute,
+  DashboardAdminDashboardCatalogHostingIndexRoute:
+    DashboardAdminDashboardCatalogHostingIndexRoute,
+  DashboardAdminDashboardCatalogPhysicalIndexRoute:
+    DashboardAdminDashboardCatalogPhysicalIndexRoute,
+  DashboardAdminDashboardCatalogProvidersIndexRoute:
+    DashboardAdminDashboardCatalogProvidersIndexRoute,
+  DashboardAdminDashboardCatalogProxyIndexRoute:
+    DashboardAdminDashboardCatalogProxyIndexRoute,
+  DashboardAdminDashboardCatalogViaIndexRoute:
+    DashboardAdminDashboardCatalogViaIndexRoute,
+  DashboardAdminDashboardCatalogVpsIndexRoute:
+    DashboardAdminDashboardCatalogVpsIndexRoute,
+  DashboardAdminDashboardPostsCategoriesIndexRoute:
+    DashboardAdminDashboardPostsCategoriesIndexRoute,
+  DashboardAdminDashboardPostsNewIndexRoute:
+    DashboardAdminDashboardPostsNewIndexRoute,
+  DashboardAdminDashboardPostsPlatformsIndexRoute:
+    DashboardAdminDashboardPostsPlatformsIndexRoute,
+  DashboardAdminDashboardUsersUserIdIndexRoute:
+    DashboardAdminDashboardUsersUserIdIndexRoute,
+  DashboardAdminDashboardUsersRolesIndexRoute:
+    DashboardAdminDashboardUsersRolesIndexRoute,
+  DashboardAdminDashboardCatalogHostingIdIndexRoute:
+    DashboardAdminDashboardCatalogHostingIdIndexRoute,
+  DashboardAdminDashboardCatalogHostingNewIndexRoute:
+    DashboardAdminDashboardCatalogHostingNewIndexRoute,
+  DashboardAdminDashboardCatalogPhysicalIdIndexRoute:
+    DashboardAdminDashboardCatalogPhysicalIdIndexRoute,
+  DashboardAdminDashboardCatalogPhysicalNewIndexRoute:
+    DashboardAdminDashboardCatalogPhysicalNewIndexRoute,
+  DashboardAdminDashboardCatalogProxyIdIndexRoute:
+    DashboardAdminDashboardCatalogProxyIdIndexRoute,
+  DashboardAdminDashboardCatalogViaIdIndexRoute:
+    DashboardAdminDashboardCatalogViaIdIndexRoute,
+  DashboardAdminDashboardCatalogVpsIdIndexRoute:
+    DashboardAdminDashboardCatalogVpsIdIndexRoute,
+  DashboardAdminDashboardCatalogVpsNewIndexRoute:
+    DashboardAdminDashboardCatalogVpsNewIndexRoute,
+  DashboardAdminDashboardPostsPostIdEditIndexRoute:
+    DashboardAdminDashboardPostsPostIdEditIndexRoute,
+  DashboardAdminDashboardCatalogHostingIdEditIndexRoute:
+    DashboardAdminDashboardCatalogHostingIdEditIndexRoute,
+  DashboardAdminDashboardCatalogPhysicalIdEditIndexRoute:
+    DashboardAdminDashboardCatalogPhysicalIdEditIndexRoute,
+  DashboardAdminDashboardCatalogProxyIdEditIndexRoute:
+    DashboardAdminDashboardCatalogProxyIdEditIndexRoute,
+  DashboardAdminDashboardCatalogViaIdEditIndexRoute:
+    DashboardAdminDashboardCatalogViaIdEditIndexRoute,
+  DashboardAdminDashboardCatalogVpsIdEditIndexRoute:
+    DashboardAdminDashboardCatalogVpsIdEditIndexRoute,
+}
+
+const DashboardAdminRouteWithChildren = DashboardAdminRoute._addFileChildren(
+  DashboardAdminRouteChildren,
+)
+
+interface DashboardCustomerRouteChildren {
+  DashboardCustomerDashboardIndexRoute: typeof DashboardCustomerDashboardIndexRoute
+  DashboardCustomerDashboardOrdersIdRoute: typeof DashboardCustomerDashboardOrdersIdRoute
+  DashboardCustomerDashboardServicesIdRoute: typeof DashboardCustomerDashboardServicesIdRoute
+  DashboardCustomerDashboardBuyIndexRoute: typeof DashboardCustomerDashboardBuyIndexRoute
+  DashboardCustomerDashboardCartIndexRoute: typeof DashboardCustomerDashboardCartIndexRoute
+  DashboardCustomerDashboardCheckoutIndexRoute: typeof DashboardCustomerDashboardCheckoutIndexRoute
+  DashboardCustomerDashboardOrdersIndexRoute: typeof DashboardCustomerDashboardOrdersIndexRoute
+  DashboardCustomerDashboardServicesIndexRoute: typeof DashboardCustomerDashboardServicesIndexRoute
+}
+
+const DashboardCustomerRouteChildren: DashboardCustomerRouteChildren = {
+  DashboardCustomerDashboardIndexRoute: DashboardCustomerDashboardIndexRoute,
+  DashboardCustomerDashboardOrdersIdRoute:
+    DashboardCustomerDashboardOrdersIdRoute,
+  DashboardCustomerDashboardServicesIdRoute:
+    DashboardCustomerDashboardServicesIdRoute,
+  DashboardCustomerDashboardBuyIndexRoute:
+    DashboardCustomerDashboardBuyIndexRoute,
+  DashboardCustomerDashboardCartIndexRoute:
+    DashboardCustomerDashboardCartIndexRoute,
+  DashboardCustomerDashboardCheckoutIndexRoute:
+    DashboardCustomerDashboardCheckoutIndexRoute,
+  DashboardCustomerDashboardOrdersIndexRoute:
+    DashboardCustomerDashboardOrdersIndexRoute,
+  DashboardCustomerDashboardServicesIndexRoute:
+    DashboardCustomerDashboardServicesIndexRoute,
+}
+
+const DashboardCustomerRouteWithChildren =
+  DashboardCustomerRoute._addFileChildren(DashboardCustomerRouteChildren)
+
 interface DashboardRouteChildren {
-  DashboardDashboardForbiddenRoute: typeof DashboardDashboardForbiddenRoute
-  DashboardDashboardIndexRoute: typeof DashboardDashboardIndexRoute
-  DashboardDashboardAuditLogsIndexRoute: typeof DashboardDashboardAuditLogsIndexRoute
-  DashboardDashboardMediaIndexRoute: typeof DashboardDashboardMediaIndexRoute
-  DashboardDashboardPostsIndexRoute: typeof DashboardDashboardPostsIndexRoute
-  DashboardDashboardSettingsIndexRoute: typeof DashboardDashboardSettingsIndexRoute
-  DashboardDashboardUsersIndexRoute: typeof DashboardDashboardUsersIndexRoute
-  DashboardDashboardCatalogProxyNewRoute: typeof DashboardDashboardCatalogProxyNewRoute
-  DashboardDashboardCatalogViaNewRoute: typeof DashboardDashboardCatalogViaNewRoute
-  DashboardDashboardAppearanceMenuIndexRoute: typeof DashboardDashboardAppearanceMenuIndexRoute
-  DashboardDashboardCatalogHostingIndexRoute: typeof DashboardDashboardCatalogHostingIndexRoute
-  DashboardDashboardCatalogPhysicalIndexRoute: typeof DashboardDashboardCatalogPhysicalIndexRoute
-  DashboardDashboardCatalogProvidersIndexRoute: typeof DashboardDashboardCatalogProvidersIndexRoute
-  DashboardDashboardCatalogProxyIndexRoute: typeof DashboardDashboardCatalogProxyIndexRoute
-  DashboardDashboardCatalogViaIndexRoute: typeof DashboardDashboardCatalogViaIndexRoute
-  DashboardDashboardCatalogVpsIndexRoute: typeof DashboardDashboardCatalogVpsIndexRoute
-  DashboardDashboardPostsCategoriesIndexRoute: typeof DashboardDashboardPostsCategoriesIndexRoute
-  DashboardDashboardPostsNewIndexRoute: typeof DashboardDashboardPostsNewIndexRoute
-  DashboardDashboardPostsPlatformsIndexRoute: typeof DashboardDashboardPostsPlatformsIndexRoute
-  DashboardDashboardUsersUserIdIndexRoute: typeof DashboardDashboardUsersUserIdIndexRoute
-  DashboardDashboardUsersRolesIndexRoute: typeof DashboardDashboardUsersRolesIndexRoute
-  DashboardDashboardCatalogHostingIdIndexRoute: typeof DashboardDashboardCatalogHostingIdIndexRoute
-  DashboardDashboardCatalogHostingNewIndexRoute: typeof DashboardDashboardCatalogHostingNewIndexRoute
-  DashboardDashboardCatalogPhysicalIdIndexRoute: typeof DashboardDashboardCatalogPhysicalIdIndexRoute
-  DashboardDashboardCatalogPhysicalNewIndexRoute: typeof DashboardDashboardCatalogPhysicalNewIndexRoute
-  DashboardDashboardCatalogProxyIdIndexRoute: typeof DashboardDashboardCatalogProxyIdIndexRoute
-  DashboardDashboardCatalogViaIdIndexRoute: typeof DashboardDashboardCatalogViaIdIndexRoute
-  DashboardDashboardCatalogVpsIdIndexRoute: typeof DashboardDashboardCatalogVpsIdIndexRoute
-  DashboardDashboardCatalogVpsNewIndexRoute: typeof DashboardDashboardCatalogVpsNewIndexRoute
-  DashboardDashboardPostsPostIdEditIndexRoute: typeof DashboardDashboardPostsPostIdEditIndexRoute
-  DashboardDashboardCatalogHostingIdEditIndexRoute: typeof DashboardDashboardCatalogHostingIdEditIndexRoute
-  DashboardDashboardCatalogPhysicalIdEditIndexRoute: typeof DashboardDashboardCatalogPhysicalIdEditIndexRoute
-  DashboardDashboardCatalogProxyIdEditIndexRoute: typeof DashboardDashboardCatalogProxyIdEditIndexRoute
-  DashboardDashboardCatalogViaIdEditIndexRoute: typeof DashboardDashboardCatalogViaIdEditIndexRoute
-  DashboardDashboardCatalogVpsIdEditIndexRoute: typeof DashboardDashboardCatalogVpsIdEditIndexRoute
+  DashboardAdminRoute: typeof DashboardAdminRouteWithChildren
+  DashboardCustomerRoute: typeof DashboardCustomerRouteWithChildren
 }
 
 const DashboardRouteChildren: DashboardRouteChildren = {
-  DashboardDashboardForbiddenRoute: DashboardDashboardForbiddenRoute,
-  DashboardDashboardIndexRoute: DashboardDashboardIndexRoute,
-  DashboardDashboardAuditLogsIndexRoute: DashboardDashboardAuditLogsIndexRoute,
-  DashboardDashboardMediaIndexRoute: DashboardDashboardMediaIndexRoute,
-  DashboardDashboardPostsIndexRoute: DashboardDashboardPostsIndexRoute,
-  DashboardDashboardSettingsIndexRoute: DashboardDashboardSettingsIndexRoute,
-  DashboardDashboardUsersIndexRoute: DashboardDashboardUsersIndexRoute,
-  DashboardDashboardCatalogProxyNewRoute:
-    DashboardDashboardCatalogProxyNewRoute,
-  DashboardDashboardCatalogViaNewRoute: DashboardDashboardCatalogViaNewRoute,
-  DashboardDashboardAppearanceMenuIndexRoute:
-    DashboardDashboardAppearanceMenuIndexRoute,
-  DashboardDashboardCatalogHostingIndexRoute:
-    DashboardDashboardCatalogHostingIndexRoute,
-  DashboardDashboardCatalogPhysicalIndexRoute:
-    DashboardDashboardCatalogPhysicalIndexRoute,
-  DashboardDashboardCatalogProvidersIndexRoute:
-    DashboardDashboardCatalogProvidersIndexRoute,
-  DashboardDashboardCatalogProxyIndexRoute:
-    DashboardDashboardCatalogProxyIndexRoute,
-  DashboardDashboardCatalogViaIndexRoute:
-    DashboardDashboardCatalogViaIndexRoute,
-  DashboardDashboardCatalogVpsIndexRoute:
-    DashboardDashboardCatalogVpsIndexRoute,
-  DashboardDashboardPostsCategoriesIndexRoute:
-    DashboardDashboardPostsCategoriesIndexRoute,
-  DashboardDashboardPostsNewIndexRoute: DashboardDashboardPostsNewIndexRoute,
-  DashboardDashboardPostsPlatformsIndexRoute:
-    DashboardDashboardPostsPlatformsIndexRoute,
-  DashboardDashboardUsersUserIdIndexRoute:
-    DashboardDashboardUsersUserIdIndexRoute,
-  DashboardDashboardUsersRolesIndexRoute:
-    DashboardDashboardUsersRolesIndexRoute,
-  DashboardDashboardCatalogHostingIdIndexRoute:
-    DashboardDashboardCatalogHostingIdIndexRoute,
-  DashboardDashboardCatalogHostingNewIndexRoute:
-    DashboardDashboardCatalogHostingNewIndexRoute,
-  DashboardDashboardCatalogPhysicalIdIndexRoute:
-    DashboardDashboardCatalogPhysicalIdIndexRoute,
-  DashboardDashboardCatalogPhysicalNewIndexRoute:
-    DashboardDashboardCatalogPhysicalNewIndexRoute,
-  DashboardDashboardCatalogProxyIdIndexRoute:
-    DashboardDashboardCatalogProxyIdIndexRoute,
-  DashboardDashboardCatalogViaIdIndexRoute:
-    DashboardDashboardCatalogViaIdIndexRoute,
-  DashboardDashboardCatalogVpsIdIndexRoute:
-    DashboardDashboardCatalogVpsIdIndexRoute,
-  DashboardDashboardCatalogVpsNewIndexRoute:
-    DashboardDashboardCatalogVpsNewIndexRoute,
-  DashboardDashboardPostsPostIdEditIndexRoute:
-    DashboardDashboardPostsPostIdEditIndexRoute,
-  DashboardDashboardCatalogHostingIdEditIndexRoute:
-    DashboardDashboardCatalogHostingIdEditIndexRoute,
-  DashboardDashboardCatalogPhysicalIdEditIndexRoute:
-    DashboardDashboardCatalogPhysicalIdEditIndexRoute,
-  DashboardDashboardCatalogProxyIdEditIndexRoute:
-    DashboardDashboardCatalogProxyIdEditIndexRoute,
-  DashboardDashboardCatalogViaIdEditIndexRoute:
-    DashboardDashboardCatalogViaIdEditIndexRoute,
-  DashboardDashboardCatalogVpsIdEditIndexRoute:
-    DashboardDashboardCatalogVpsIdEditIndexRoute,
+  DashboardAdminRoute: DashboardAdminRouteWithChildren,
+  DashboardCustomerRoute: DashboardCustomerRouteWithChildren,
 }
 
 const DashboardRouteWithChildren = DashboardRoute._addFileChildren(

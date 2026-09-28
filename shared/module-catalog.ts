@@ -10,6 +10,7 @@ export const MODULE_CATALOG = {
   user: { name: 'Người dùng', resources: ['user', 'role'] },
   system: { name: 'Hệ thống', resources: ['setting', 'audit_log'] },
   catalog: { name: 'Danh mục dịch vụ', resources: ['product'] },
+  commerce: { name: 'Thương mại', resources: ['order'] },
 } as const
 
 export type ModuleCode = keyof typeof MODULE_CATALOG

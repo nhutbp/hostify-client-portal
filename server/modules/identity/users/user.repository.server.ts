@@ -1,6 +1,7 @@
 import type { Prisma } from '../../../../prisma/generated/client.js'
 import { prisma } from '../../../db/prisma'
 import type { UserStatus } from './types/user.constants.js'
+import { ROLE_CODES } from '../../../../shared/roles'
 
 export async function findUserByLogin(login: string) {
   const normalized = login.trim().toLowerCase()
@@ -56,6 +57,9 @@ export async function createUserRecord(data: {
           fullName: data.displayName,
           phone: data.phone,
         },
+      },
+      userRoles: {
+        create: { role: { connect: { code: ROLE_CODES.CUSTOMER } } },
       },
     },
     include: { userProfile: true },

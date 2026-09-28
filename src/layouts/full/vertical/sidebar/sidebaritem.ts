@@ -231,6 +231,14 @@ const SidebarContent: MenuItem[] = [
   },
   {
     id: uniqueId('menu-'),
+    titleKey: 'sidebar.orders',
+    icon: 'solar:clipboard-list-linear',
+    section: 'sidebar.sections.management',
+    url: '/admin/dashboard/orders',
+    permission: PERMISSION_CODES.COMMERCE_ORDER_VIEW,
+  },
+  {
+    id: uniqueId('menu-'),
     titleKey: 'sidebar.settings',
     icon: 'solar:settings-linear',
     section: 'sidebar.sections.system',

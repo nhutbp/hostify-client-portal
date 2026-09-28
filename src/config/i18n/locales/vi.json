@@ -191,6 +191,7 @@
       "products": "Sản phẩm / Dịch vụ",
       "content": "Nội dung",
       "customers": "Khách hàng",
+      "management": "Quản lý",
       "system": "Hệ thống",
       "other": "Khác"
     },
@@ -220,6 +221,7 @@
     "postCategories": "Danh mục bài viết",
     "postPlatforms": "Platform bài viết",
     "userManagement": "Quản lý người dùng",
+    "orders": "Đơn hàng",
     "userList": "Danh sách người dùng",
     "rolePermissions": "Vai trò & phân quyền",
     "settings": "Cài đặt",

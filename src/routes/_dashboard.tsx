@@ -1,5 +1,4 @@
 import { createFileRoute, Outlet, redirect } from '@tanstack/react-router'
-import FullLayout from '../layouts/full/FullLayout'
 import { getCurrentUser } from '../../server/modules/identity/auth/auth'
 import { unwrapSuccessResponse } from '@/utils/response'
 
@@ -11,18 +10,11 @@ export const Route = createFileRoute('/_dashboard')({
         to: '/login',
       })
     }
-    if (!user.canAccessDashboard) {
-      throw redirect({ to: '/' })
-    }
     return user
   },
   component: LayoutComponent,
 })
 
 function LayoutComponent() {
-  return (
-    <FullLayout>
-      <Outlet />
-    </FullLayout>
-  )
+  return <Outlet />
 }
