@@ -48,9 +48,7 @@
   margin-bottom: 7px;
 }
 .vps-basic-columns {
-  display: grid;
-  grid-template-columns: minmax(0, 1.55fr) minmax(0, 1fr);
-  gap: 22px;
+  display: block;
 }
 .vps-labeled-row {
   display: grid;
@@ -68,7 +66,7 @@
 }
 .vps-hardware-grid {
   display: grid;
-  grid-template-columns: 1.15fr 1.45fr 1.5fr 1.25fr 0.82fr;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 20px;
   align-items: start;
 }
@@ -79,7 +77,7 @@
 }
 .vps-pricing-grid {
   display: grid;
-  grid-template-columns: 40% minmax(0, 1fr);
+  grid-template-columns: minmax(0, 1fr);
   gap: 20px;
   align-items: start;
 }
@@ -92,11 +90,13 @@
   padding: 1px 5px;
   font-size: 13px;
   line-height: 18px;
+  min-width: 500px;
 }
 .vps-pricing-row:first-child {
   min-height: 40px;
 }
-.vps-create-page input:not([type='checkbox']):not([type='radio']):not([type='file']),
+.vps-create-page
+  input:not([type='checkbox']):not([type='radio']):not([type='file']),
 .vps-create-page select {
   min-height: 36px;
 }
@@ -141,9 +141,9 @@
 .vps-create-switch[data-on='true']::after {
   transform: translateX(15px);
 }
-@media (min-width: 1450px) {
+@media (min-width: 1280px) {
   .vps-create-grid {
-    grid-template-columns: minmax(0, 1fr) 395px;
+    grid-template-columns: minmax(0, 1fr) 360px;
   }
 }
 @media (max-width: 1449px) {
@@ -152,14 +152,15 @@
   }
 }
 @media (max-width: 760px) {
-  .vps-basic-columns,
-  .vps-pricing-grid {
-    grid-template-columns: minmax(0, 1fr);
-  }
   .vps-labeled-row {
     grid-template-columns: 86px minmax(0, 1fr);
   }
   .vps-hardware-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+@media (max-width: 480px) {
+  .vps-hardware-grid {
+    grid-template-columns: minmax(0, 1fr);
   }
 }

@@ -4,6 +4,12 @@ const moneySchema = z.coerce.number().int().min(0).max(10_000_000_000)
 
 export const createVpsPackageSchema = z.object({
   name: z.string().trim().min(2).max(120),
+  slug: z
+    .string()
+    .trim()
+    .min(2)
+    .max(120)
+    .regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/),
   description: z.string().trim().min(1).max(500),
   content: z.string().trim().max(100_000).default(''),
   code: z.string().trim().min(2).max(60).optional(),
@@ -32,12 +38,16 @@ export const createVpsPackageSchema = z.object({
     .min(1),
 })
 
+export const updateVpsPackageSchema = createVpsPackageSchema
+  .omit({ code: true })
+  .extend({ id: z.string().uuid() })
+
 export const vpsLookupSchema = z.object({})
+export const getVpsPackageSchema = z.object({ id: z.string().uuid() })
 export const listVpsPackagesSchema = z.object({
   page: z.coerce.number().int().min(1).default(1),
   limit: z.coerce.number().int().min(1).max(100).default(10),
   search: z.string().trim().max(120).default(''),
-  categorySlug: z.string().trim().max(100).default('vps'),
   providerCategoryId: z.string().uuid().optional(),
   datacenterId: z.string().uuid().optional(),
   status: z.enum(['ACTIVE', 'DRAFT']).optional(),
@@ -47,5 +57,7 @@ export const setVpsPackageStatusSchema = z.object({
   status: z.enum(['ACTIVE', 'DRAFT']),
 })
 export type CreateVpsPackageInput = z.infer<typeof createVpsPackageSchema>
+export type UpdateVpsPackageInput = z.infer<typeof updateVpsPackageSchema>
 export type ListVpsPackagesInput = z.infer<typeof listVpsPackagesSchema>
+export type GetVpsPackageInput = z.infer<typeof getVpsPackageSchema>
 export type SetVpsPackageStatusInput = z.infer<typeof setVpsPackageStatusSchema>

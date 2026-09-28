@@ -35,11 +35,14 @@ const CollapsibleMenuItem = ({
 }) => {
   const hasChildren = item.children && item.children.length > 0
   const isActive = item.active !== false && item.url === currentPath
-  const hasActiveChild = item.children?.some(
-    (child) =>
-      child.active !== false &&
-      (child.url === currentPath || currentPath.startsWith(`${child.url}/`)),
-  )
+  const activeChild = item.children
+    ?.filter(
+      (child) =>
+        child.active !== false &&
+        (child.url === currentPath || currentPath.startsWith(`${child.url}/`)),
+    )
+    .sort((a, b) => b.url.length - a.url.length)[0]
+  const hasActiveChild = Boolean(activeChild)
 
   // Calculate total badge count for parent menu
   const totalBadgeCount =
@@ -117,10 +120,7 @@ const CollapsibleMenuItem = ({
       >
         <div className="border-border ml-4 space-y-1 border-l pl-4">
           {item.children?.map((child) => {
-            const isChildActive =
-              child.active !== false &&
-              (child.url === currentPath ||
-                currentPath.startsWith(`${child.url}/`))
+            const isChildActive = child.id === activeChild?.id
             return (
               <Link
                 key={child.id}

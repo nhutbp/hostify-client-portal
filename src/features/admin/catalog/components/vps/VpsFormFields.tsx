@@ -1,4 +1,5 @@
 import type { ReactNode } from 'react'
+import type { LucideIcon } from 'lucide-react'
 
 export const vpsInputClass =
   'h-[30px] w-full rounded-[5px] border border-slate-200 bg-white px-2.5 text-xs text-[#18254b] outline-none focus:border-blue-500'
@@ -24,12 +25,12 @@ export function Field({
 }
 
 export function Section({
-  number,
+  icon: Icon,
   title,
   children,
   className = '',
 }: {
-  number: number
+  icon: LucideIcon
   title: string
   children: ReactNode
   className?: string
@@ -37,8 +38,8 @@ export function Section({
   return (
     <section className={`vps-create-section ${className}`}>
       <h2 className="flex items-center gap-2 text-[15px] font-bold text-[#101945]">
-        <span className="flex size-[23px] items-center justify-center rounded-full bg-blue-600 text-xs text-white">
-          {number}
+        <span className="flex size-7 items-center justify-center rounded-md bg-blue-600 text-white">
+          <Icon className="size-4" aria-hidden="true" />
         </span>
         {title}
       </h2>

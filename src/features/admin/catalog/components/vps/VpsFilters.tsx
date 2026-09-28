@@ -44,7 +44,7 @@ export function VpsFilters(props: Props) {
     </label>
   )
   return (
-    <div className="mb-4 grid gap-2 md:grid-cols-[minmax(180px,1fr)_145px_145px_145px]">
+    <div className="mb-4 grid gap-2 md:grid-cols-2 xl:grid-cols-[minmax(280px,1fr)_190px_160px_170px]">
       <label className="relative">
         <Search className="absolute top-3 left-3 size-4 text-slate-400" />
         <input

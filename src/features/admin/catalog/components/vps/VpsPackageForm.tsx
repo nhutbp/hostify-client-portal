@@ -1,27 +1,37 @@
 import { useEffect, useState } from 'react'
+import { useForm } from '@tanstack/react-form'
+import { useSelector } from '@tanstack/react-store'
 import { useNavigate } from '@tanstack/react-router'
 import { useTranslation } from 'react-i18next'
 import {
+  Box,
+  Building2,
   Cpu,
   Gauge,
   HardDrive,
-  Info,
-  Loader2,
   MemoryStick,
   Plus,
   Server,
+  Tag,
   Trash2,
 } from 'lucide-react'
-import type { CreateVpsPackageInput } from '../../services/vpsService'
+import type {
+  CreateVpsPackageInput,
+  VpsPackageDetail,
+} from '../../services/vpsService'
 import {
   useCreateVpsPackage,
+  useUpdateVpsPackage,
   useVpsPackageLookups,
 } from '../../hooks/useVpsPackage'
-import type { VpsPlan } from '../../types/vps'
 import { toast } from '@/utils/toast'
+import { slugify } from '@/utils/utils'
 import { TiptapEditor } from '@/components/editor/TiptapEditor'
-import { VpsServerIllustration } from './VpsServerIllustration'
 import { Field, NumberControl, Section, vpsInputClass } from './VpsFormFields'
+import { VpsDetailsTabs } from './VpsDetailsTabs'
+import type { VpsDetailsTab } from './VpsDetailsTabs'
+import { VpsPublishingSection } from './VpsPublishingSection'
+import { VpsAdditionalSection } from './VpsAdditionalSection'
 import { vpsOperatingSystems } from '../../data/operatingSystems'
 import { CatalogImageMediaPicker } from '../CatalogImageMediaPicker'
 
@@ -58,40 +68,124 @@ const periodsDefault: Period[] = [
     discount: '-15%',
   },
 ]
-export function VpsPackageForm({ initialPlan }: { initialPlan?: VpsPlan }) {
+
+function getInitialPeriods(product?: VpsPackageDetail): Period[] {
+  if (!product) return periodsDefault
+  const saved = product.billingPrices
+  const currentPrices = product.plans[0]?.prices ?? []
+  const periods = periodsDefault.flatMap((template) => {
+    const configured = saved.find(
+      (value) =>
+        value &&
+        typeof value === 'object' &&
+        !Array.isArray(value) &&
+        value.billingCycle === template.billingCycle,
+    )
+    if (
+      configured &&
+      typeof configured === 'object' &&
+      !Array.isArray(configured) &&
+      typeof configured.amount === 'number'
+    ) {
+      const discount =
+        typeof configured.discountPercent === 'number'
+          ? configured.discountPercent
+          : 0
+      return [
+        {
+          ...template,
+          amount: String(configured.amount),
+          discount: template.billingCycle === 'MONTHLY' ? '-' : `-${discount}%`,
+        },
+      ]
+    }
+    const current = currentPrices.find(
+      (price) => price.billingCycle === template.billingCycle,
+    )
+    return current
+      ? [
+          {
+            ...template,
+            amount: String(current.amountMinor),
+            discount: template.billingCycle === 'MONTHLY' ? '-' : '0%',
+          },
+        ]
+      : []
+  })
+  return periods.length ? periods : periodsDefault
+}
+
+export function VpsPackageForm({
+  initialPackage,
+}: {
+  initialPackage?: VpsPackageDetail
+}) {
   const { t } = useTranslation('catalog')
   const navigate = useNavigate()
   const lookups = useVpsPackageLookups()
   const createPackage = useCreateVpsPackage()
+  const updatePackage = useUpdateVpsPackage()
   const [mediaPickerOpen, setMediaPickerOpen] = useState(false)
-  const [form, setForm] = useState({
-    name: initialPlan?.name ?? t('vps.form.defaultName'),
-    description: initialPlan?.description ?? t('vps.form.defaultDescription'),
-    content: '',
-    providerId: '',
-    providerCategoryId: '',
-    datacenterIds: [] as string[],
-    cpu: '4',
-    ramGb: '8',
-    diskGb: '100',
-    diskType: 'NVMe SSD',
-    operatingSystem: vpsOperatingSystems[0] as string,
-    bandwidth: t('vps.form.unlimited'),
-    ipCount: '1',
-    status: 'ACTIVE' as 'DRAFT' | 'ACTIVE',
-    featured: true,
-    displayOrder: '0',
-    tags: t('vps.form.tagValue'),
-    imageUrl: '',
+  const [slugManuallyEdited, setSlugManuallyEdited] = useState(false)
+  const formApi = useForm({
+    defaultValues: (() => {
+      const features = initialPackage?.plans[0]?.features
+      const config =
+        features && typeof features === 'object' && !Array.isArray(features)
+          ? (features as Record<string, unknown>)
+          : {}
+      const getNumber = (key: string, fallback: number) =>
+        String(typeof config[key] === 'number' ? config[key] : fallback)
+      return {
+        name: initialPackage?.name ?? t('vps.form.defaultName'),
+        slug: initialPackage?.slug ?? slugify(t('vps.form.defaultName')),
+        description:
+          initialPackage?.description ?? t('vps.form.defaultDescription'),
+        content: initialPackage?.content ?? '',
+        providerId: initialPackage?.providerId ?? '',
+        providerCategoryId: initialPackage?.providerCategory?.id ?? '',
+        datacenterIds: initialPackage?.datacenterIds ?? ([] as string[]),
+        cpu: getNumber('cpu', 4),
+        ramGb: getNumber('ramGb', 8),
+        diskGb: getNumber('diskGb', 100),
+        diskType:
+          typeof config.diskType === 'string' ? config.diskType : 'NVMe SSD',
+        operatingSystem:
+          initialPackage?.operatingSystem ?? (vpsOperatingSystems[0] as string),
+        bandwidth:
+          config.bandwidth === 'UNLIMITED'
+            ? t('vps.form.unlimited')
+            : typeof config.bandwidth === 'string'
+              ? config.bandwidth
+              : t('vps.form.unlimited'),
+        ipCount: getNumber('ipCount', 1),
+        status:
+          initialPackage?.status === 'DRAFT'
+            ? ('DRAFT' as const)
+            : ('ACTIVE' as const),
+        featured: initialPackage?.featured ?? true,
+        displayOrder: String(initialPackage?.displayOrder ?? 0),
+        tags: initialPackage?.tags.join(', ') ?? t('vps.form.tagValue'),
+        imageUrl: initialPackage?.imageUrl ?? '',
+        billingPrices: getInitialPeriods(initialPackage),
+      }
+    })(),
+    onSubmit: async ({ value }) => savePackage(value),
   })
-  const [periods, setPeriods] = useState(periodsDefault)
+  const form = useSelector(formApi.store, (state) => state.values)
+  const periods = form.billingPrices
   const [error, setError] = useState('')
-  const [activeTab, setActiveTab] = useState<'os' | 'location'>('os')
+  const [detailsTab, setDetailsTab] = useState<VpsDetailsTab>('hardware')
   const [tagDraft, setTagDraft] = useState('')
   const setValue = <K extends keyof typeof form>(
     key: K,
     value: (typeof form)[K],
-  ) => setForm((current) => ({ ...current, [key]: value }))
+  ) => formApi.setFieldValue(key, value as never)
+  const setPeriods = (update: (items: Period[]) => Period[]) =>
+    formApi.setFieldValue(
+      'billingPrices',
+      update(formApi.state.values.billingPrices),
+    )
   useEffect(() => {
     const provider = lookups.data?.providers[0]
     if (provider && !form.providerId) setValue('providerId', provider.id)
@@ -152,11 +246,8 @@ export function VpsPackageForm({ initialPlan }: { initialPlan?: VpsPlan }) {
   const toggleDatacenter = (id: string) => {
     const chosen = lookups.data?.datacenters.find((item) => item.id === id)
     if (chosen && chosen.providerId !== form.providerId) {
-      setForm((current) => ({
-        ...current,
-        providerId: chosen.providerId,
-        datacenterIds: [id],
-      }))
+      setValue('providerId', chosen.providerId)
+      setValue('datacenterIds', [id])
       return
     }
     setValue(
@@ -191,53 +282,78 @@ export function VpsPackageForm({ initialPlan }: { initialPlan?: VpsPlan }) {
       setTagDraft('')
     }
   }
-  const submit = async (status: 'DRAFT' | 'ACTIVE') => {
+  const savePackage = async (value: typeof form) => {
     setError('')
-    if (!form.providerCategoryId) {
+    if (!value.slug || value.slug.length < 2) {
+      setError(t('vps.form.slugRequired'))
+      return
+    }
+    if (!value.providerCategoryId) {
       setError(t('vps.form.selectProvider'))
+      setDetailsTab('provider')
       return
     }
     const input: CreateVpsPackageInput = {
-      name: form.name,
-      description: form.description,
-      content: form.content,
-      status,
-      featured: form.featured,
-      displayOrder: Number(form.displayOrder),
-      tags: form.tags
+      name: value.name,
+      slug: value.slug,
+      description: value.description,
+      content: value.content,
+      status: value.status,
+      featured: value.featured,
+      displayOrder: Number(value.displayOrder),
+      tags: value.tags
         .split(',')
         .map((item) => item.trim())
         .filter(Boolean),
-      imageUrl: form.imageUrl || null,
-      cpu: Number(form.cpu),
-      ramGb: Number(form.ramGb),
-      diskGb: Number(form.diskGb),
-      diskType: form.diskType,
-      operatingSystem: form.operatingSystem,
+      imageUrl: value.imageUrl || null,
+      cpu: Number(value.cpu),
+      ramGb: Number(value.ramGb),
+      diskGb: Number(value.diskGb),
+      diskType: value.diskType,
+      operatingSystem: value.operatingSystem,
       bandwidth:
-        form.bandwidth === t('vps.form.unlimited')
+        value.bandwidth === t('vps.form.unlimited')
           ? 'UNLIMITED'
-          : form.bandwidth,
-      ipCount: Number(form.ipCount),
-      providerCategoryId: form.providerCategoryId,
-      datacenterIds: form.datacenterIds.length
-        ? form.datacenterIds
+          : value.bandwidth,
+      ipCount: Number(value.ipCount),
+      providerCategoryId: value.providerCategoryId,
+      datacenterIds: value.datacenterIds.length
+        ? value.datacenterIds
         : datacenters.slice(0, 1).map((item) => item.id),
-      billingPrices: periods.map((item) => ({
+      billingPrices: value.billingPrices.map((item) => ({
         billingCycle: item.billingCycle,
         amount: Number(item.amount),
         discountPercent: Number(item.discount.replace(/[^0-9]/g, '')) || 0,
       })),
     }
     try {
-      await createPackage.mutateAsync(input)
-      toast.success(t('vps.form.created'))
-      await navigate({ to: '/dashboard/catalog/vps' })
+      if (initialPackage) {
+        await updatePackage.mutateAsync({ ...input, id: initialPackage.id })
+        toast.success(t('vps.form.updated'))
+        await navigate({
+          to: '/dashboard/catalog/vps/$id',
+          params: { id: initialPackage.id },
+        })
+      } else {
+        await createPackage.mutateAsync(input)
+        toast.success(t('vps.form.created'))
+        await navigate({ to: '/dashboard/catalog/vps' })
+      }
     } catch (cause) {
       setError(
-        cause instanceof Error ? cause.message : t('vps.form.createFailed'),
+        cause instanceof Error
+          ? cause.message
+          : t(
+              initialPackage
+                ? 'vps.form.updateFailed'
+                : 'vps.form.createFailed',
+            ),
       )
     }
+  }
+  const submit = (status: 'DRAFT' | 'ACTIVE') => {
+    formApi.setFieldValue('status', status)
+    void formApi.handleSubmit()
   }
   const rows = [
     { icon: Cpu, value: `${form.cpu} vCPU` },
@@ -259,13 +375,6 @@ export function VpsPackageForm({ initialPlan }: { initialPlan?: VpsPlan }) {
   const allDatacenters = [...(lookups.data?.datacenters ?? [])].sort(
     (a, b) => datacenterOrder.indexOf(a.code) - datacenterOrder.indexOf(b.code),
   )
-  const flags: Record<string, string> = {
-    VN: '🇻🇳',
-    SG: '🇸🇬',
-    JP: '🇯🇵',
-    US: '🇺🇸',
-    DE: '🇩🇪',
-  }
   return (
     <div className="text-[#101945]">
       {error && (
@@ -276,7 +385,7 @@ export function VpsPackageForm({ initialPlan }: { initialPlan?: VpsPlan }) {
       <div className="vps-create-grid">
         <div className="min-w-0 space-y-2.5">
           <Section
-            number={1}
+            icon={Box}
             title={t('vps.form.sectionBasic')}
             className="min-h-[308px]"
           >
@@ -292,12 +401,32 @@ export function VpsPackageForm({ initialPlan }: { initialPlan?: VpsPlan }) {
                       className={inputClass}
                       maxLength={100}
                       value={form.name}
-                      onChange={(event) => setValue('name', event.target.value)}
+                      onChange={(event) => {
+                        const name = event.target.value
+                        setValue('name', name)
+                        if (!slugManuallyEdited) setValue('slug', slugify(name))
+                      }}
                     />
                     <span className="absolute bottom-0.5 right-2 text-[10px] text-[#7182a4]">
                       {form.name.length}/100
                     </span>
                   </div>
+                </div>
+                <div className="vps-labeled-row">
+                  <label htmlFor="vps-slug">
+                    {t('vps.form.slug')} <span className="text-red-500">*</span>
+                  </label>
+                  <input
+                    id="vps-slug"
+                    className={inputClass}
+                    maxLength={120}
+                    value={form.slug}
+                    onChange={(event) => {
+                      setSlugManuallyEdited(true)
+                      setValue('slug', slugify(event.target.value))
+                    }}
+                    placeholder={t('vps.form.slugPlaceholder')}
+                  />
                 </div>
                 <div className="vps-labeled-row">
                   <label htmlFor="vps-description">
@@ -307,7 +436,7 @@ export function VpsPackageForm({ initialPlan }: { initialPlan?: VpsPlan }) {
                   <div className="relative">
                     <textarea
                       id="vps-description"
-                      className="h-[65px] w-full resize-none rounded-[5px] border bg-white px-2.5 py-2 text-xs"
+                      className="h-[110px] w-full resize-none rounded-[5px] border bg-white px-2.5 py-2 pb-6 text-xs"
                       maxLength={200}
                       value={form.description}
                       onChange={(event) =>
@@ -361,106 +490,6 @@ export function VpsPackageForm({ initialPlan }: { initialPlan?: VpsPlan }) {
                   </div>
                 </div>
               </div>
-              <div className="space-y-3">
-                <div>
-                  <p className="mb-1 text-xs">{t('vps.form.status')}</p>
-                  <div className="flex gap-5 text-xs">
-                    <label className="flex items-center gap-1.5">
-                      <input
-                        type="radio"
-                        checked={form.status === 'ACTIVE'}
-                        onChange={() => setValue('status', 'ACTIVE')}
-                        name="status"
-                      />
-                      {t('vps.form.visible')}
-                    </label>
-                    <label className="flex items-center gap-1.5">
-                      <input
-                        type="radio"
-                        checked={form.status === 'DRAFT'}
-                        onChange={() => setValue('status', 'DRAFT')}
-                        name="status"
-                      />
-                      {t('vps.form.hidden')}
-                    </label>
-                  </div>
-                </div>
-                <div>
-                  <p className="mb-1 text-xs">{t('vps.form.featured')}</p>
-                  <label className="flex items-center gap-2 text-xs">
-                    <input
-                      type="checkbox"
-                      className="sr-only"
-                      checked={form.featured}
-                      onChange={(event) =>
-                        setValue('featured', event.target.checked)
-                      }
-                    />
-                    <span
-                      className="vps-create-switch"
-                      data-on={form.featured}
-                    />
-                    {t('vps.form.showOnHome')}
-                  </label>
-                </div>
-                <div className="flex items-center gap-3">
-                  <label
-                    htmlFor="vps-display-order"
-                    className="w-24 shrink-0 text-xs"
-                  >
-                    {t('vps.form.displayOrder')}
-                  </label>
-                  <input
-                    id="vps-display-order"
-                    className={inputClass}
-                    type="number"
-                    min="0"
-                    value={form.displayOrder}
-                    onChange={(event) =>
-                      setValue('displayOrder', event.target.value)
-                    }
-                  />
-                </div>
-                <div>
-                  <p className="mb-1 text-xs">{t('vps.form.image')}</p>
-                  <div className="flex items-start gap-3">
-                    <div className="flex h-[72px] w-[120px] shrink-0 items-center justify-center overflow-hidden rounded-md bg-[#eaf3ff]">
-                      {form.imageUrl ? (
-                        <img
-                          src={form.imageUrl}
-                          alt={form.name}
-                          className="h-full w-full object-cover"
-                        />
-                      ) : (
-                        <VpsServerIllustration />
-                      )}
-                    </div>
-                    <div>
-                      <div className="flex gap-1">
-                        <button
-                          type="button"
-                          onClick={() => setMediaPickerOpen(true)}
-                          className="h-[30px] rounded-[5px] border border-[#d6e2f6] px-2.5 text-xs text-[#073b9e]"
-                        >
-                          {t('vps.form.changeImage')}
-                        </button>
-                        <button
-                          type="button"
-                          onClick={() => setValue('imageUrl', '')}
-                          className="h-[30px] rounded-[5px] border border-[#f9d8dd] bg-[#fff8f9] px-3 text-xs text-red-500"
-                        >
-                          {t('vps.form.removeImage')}
-                        </button>
-                      </div>
-                      <p className="mt-1.5 text-[10px] leading-4 text-[#607397]">
-                        {t('vps.form.imageFormatHint')}
-                        <br />
-                        {t('vps.form.imageSizeHint')}
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </div>
             </div>
             <div className="mt-4">
               <p className="mb-2 text-sm font-medium text-[#26385c]">
@@ -473,207 +502,285 @@ export function VpsPackageForm({ initialPlan }: { initialPlan?: VpsPlan }) {
               />
             </div>
           </Section>
-          <Section
-            number={2}
-            title={t('vps.form.sectionHardware')}
-            className="min-h-[156px]"
+          <VpsDetailsTabs activeTab={detailsTab} onChange={setDetailsTab} />
+          <div
+            id="vps-details-hardware-panel"
+            role="tabpanel"
+            aria-labelledby="vps-details-hardware-tab"
+            hidden={detailsTab !== 'hardware'}
+            className="pt-2"
           >
-            <div className="vps-hardware-grid">
-              <Field label={t('vps.form.cpu')} required>
-                <NumberControl
-                  value={form.cpu}
-                  onChange={(value) => setValue('cpu', value)}
-                  min={1}
-                  buttons
-                />
-              </Field>
-              <Field label={t('vps.form.ram')} required>
-                <NumberControl
-                  value={form.ramGb}
-                  onChange={(value) => setValue('ramGb', value)}
-                  min={1}
-                  unit="GB"
-                  buttons
-                />
-              </Field>
-              <Field label={t('vps.form.disk')} required>
-                <NumberControl
-                  value={form.diskGb}
-                  onChange={(value) => setValue('diskGb', value)}
-                  min={1}
-                  unit="GB"
-                  buttons
-                />
-                <select
-                  className={`${inputClass} mt-1`}
-                  value={form.diskType}
-                  onChange={(event) => setValue('diskType', event.target.value)}
-                >
-                  <option value="NVMe SSD">NVMe SSD (Hiệu suất cao)</option>
-                  <option value="SSD">SSD</option>
-                  <option value="HDD">HDD</option>
-                </select>
-              </Field>
-              <Field label={t('vps.form.bandwidth')} required>
-                <div className="flex h-[30px] overflow-hidden rounded-[5px] border border-[#d6e2f6] text-xs">
-                  <input
-                    className="min-w-0 flex-1 px-2.5"
-                    value={form.bandwidth}
-                    onChange={(event) =>
-                      setValue('bandwidth', event.target.value)
-                    }
+            <Section
+              icon={Server}
+              title={t('vps.form.sectionHardware')}
+              className="min-h-[156px]"
+            >
+              <div className="vps-hardware-grid">
+                <Field label={t('vps.form.cpu')} required>
+                  <NumberControl
+                    value={form.cpu}
+                    onChange={(value) => setValue('cpu', value)}
+                    min={1}
+                    buttons
                   />
-                  <span className="flex items-center border-l bg-[#f4f8fe] px-2 text-[#53688b]">
-                    Mbps
-                  </span>
-                </div>
-              </Field>
-              <Field label={t('vps.form.ipCount')} required>
-                <input
-                  className={inputClass}
-                  type="number"
-                  min="1"
-                  value={form.ipCount}
-                  onChange={(event) => setValue('ipCount', event.target.value)}
-                />
-              </Field>
-            </div>
-          </Section>
-          <Section number={3} title={t('vps.form.sectionPricing')}>
-            <div className="vps-pricing-grid">
-              <div>
-                <Field label={t('vps.form.price')} required>
-                  <div className="flex h-[30px] overflow-hidden rounded-[5px] border border-[#d6e2f6]">
+                </Field>
+                <Field label={t('vps.form.ram')} required>
+                  <NumberControl
+                    value={form.ramGb}
+                    onChange={(value) => setValue('ramGb', value)}
+                    min={1}
+                    unit="GB"
+                    buttons
+                  />
+                </Field>
+                <Field label={t('vps.form.disk')} required>
+                  <NumberControl
+                    value={form.diskGb}
+                    onChange={(value) => setValue('diskGb', value)}
+                    min={1}
+                    unit="GB"
+                    buttons
+                  />
+                  <select
+                    className={`${inputClass} mt-1`}
+                    value={form.diskType}
+                    onChange={(event) =>
+                      setValue('diskType', event.target.value)
+                    }
+                  >
+                    <option value="NVMe SSD">NVMe SSD (Hiệu suất cao)</option>
+                    <option value="SSD">SSD</option>
+                    <option value="HDD">HDD</option>
+                  </select>
+                </Field>
+                <Field label={t('vps.form.bandwidth')} required>
+                  <div className="flex h-[30px] overflow-hidden rounded-[5px] border border-[#d6e2f6] text-xs">
                     <input
-                      className="min-w-0 flex-1 px-3 text-xs"
-                      inputMode="numeric"
-                      value={formatMoney(periods[0].amount)}
+                      className="min-w-0 flex-1 px-2.5"
+                      value={form.bandwidth}
                       onChange={(event) =>
-                        updatePeriod(0, 'amount', event.target.value)
+                        setValue('bandwidth', event.target.value)
                       }
                     />
-                    <span className="flex items-center border-l bg-[#f4f8fe] px-4 text-xs text-[#53688b]">
-                      {t('vps.form.priceMonth')}
+                    <span className="flex items-center border-l bg-[#f4f8fe] px-2 text-[#53688b]">
+                      Mbps
                     </span>
                   </div>
                 </Field>
-                <p className="mt-5 text-xs font-medium">
-                  {t('vps.form.durationDiscount')}
-                </p>
-                <div className="mt-1 rounded-md bg-[#eaf4ff] px-3 py-2 text-[11px] leading-4 text-[#31568f]">
-                  {t('vps.form.discountHint')}
-                </div>
+                <Field label={t('vps.form.ipCount')} required>
+                  <input
+                    className={inputClass}
+                    type="number"
+                    min="1"
+                    value={form.ipCount}
+                    onChange={(event) =>
+                      setValue('ipCount', event.target.value)
+                    }
+                  />
+                </Field>
               </div>
-              <div className="min-w-0">
-                <div className="vps-pricing-table overflow-hidden rounded-md border border-[#d6e2f6]">
-                  <div className="vps-pricing-row bg-[#f6f9ff] font-semibold">
-                    <span>{t('vps.form.period')}</span>
-                    <span>{t('vps.form.amount')}</span>
-                    <span>{t('vps.form.discount')}</span>
-                    <span>{t('vps.form.afterDiscount')}</span>
-                    <span />
-                  </div>
-                  {periods.map((period, index) => (
-                    <div
-                      key={period.billingCycle}
-                      className="vps-pricing-row border-t border-[#e5edfa]"
-                    >
-                      <span className="pl-2">
-                        {periodLabel(period.billingCycle)}
-                      </span>
-                      <input
-                        className="h-[23px] min-w-0 rounded-[4px] border px-2 text-center"
-                        inputMode="numeric"
-                        value={formatMoney(period.amount)}
-                        onChange={(event) =>
-                          updatePeriod(index, 'amount', event.target.value)
-                        }
-                      />
-                      <input
-                        className="h-[23px] min-w-0 rounded-[4px] border px-2 text-center"
-                        value={period.discount}
-                        onChange={(event) =>
-                          updatePeriod(index, 'discount', event.target.value)
-                        }
-                        disabled={index === 0}
-                      />
-                      <span
-                        className={`rounded-[4px] py-1 text-center ${index === 0 || index === 2 || index === 3 ? 'font-semibold text-blue-600' : ''}`}
-                      >
-                        {formatMoney(
-                          Math.round(
-                            Number(period.amount) *
-                              (1 -
-                                (Number(
-                                  period.discount.replace(/[^0-9]/g, ''),
-                                ) || 0) /
-                                  100),
-                          ),
-                        )}
-                      </span>
-                      {index > 0 ? (
-                        <button
-                          type="button"
-                          aria-label={`${t('vps.form.removePeriod')} ${periodLabel(period.billingCycle)}`}
-                          onClick={() =>
-                            setPeriods((items) =>
-                              items.filter(
-                                (item) =>
-                                  item.billingCycle !== period.billingCycle,
-                              ),
-                            )
-                          }
-                          className="text-[#61769b]"
-                        >
-                          <Trash2 className="size-3" />
-                        </button>
-                      ) : (
-                        <span />
-                      )}
-                    </div>
-                  ))}
-                </div>
-                <button
-                  type="button"
-                  onClick={addPeriod}
-                  disabled={periods.length === periodsDefault.length}
-                  className="ml-3 mt-1 inline-flex h-[26px] items-center gap-1 rounded border border-[#b4cfff] px-3 text-xs text-[#075bea] disabled:opacity-50"
-                >
-                  <Plus className="size-3" />
-                  {t('vps.form.addPeriod')}
-                </button>
-              </div>
-            </div>
-          </Section>
-          <Section
-            number={4}
-            title={t('vps.form.sectionProvider')}
-            className="vps-provider-section"
+            </Section>
+          </div>
+          <div
+            id="vps-details-pricing-panel"
+            role="tabpanel"
+            aria-labelledby="vps-details-pricing-tab"
+            hidden={detailsTab !== 'pricing'}
+            className="pt-2"
           >
-            <div>
-              <Field label={t('vps.form.defaultProvider')} required>
-                <select
-                  className={inputClass}
-                  value={form.providerCategoryId}
-                  onChange={(event) =>
-                    setValue('providerCategoryId', event.target.value)
-                  }
-                >
-                  <option value="">{t('vps.form.selectProvider')}</option>
-                  {lookups.data?.providerCategories.map((provider) => (
-                    <option key={provider.id} value={provider.id}>
-                      {provider.name}
-                    </option>
-                  ))}
-                </select>
-              </Field>
-              <p className="mt-1 text-[10px] text-[#61749b]">
-                {t('vps.form.providerHint')}
-              </p>
-            </div>
-          </Section>
+            <Section icon={Tag} title={t('vps.form.sectionPricing')}>
+              <div className="vps-pricing-grid">
+                <div>
+                  <Field label={t('vps.form.price')} required>
+                    <div className="flex h-[30px] overflow-hidden rounded-[5px] border border-[#d6e2f6]">
+                      <input
+                        className="min-w-0 flex-1 px-3 text-xs"
+                        inputMode="numeric"
+                        value={formatMoney(periods[0].amount)}
+                        onChange={(event) =>
+                          updatePeriod(0, 'amount', event.target.value)
+                        }
+                      />
+                      <span className="flex items-center border-l bg-[#f4f8fe] px-4 text-xs text-[#53688b]">
+                        {t('vps.form.priceMonth')}
+                      </span>
+                    </div>
+                  </Field>
+                  <p className="mt-5 text-xs font-medium">
+                    {t('vps.form.durationDiscount')}
+                  </p>
+                  <div className="mt-1 rounded-md bg-[#eaf4ff] px-3 py-2 text-[11px] leading-4 text-[#31568f]">
+                    {t('vps.form.discountHint')}
+                  </div>
+                </div>
+                <div className="min-w-0">
+                  <div className="vps-pricing-table overflow-x-auto rounded-md border border-[#d6e2f6]">
+                    <div className="vps-pricing-row bg-[#f6f9ff] font-semibold">
+                      <span>{t('vps.form.period')}</span>
+                      <span>{t('vps.form.amount')}</span>
+                      <span>{t('vps.form.discount')}</span>
+                      <span>{t('vps.form.afterDiscount')}</span>
+                      <span />
+                    </div>
+                    {periods.map((period, index) => (
+                      <div
+                        key={period.billingCycle}
+                        className="vps-pricing-row border-t border-[#e5edfa]"
+                      >
+                        <span className="pl-2">
+                          {periodLabel(period.billingCycle)}
+                        </span>
+                        <input
+                          className="h-[23px] min-w-0 rounded-[4px] border px-2 text-center"
+                          inputMode="numeric"
+                          value={formatMoney(period.amount)}
+                          onChange={(event) =>
+                            updatePeriod(index, 'amount', event.target.value)
+                          }
+                        />
+                        <input
+                          className="h-[23px] min-w-0 rounded-[4px] border px-2 text-center"
+                          value={period.discount}
+                          onChange={(event) =>
+                            updatePeriod(index, 'discount', event.target.value)
+                          }
+                          disabled={index === 0}
+                        />
+                        <span
+                          className={`rounded-[4px] py-1 text-center ${index === 0 || index === 2 || index === 3 ? 'font-semibold text-blue-600' : ''}`}
+                        >
+                          {formatMoney(
+                            Math.round(
+                              Number(period.amount) *
+                                (1 -
+                                  (Number(
+                                    period.discount.replace(/[^0-9]/g, ''),
+                                  ) || 0) /
+                                    100),
+                            ),
+                          )}
+                        </span>
+                        {index > 0 ? (
+                          <button
+                            type="button"
+                            aria-label={`${t('vps.form.removePeriod')} ${periodLabel(period.billingCycle)}`}
+                            onClick={() =>
+                              setPeriods((items) =>
+                                items.filter(
+                                  (item) =>
+                                    item.billingCycle !== period.billingCycle,
+                                ),
+                              )
+                            }
+                            className="text-[#61769b]"
+                          >
+                            <Trash2 className="size-3" />
+                          </button>
+                        ) : (
+                          <span />
+                        )}
+                      </div>
+                    ))}
+                  </div>
+                  <button
+                    type="button"
+                    onClick={addPeriod}
+                    disabled={periods.length === periodsDefault.length}
+                    className="ml-3 mt-1 inline-flex h-[26px] items-center gap-1 rounded border border-[#b4cfff] px-3 text-xs text-[#075bea] disabled:opacity-50"
+                  >
+                    <Plus className="size-3" />
+                    {t('vps.form.addPeriod')}
+                  </button>
+                </div>
+              </div>
+            </Section>
+          </div>
+          <div
+            id="vps-details-provider-panel"
+            role="tabpanel"
+            aria-labelledby="vps-details-provider-tab"
+            hidden={detailsTab !== 'provider'}
+            className="pt-2"
+          >
+            <Section
+              icon={Building2}
+              title={t('vps.form.sectionProvider')}
+              className="vps-provider-section"
+            >
+              <div>
+                <Field label={t('vps.form.defaultProvider')} required>
+                  <select
+                    className={inputClass}
+                    value={form.providerCategoryId}
+                    onChange={(event) =>
+                      setValue('providerCategoryId', event.target.value)
+                    }
+                  >
+                    <option value="">{t('vps.form.selectProvider')}</option>
+                    {lookups.data?.providerCategories.map((provider) => (
+                      <option key={provider.id} value={provider.id}>
+                        {provider.name}
+                      </option>
+                    ))}
+                  </select>
+                </Field>
+                <p className="mt-1 text-[10px] text-[#61749b]">
+                  {t('vps.form.providerHint')}
+                </p>
+              </div>
+            </Section>
+          </div>
+          <div
+            id="vps-details-additional-panel"
+            role="tabpanel"
+            aria-labelledby="vps-details-additional-tab"
+            hidden={detailsTab !== 'additional'}
+            className="pt-2"
+          >
+            <VpsAdditionalSection
+              operatingSystem={form.operatingSystem}
+              onOperatingSystemChange={(value) =>
+                setValue('operatingSystem', value)
+              }
+              datacenterIds={form.datacenterIds}
+              datacenters={allDatacenters}
+              onToggleDatacenter={toggleDatacenter}
+            />
+          </div>
         </div>
         <aside className="min-w-0 space-y-2.5">
+          <VpsPublishingSection
+            name={form.name}
+            status={form.status}
+            featured={form.featured}
+            displayOrder={form.displayOrder}
+            imageUrl={form.imageUrl}
+            isSaving={
+              createPackage.isPending ||
+              updatePackage.isPending ||
+              lookups.isLoading
+            }
+            onStatusChange={(status) => setValue('status', status)}
+            onFeaturedChange={(featured) => setValue('featured', featured)}
+            onDisplayOrderChange={(displayOrder) =>
+              setValue('displayOrder', displayOrder)
+            }
+            onChangeImage={() => setMediaPickerOpen(true)}
+            onRemoveImage={() => setValue('imageUrl', '')}
+            onCancel={() =>
+              navigate(
+                initialPackage
+                  ? {
+                      to: '/dashboard/catalog/vps/$id',
+                      params: { id: initialPackage.id },
+                    }
+                  : { to: '/dashboard/catalog/vps' },
+              )
+            }
+            onSaveDraft={() => submit('DRAFT')}
+            onSave={() => submit(form.status)}
+            isEdit={Boolean(initialPackage)}
+          />
           <section className="vps-create-section min-h-[295px]">
             <div className="flex items-center justify-between border-b border-[#e4ebf7] pb-2">
               <h2 className="text-[15px] font-bold text-[#101945]">
@@ -717,120 +824,6 @@ export function VpsPackageForm({ initialPlan }: { initialPlan?: VpsPlan }) {
                   </p>
                 ))}
               </div>
-            </div>
-          </section>
-          <section className="vps-create-section min-h-[286px]">
-            <h2 className="text-[15px] font-bold text-[#101945]">
-              {t('vps.form.additional')}
-            </h2>
-            <div
-              role="tablist"
-              aria-label={t('vps.form.additional')}
-              className="flex border-b border-[#d6e2f6] text-xs"
-            >
-              {(['os', 'location'] as const).map((tab) => (
-                <button
-                  key={tab}
-                  id={`vps-additional-tab-${tab}`}
-                  type="button"
-                  role="tab"
-                  aria-selected={activeTab === tab}
-                  aria-controls="vps-additional-panel"
-                  onClick={() => setActiveTab(tab)}
-                  className={`flex-1 border-b-2 py-1.5 ${activeTab === tab ? 'border-blue-600 text-blue-600' : 'border-transparent text-[#506181]'}`}
-                >
-                  {t(`vps.form.${tab === 'location' ? 'datacenters' : 'os'}`)}
-                </button>
-              ))}
-            </div>
-            <div
-              id="vps-additional-panel"
-              role="tabpanel"
-              aria-labelledby={`vps-additional-tab-${activeTab}`}
-              className="min-h-[145px] space-y-1 py-2.5"
-            >
-              {activeTab === 'os' ? (
-                <label
-                  className="block text-xs text-[#26385c]"
-                  htmlFor="vps-operating-system"
-                >
-                  <span className="mb-1 block font-medium">
-                    {t('vps.form.defaultOs')}
-                  </span>
-                  <select
-                    id="vps-operating-system"
-                    className={inputClass}
-                    value={form.operatingSystem}
-                    onChange={(event) =>
-                      setValue('operatingSystem', event.target.value)
-                    }
-                  >
-                    {vpsOperatingSystems.map((system) => (
-                      <option key={system} value={system}>
-                        {system}
-                      </option>
-                    ))}
-                  </select>
-                </label>
-              ) : allDatacenters.length ? (
-                allDatacenters.map((item) => (
-                  <label
-                    key={item.id}
-                    className="flex items-center gap-2 text-xs text-[#26385c]"
-                  >
-                    <input
-                      type="checkbox"
-                      className="size-3.5"
-                      checked={form.datacenterIds.includes(item.id)}
-                      onChange={() => toggleDatacenter(item.id)}
-                    />
-                    <span className="text-base leading-none">
-                      {flags[item.countryCode] ?? '🌐'}
-                    </span>
-                    {item.name}
-                  </label>
-                ))
-              ) : (
-                <p className="text-xs text-slate-500">
-                  {t('vps.form.noDatacenters')}
-                </p>
-              )}
-            </div>
-            <div className="flex items-start gap-2 rounded-[5px] bg-[#eaf4ff] px-2.5 py-2 text-[11px] leading-4 text-[#31568f]">
-              <Info className="mt-0.5 size-3.5 shrink-0 text-blue-600" />
-              {t(
-                activeTab === 'os'
-                  ? 'vps.form.osHint'
-                  : 'vps.form.datacenterHint',
-              )}
-            </div>
-            <div className="-mx-[17px] mt-3 flex flex-wrap justify-end gap-2 border-t border-[#e6edf8] px-4 py-2.5">
-              <button
-                type="button"
-                onClick={() => navigate({ to: '/dashboard/catalog/vps' })}
-                className="h-[40px] min-w-[116px] rounded-[6px] border border-[#d6e2f6] text-xs text-[#194181]"
-              >
-                {t('vps.form.cancel')}
-              </button>
-              <button
-                type="button"
-                disabled={createPackage.isPending}
-                onClick={() => submit('DRAFT')}
-                className="h-[40px] min-w-[88px] rounded-[6px] border border-[#d6e2f6] text-xs text-[#194181] disabled:opacity-50"
-              >
-                {t('vps.form.saveDraft')}
-              </button>
-              <button
-                type="button"
-                disabled={createPackage.isPending || lookups.isLoading}
-                onClick={() => submit(form.status)}
-                className="h-[40px] min-w-[148px] rounded-[6px] bg-[#075bea] px-3 text-xs font-medium text-white disabled:opacity-50"
-              >
-                {createPackage.isPending && (
-                  <Loader2 className="mr-1 inline size-3 animate-spin" />
-                )}
-                {t('vps.form.next')} <span className="ml-1">→</span>
-              </button>
             </div>
           </section>
         </aside>

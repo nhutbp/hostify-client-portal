@@ -1,8 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { ExternalLink, Plus } from 'lucide-react'
+import { Plus } from 'lucide-react'
 import { Link } from '@tanstack/react-router'
-import { VpsCategoryCards } from '../../components/vps/VpsCategoryCards'
 import { VpsFilters } from '../../components/vps/VpsFilters'
 import { VpsPlansTable } from '../../components/vps/VpsPlansTable'
 import {
@@ -16,7 +15,6 @@ export default function AdminVpsPackagesPage() {
   const { t } = useTranslation('catalog')
   const [query, setQuery] = useState('')
   const [search, setSearch] = useState('')
-  const [selectedCategory, setSelectedCategory] = useState('vps')
   const [providerCategoryId, setProviderCategoryId] = useState('')
   const [datacenterId, setDatacenterId] = useState('')
   const [status, setStatus] = useState('')
@@ -26,7 +24,6 @@ export default function AdminVpsPackagesPage() {
     page,
     limit: 10,
     search,
-    categorySlug: selectedCategory,
     providerCategoryId: providerCategoryId || undefined,
     datacenterId: datacenterId || undefined,
     status: status === 'ACTIVE' || status === 'DRAFT' ? status : undefined,
@@ -39,10 +36,6 @@ export default function AdminVpsPackagesPage() {
     }, 300)
     return () => window.clearTimeout(timeout)
   }, [query])
-  const changeCategory = (slug: string) => {
-    setSelectedCategory(slug)
-    setPage(1)
-  }
   const togglePlan = async (id: string, nextStatus: 'ACTIVE' | 'DRAFT') => {
     try {
       await statusMutation.mutateAsync({ id, status: nextStatus })
@@ -52,9 +45,6 @@ export default function AdminVpsPackagesPage() {
       )
     }
   }
-  const categoryName =
-    list.data?.categories.find((item) => item.slug === selectedCategory)
-      ?.name ?? 'VPS'
   return (
     <div className="space-y-5 text-slate-900">
       <div className="flex flex-wrap items-end justify-between gap-3">
@@ -70,38 +60,13 @@ export default function AdminVpsPackagesPage() {
           </p>
         </div>
         <Link
-          to="/dashboard"
-          className="inline-flex h-10 items-center gap-2 rounded-lg border border-blue-100 bg-white px-4 text-base font-semibold text-blue-600 shadow-sm hover:bg-blue-50"
+          to="/dashboard/catalog/vps/new"
+          className="inline-flex h-10 items-center gap-2 rounded-lg bg-blue-600 px-4 text-base font-semibold text-white shadow-sm hover:bg-blue-700"
         >
-          {t('vps.viewWebsite')} <ExternalLink className="size-4" />
+          <Plus className="size-4" /> {t('vps.add')}
         </Link>
       </div>
-      <VpsCategoryCards
-        categories={list.data?.categories ?? []}
-        selected={selectedCategory}
-        onSelect={changeCategory}
-      />
-      <section className="rounded-2xl bg-white p-5 shadow-sm ring-1 ring-slate-100">
-        <div className="mb-5 flex flex-wrap items-center justify-between gap-3">
-          <div>
-            <h2 className="text-xl font-bold text-[#11184c]">
-              {t('vps.listTitle', {
-                category: t(`vps.categories.${selectedCategory}`, {
-                  defaultValue: categoryName,
-                }),
-              })}
-            </h2>
-            <p className="mt-1 text-base text-slate-500">
-              {t('vps.listDescription')}
-            </p>
-          </div>
-          <Link
-            to="/dashboard/catalog/vps/new"
-            className="inline-flex h-10 items-center gap-2 rounded-lg bg-blue-600 px-4 text-base font-semibold text-white shadow-sm hover:bg-blue-700"
-          >
-            <Plus className="size-4" /> {t('vps.add')}
-          </Link>
-        </div>
+      <div className="min-w-0">
         <VpsFilters
           query={query}
           onQueryChange={setQuery}
@@ -141,7 +106,7 @@ export default function AdminVpsPackagesPage() {
             onPageChange={setPage}
           />
         )}
-      </section>
+      </div>
     </div>
   )
 }

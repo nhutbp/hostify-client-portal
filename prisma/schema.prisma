@@ -518,6 +518,7 @@ model Membership {
 model Product {
   id               String            @id @db.Uuid
   code             String            @unique
+  slug             String            @unique
   categoryId       String            @map("category_id") @db.Uuid
   providerCategoryId String?          @map("provider_category_id") @db.Uuid
   name             String

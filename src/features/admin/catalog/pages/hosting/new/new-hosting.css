@@ -1,0 +1,50 @@
+.hosting-new-page {
+  background: #f2f8ff;
+}
+.hosting-labeled-row {
+  display: grid;
+  grid-template-columns: 102px minmax(0, 1fr);
+  align-items: start;
+  gap: 10px;
+}
+.hosting-labeled-row > label {
+  padding-top: 9px;
+  color: #11184c;
+  font-size: 14px;
+  font-weight: 600;
+}
+.hosting-switch {
+  position: relative;
+  width: 38px;
+  height: 22px;
+  flex: none;
+  border-radius: 999px;
+  background: #a5b4c8;
+  transition: background 150ms ease;
+}
+.hosting-switch::after {
+  content: '';
+  position: absolute;
+  left: 3px;
+  top: 3px;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: white;
+  transition: transform 150ms ease;
+}
+.hosting-switch[data-on='true'] {
+  background: #0065f7;
+}
+.hosting-switch[data-on='true']::after {
+  transform: translateX(16px);
+}
+@media (max-width: 420px) {
+  .hosting-labeled-row {
+    grid-template-columns: 1fr;
+    gap: 4px;
+  }
+  .hosting-labeled-row > label {
+    padding-top: 0;
+  }
+}

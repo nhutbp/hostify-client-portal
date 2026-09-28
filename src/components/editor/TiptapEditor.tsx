@@ -125,10 +125,12 @@ export function TiptapEditor({
   content = defaultTiptapContent,
   placeholder = 'Nhập nội dung...',
   onChange,
+  compact = false,
 }: {
   content?: string
   placeholder?: string
   onChange?: (value: string) => void
+  compact?: boolean
 }) {
   const [isMediaPickerOpen, setIsMediaPickerOpen] = useState(false)
   const mediaQuery = useMediaList()
@@ -192,7 +194,9 @@ export function TiptapEditor({
 
   return (
     <div className="overflow-hidden rounded-lg border border-slate-200 bg-slate-100 dark:border-slate-700 dark:bg-slate-900">
-      <div className="flex flex-wrap items-center gap-1 border-b bg-white p-2 dark:border-slate-700 dark:bg-slate-950">
+      <div
+        className={`flex flex-wrap items-center border-b bg-white dark:border-slate-700 dark:bg-slate-950 ${compact ? 'gap-0 p-1' : 'gap-1 p-2'}`}
+      >
         <Select
           defaultValue="paragraph"
           onValueChange={(value) => {
@@ -209,7 +213,9 @@ export function TiptapEditor({
             }
           }}
         >
-          <SelectTrigger className="h-8 w-36 border-0 bg-transparent text-xs shadow-none">
+          <SelectTrigger
+            className={`${compact ? 'h-8 w-20' : 'h-8 w-36'} border-0 bg-transparent text-xs shadow-none`}
+          >
             <SelectValue />
           </SelectTrigger>
           <SelectContent>
@@ -236,124 +242,150 @@ export function TiptapEditor({
           active={editor.isActive('underline')}
           onClick={() => editor.chain().focus().toggleUnderline().run()}
         />
-        <ToolbarButton
-          icon={<Quote className="size-4" />}
-          active={editor.isActive('blockquote')}
-          onClick={() => editor.chain().focus().toggleBlockquote().run()}
-        />
+        {!compact && (
+          <ToolbarButton
+            icon={<Quote className="size-4" />}
+            active={editor.isActive('blockquote')}
+            onClick={() => editor.chain().focus().toggleBlockquote().run()}
+          />
+        )}
         <ToolbarButton
           icon={<List className="size-4" />}
           active={editor.isActive('bulletList')}
           onClick={() => editor.chain().focus().toggleBulletList().run()}
         />
-        <ToolbarButton
-          icon={<ListOrdered className="size-4" />}
-          active={editor.isActive('orderedList')}
-          onClick={() => editor.chain().focus().toggleOrderedList().run()}
-        />
-        <ToolbarButton
-          icon={<Highlighter className="size-4" />}
-          active={editor.isActive('highlight')}
-          onClick={() => editor.chain().focus().toggleHighlight().run()}
-        />
+        {!compact && (
+          <ToolbarButton
+            icon={<ListOrdered className="size-4" />}
+            active={editor.isActive('orderedList')}
+            onClick={() => editor.chain().focus().toggleOrderedList().run()}
+          />
+        )}
+        {!compact && (
+          <ToolbarButton
+            icon={<Highlighter className="size-4" />}
+            active={editor.isActive('highlight')}
+            onClick={() => editor.chain().focus().toggleHighlight().run()}
+          />
+        )}
         <ToolbarButton
           icon={<ImageIcon className="size-4" />}
           onClick={() => setIsMediaPickerOpen(true)}
         />
-        <label
-          className="flex cursor-pointer items-center gap-1 rounded p-1.5 text-slate-600 hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-slate-800"
-          title="Màu chữ"
-        >
-          <span className="text-xs font-semibold">A</span>
-          <input
-            type="color"
-            aria-label="Màu chữ"
-            className="size-5 cursor-pointer border-0 bg-transparent p-0"
-            value={editor.getAttributes('textStyle').color ?? '#0f172a'}
-            onChange={(event) =>
-              editor.chain().focus().setColor(event.target.value).run()
+        {!compact && (
+          <label
+            className="flex cursor-pointer items-center gap-1 rounded p-1.5 text-slate-600 hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-slate-800"
+            title="Màu chữ"
+          >
+            <span className="text-xs font-semibold">A</span>
+            <input
+              type="color"
+              aria-label="Màu chữ"
+              className="size-5 cursor-pointer border-0 bg-transparent p-0"
+              value={editor.getAttributes('textStyle').color ?? '#0f172a'}
+              onChange={(event) =>
+                editor.chain().focus().setColor(event.target.value).run()
+              }
+            />
+          </label>
+        )}
+        {!compact && (
+          <ToolbarButton
+            label="A̶"
+            onClick={() => editor.chain().focus().unsetColor().run()}
+          />
+        )}
+        {!compact && (
+          <span className="mx-1 h-5 w-px bg-slate-200 dark:bg-slate-700" />
+        )}
+        {!compact && (
+          <ToolbarButton
+            icon={<AlignLeft className="size-4" />}
+            onClick={() =>
+              editor.isActive('image')
+                ? editor
+                    .chain()
+                    .focus()
+                    .updateAttributes('image', { align: 'left' })
+                    .run()
+                : editor.chain().focus().setTextAlign('left').run()
             }
           />
-        </label>
-        <ToolbarButton
-          label="A̶"
-          onClick={() => editor.chain().focus().unsetColor().run()}
-        />
-        <span className="mx-1 h-5 w-px bg-slate-200 dark:bg-slate-700" />
-        <ToolbarButton
-          icon={<AlignLeft className="size-4" />}
-          onClick={() =>
-            editor.isActive('image')
-              ? editor
-                  .chain()
-                  .focus()
-                  .updateAttributes('image', { align: 'left' })
-                  .run()
-              : editor.chain().focus().setTextAlign('left').run()
-          }
-        />
-        <ToolbarButton
-          icon={<AlignCenter className="size-4" />}
-          onClick={() =>
-            editor.isActive('image')
-              ? editor
-                  .chain()
-                  .focus()
-                  .updateAttributes('image', { align: 'center' })
-                  .run()
-              : editor.chain().focus().setTextAlign('center').run()
-          }
-        />
-        <ToolbarButton
-          icon={<AlignRight className="size-4" />}
-          onClick={() =>
-            editor.isActive('image')
-              ? editor
-                  .chain()
-                  .focus()
-                  .updateAttributes('image', { align: 'right' })
-                  .run()
-              : editor.chain().focus().setTextAlign('right').run()
-          }
-        />
-        <div className="ml-1 flex items-center gap-1 border-l pl-2 text-xs text-slate-500 dark:border-slate-700 dark:text-slate-400">
-          <span>Kích thước ảnh</span>
-          <Select
-            value={selectedImageWidth}
-            disabled={!isImageSelected}
-            onValueChange={(value) => {
-              if (isImageSelected)
-                editor
-                  .chain()
-                  .focus()
-                  .updateAttributes('image', {
-                    width: value === '100%' ? null : value,
-                  })
-                  .run()
-            }}
-          >
-            <SelectTrigger className="h-8 w-28 border-0 bg-transparent text-xs shadow-none">
-              <SelectValue />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="25%">25%</SelectItem>
-              <SelectItem value="50%">50%</SelectItem>
-              <SelectItem value="75%">75%</SelectItem>
-              <SelectItem value="100%">100%</SelectItem>
-            </SelectContent>
-          </Select>
-        </div>
-        <span className="mx-1 h-5 w-px bg-slate-200 dark:bg-slate-700" />
-        <ToolbarButton
-          icon={<Undo2 className="size-4" />}
-          disabled={!editor.can().undo()}
-          onClick={() => editor.chain().focus().undo().run()}
-        />
-        <ToolbarButton
-          icon={<Redo2 className="size-4" />}
-          disabled={!editor.can().redo()}
-          onClick={() => editor.chain().focus().redo().run()}
-        />
+        )}
+        {!compact && (
+          <ToolbarButton
+            icon={<AlignCenter className="size-4" />}
+            onClick={() =>
+              editor.isActive('image')
+                ? editor
+                    .chain()
+                    .focus()
+                    .updateAttributes('image', { align: 'center' })
+                    .run()
+                : editor.chain().focus().setTextAlign('center').run()
+            }
+          />
+        )}
+        {!compact && (
+          <ToolbarButton
+            icon={<AlignRight className="size-4" />}
+            onClick={() =>
+              editor.isActive('image')
+                ? editor
+                    .chain()
+                    .focus()
+                    .updateAttributes('image', { align: 'right' })
+                    .run()
+                : editor.chain().focus().setTextAlign('right').run()
+            }
+          />
+        )}
+        {!compact && (
+          <div className="ml-1 flex items-center gap-1 border-l pl-2 text-xs text-slate-500 dark:border-slate-700 dark:text-slate-400">
+            <span>Kích thước ảnh</span>
+            <Select
+              value={selectedImageWidth}
+              disabled={!isImageSelected}
+              onValueChange={(value) => {
+                if (isImageSelected)
+                  editor
+                    .chain()
+                    .focus()
+                    .updateAttributes('image', {
+                      width: value === '100%' ? null : value,
+                    })
+                    .run()
+              }}
+            >
+              <SelectTrigger className="h-8 w-28 border-0 bg-transparent text-xs shadow-none">
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="25%">25%</SelectItem>
+                <SelectItem value="50%">50%</SelectItem>
+                <SelectItem value="75%">75%</SelectItem>
+                <SelectItem value="100%">100%</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+        )}
+        {!compact && (
+          <span className="mx-1 h-5 w-px bg-slate-200 dark:bg-slate-700" />
+        )}
+        {!compact && (
+          <ToolbarButton
+            icon={<Undo2 className="size-4" />}
+            disabled={!editor.can().undo()}
+            onClick={() => editor.chain().focus().undo().run()}
+          />
+        )}
+        {!compact && (
+          <ToolbarButton
+            icon={<Redo2 className="size-4" />}
+            disabled={!editor.can().redo()}
+            onClick={() => editor.chain().focus().redo().run()}
+          />
+        )}
       </div>
       <div className="w-full overflow-auto">
         <EditorContent
@@ -362,9 +394,11 @@ export function TiptapEditor({
           className="w-full min-h-64 bg-white dark:bg-slate-950 [&_.ProseMirror]:min-h-64 [&_.ProseMirror]:w-full [&_.ProseMirror]:p-8 [&_.ProseMirror]:outline-none [&_.ProseMirror_p]:mb-3 [&_.ProseMirror_p]:text-sm [&_.ProseMirror_p]:leading-7 [&_.ProseMirror_h1]:mb-5 [&_.ProseMirror_h1]:text-4xl [&_.ProseMirror_h1]:font-bold [&_.ProseMirror_h2]:mb-4 [&_.ProseMirror_h2]:text-3xl [&_.ProseMirror_h2]:font-bold [&_.ProseMirror_h3]:mb-3 [&_.ProseMirror_h3]:text-2xl [&_.ProseMirror_h3]:font-semibold [&_.ProseMirror_h4]:mb-3 [&_.ProseMirror_h4]:text-xl [&_.ProseMirror_h4]:font-semibold [&_.ProseMirror_h5]:mb-2 [&_.ProseMirror_h5]:text-lg [&_.ProseMirror_h5]:font-semibold [&_.ProseMirror_h6]:mb-2 [&_.ProseMirror_h6]:text-base [&_.ProseMirror_h6]:font-semibold [&_.ProseMirror_blockquote]:border-l-4 [&_.ProseMirror_blockquote]:border-primary [&_.ProseMirror_blockquote]:pl-4 [&_.ProseMirror_ul]:list-disc [&_.ProseMirror_ul]:pl-6 [&_.ProseMirror_ol]:list-decimal [&_.ProseMirror_ol]:pl-6 [&_.ProseMirror_img]:my-4 [&_.ProseMirror_img]:max-h-80 [&_.ProseMirror_img]:max-w-full [&_.ProseMirror_img]:rounded-lg [&_.ProseMirror_img]:object-contain [&_.ProseMirror_.ProseMirror-selectednode]:rounded-md [&_.ProseMirror_.ProseMirror-selectednode]:ring-2 [&_.ProseMirror_.ProseMirror-selectednode]:ring-primary [&_.ProseMirror_.ProseMirror-selectednode]:ring-offset-2"
         />
       </div>
-      <div className="border-t bg-white px-3 py-1 text-right text-xs text-slate-400 dark:border-slate-700 dark:bg-slate-950">
-        145/5000
-      </div>
+      {!compact && (
+        <div className="border-t bg-white px-3 py-1 text-right text-xs text-slate-400 dark:border-slate-700 dark:bg-slate-950">
+          145/5000
+        </div>
+      )}
       <MediaPicker
         open={isMediaPickerOpen}
         imageOnly

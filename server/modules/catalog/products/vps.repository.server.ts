@@ -5,6 +5,7 @@ import type {
   CreateVpsPackageInput,
   ListVpsPackagesInput,
   SetVpsPackageStatusInput,
+  UpdateVpsPackageInput,
 } from './vps.schemas'
 
 export function listVpsCatalogLookups() {
@@ -26,11 +27,6 @@ export function listVpsCatalogLookups() {
         providerId: true,
       },
     }),
-    prisma.productCategory.findMany({
-      where: { deletedAt: null, kind: 'SERVICE' },
-      orderBy: { name: 'asc' },
-      select: { id: true, name: true, slug: true },
-    }),
     prisma.productTag.findMany({
       orderBy: { name: 'asc' },
       select: { id: true, name: true, slug: true },
@@ -44,10 +40,9 @@ export function listVpsCatalogLookups() {
       orderBy: { name: 'asc' },
       select: { id: true, name: true, slug: true, imageUrl: true },
     }),
-  ]).then(([providers, datacenters, categories, tags, providerCategories]) => ({
+  ]).then(([providers, datacenters, tags, providerCategories]) => ({
     providers,
     datacenters,
-    categories,
     tags,
     providerCategories,
   }))
@@ -55,7 +50,7 @@ export function listVpsCatalogLookups() {
 
 export async function listVpsPackageRecords(input: ListVpsPackagesInput) {
   const where: Prisma.ProductWhereInput = {
-    category: { slug: input.categorySlug, kind: 'SERVICE', deletedAt: null },
+    category: { slug: 'vps', kind: 'SERVICE', deletedAt: null },
     ...(input.status ? { status: input.status } : {}),
     ...(input.search
       ? {
@@ -80,7 +75,7 @@ export async function listVpsPackageRecords(input: ListVpsPackagesInput) {
         }
       : {}),
   }
-  const [records, total, categories, datacenters] = await Promise.all([
+  const [records, total, datacenters] = await Promise.all([
     prisma.product.findMany({
       where,
       skip: (input.page - 1) * input.limit,
@@ -97,16 +92,6 @@ export async function listVpsPackageRecords(input: ListVpsPackagesInput) {
       },
     }),
     prisma.product.count({ where }),
-    prisma.productCategory.findMany({
-      where: { deletedAt: null, kind: 'SERVICE' },
-      orderBy: { name: 'asc' },
-      select: {
-        id: true,
-        slug: true,
-        name: true,
-        _count: { select: { products: true } },
-      },
-    }),
     prisma.datacenter.findMany({
       select: { id: true, name: true, countryCode: true, city: true },
     }),
@@ -134,8 +119,13 @@ export async function listVpsPackageRecords(input: ListVpsPackagesInput) {
     const monthlyPrice =
       plan?.prices.find(
         (price) =>
-          price.billingCycle === 'MONTHLY' && price.status === record.status,
-      ) ?? plan?.prices.find((price) => price.billingCycle === 'MONTHLY')
+          price.billingCycle === 'MONTHLY' &&
+          !price.effectiveTo &&
+          price.status === record.status,
+      ) ??
+      plan?.prices.find(
+        (price) => price.billingCycle === 'MONTHLY' && !price.effectiveTo,
+      )
     return {
       id: record.id,
       code: record.code,
@@ -165,23 +155,235 @@ export async function listVpsPackageRecords(input: ListVpsPackagesInput) {
       hasPrevious: input.page > 1,
       hasNext: input.page * input.limit < total,
     },
-    categories: categories
-      .map((item) => ({
-        id: item.id,
-        name: item.name,
-        slug: item.slug,
-        count: item._count.products,
-      }))
-      .sort((a, b) => {
-        const order = ['vps', 'hosting', 'physical', 'proxy', 'via']
-        const aIndex = order.indexOf(a.slug)
-        const bIndex = order.indexOf(b.slug)
-        return (
-          (aIndex < 0 ? order.length : aIndex) -
-            (bIndex < 0 ? order.length : bIndex) || a.name.localeCompare(b.name)
-        )
-      }),
   }
+}
+
+export async function getVpsPackageRecord(id: string) {
+  const product = await prisma.product.findFirst({
+    where: { id, category: { slug: 'vps', kind: 'SERVICE', deletedAt: null } },
+    include: {
+      category: { select: { name: true, slug: true } },
+      providerCategory: { select: { id: true, name: true } },
+      metas: { select: { metaKey: true, metaValue: true } },
+      plans: {
+        orderBy: { createdAt: 'asc' },
+        include: { prices: { orderBy: { effectiveFrom: 'desc' } } },
+      },
+    },
+  })
+  if (!product) return null
+  const metadata = Object.fromEntries(
+    product.metas.map((meta) => [meta.metaKey, meta.metaValue]),
+  )
+  const datacenterIds = Array.isArray(metadata.datacenterIds)
+    ? metadata.datacenterIds.filter(
+        (value): value is string => typeof value === 'string',
+      )
+    : []
+  const datacenters = datacenterIds.length
+    ? await prisma.datacenter.findMany({
+        where: { id: { in: datacenterIds } },
+        select: { id: true, name: true, countryCode: true, city: true },
+      })
+    : []
+  return {
+    id: product.id,
+    code: product.code,
+    slug: product.slug,
+    name: product.name,
+    description: product.description ?? '',
+    content: product.content,
+    status: product.status,
+    category: product.category,
+    providerCategory: product.providerCategory,
+    featured: metadata.featured === true,
+    tags: Array.isArray(metadata.tags)
+      ? metadata.tags.filter((tag): tag is string => typeof tag === 'string')
+      : [],
+    imageUrl: typeof metadata.imageUrl === 'string' ? metadata.imageUrl : null,
+    operatingSystem:
+      typeof metadata.operatingSystem === 'string'
+        ? metadata.operatingSystem
+        : null,
+    displayOrder:
+      typeof metadata.displayOrder === 'number' ? metadata.displayOrder : 0,
+    providerId:
+      typeof metadata.providerId === 'string' ? metadata.providerId : null,
+    datacenterIds,
+    billingPrices: Array.isArray(metadata.billingPrices)
+      ? metadata.billingPrices
+      : [],
+    datacenters,
+    plans: product.plans.map((plan) => ({
+      id: plan.id,
+      code: plan.code,
+      name: plan.name,
+      status: plan.status,
+      features: plan.features,
+      prices: plan.prices
+        .filter((price) => !price.effectiveTo)
+        .map((price) => ({
+          id: price.id,
+          billingCycle: price.billingCycle,
+          currency: price.currency,
+          amountMinor: Number(price.amountMinor),
+          setupFeeMinor: Number(price.setupFeeMinor),
+          status: price.status,
+          effectiveFrom: price.effectiveFrom.toISOString(),
+        })),
+    })),
+    createdAt: product.createdAt.toISOString(),
+    updatedAt: product.updatedAt.toISOString(),
+  }
+}
+
+export function updateVpsPackageRecord(input: UpdateVpsPackageInput) {
+  const now = new Date()
+  return prisma.$transaction(async (tx) => {
+    const product = await tx.product.findFirst({
+      where: {
+        id: input.id,
+        category: { slug: 'vps', kind: 'SERVICE', deletedAt: null },
+      },
+      select: { id: true, code: true },
+    })
+    if (!product) return null
+
+    const providerCategory = await tx.productCategory.findFirst({
+      where: {
+        id: input.providerCategoryId,
+        kind: 'PROVIDER',
+        deletedAt: null,
+        parent: { slug: 'nha-cung-cap', kind: 'PROVIDER', deletedAt: null },
+      },
+      select: { id: true },
+    })
+    if (!providerCategory) throw new Error('Nhà cung cấp không hợp lệ')
+    const datacenters = await tx.datacenter.findMany({
+      where: {
+        id: { in: input.datacenterIds },
+        status: 'ACTIVE',
+        provider: { status: 'ACTIVE' },
+      },
+      select: { id: true, code: true, name: true, providerId: true },
+    })
+    if (
+      datacenters.length !== input.datacenterIds.length ||
+      datacenters.some((item) => item.providerId !== datacenters[0]?.providerId)
+    )
+      throw new Error(
+        'Các datacenter phải thuộc cùng một provider hạ tầng đang hoạt động',
+      )
+    const infrastructureProviderId = datacenters[0].providerId
+    const planStatus = input.status === 'ACTIVE' ? 'ACTIVE' : 'DRAFT'
+
+    await tx.product.update({
+      where: { id: product.id },
+      data: {
+        name: input.name,
+        slug: input.slug,
+        description: input.description,
+        content: input.content,
+        status: input.status,
+        providerCategoryId: providerCategory.id,
+      },
+    })
+
+    const metadata = {
+      featured: input.featured,
+      displayOrder: input.displayOrder,
+      tags: input.tags,
+      imageUrl: input.imageUrl ?? null,
+      providerId: infrastructureProviderId,
+      datacenterIds: datacenters.map((item) => item.id),
+      datacenters,
+      billingPrices: input.billingPrices,
+      operatingSystem: input.operatingSystem,
+    }
+    for (const [metaKey, metaValue] of Object.entries(metadata)) {
+      if (metaValue === null) {
+        await tx.productMeta.deleteMany({
+          where: { productId: product.id, metaKey },
+        })
+        continue
+      }
+      const value = metaValue as Prisma.InputJsonValue
+      await tx.productMeta.upsert({
+        where: { productId_metaKey: { productId: product.id, metaKey } },
+        update: {
+          metaValue: value,
+          valueType: Array.isArray(metaValue) ? 'array' : typeof metaValue,
+        },
+        create: {
+          id: createId(),
+          productId: product.id,
+          metaKey,
+          metaValue: value,
+          valueType: Array.isArray(metaValue) ? 'array' : typeof metaValue,
+          isPublic: [
+            'featured',
+            'tags',
+            'imageUrl',
+            'datacenterIds',
+            'operatingSystem',
+          ].includes(metaKey),
+        },
+      })
+    }
+
+    const features = {
+      cpu: input.cpu,
+      ramGb: input.ramGb,
+      diskGb: input.diskGb,
+      diskType: input.diskType,
+      operatingSystem: input.operatingSystem,
+      bandwidth: input.bandwidth,
+      ipCount: input.ipCount,
+      providerId: infrastructureProviderId,
+      datacenterIds: datacenters.map((item) => item.id),
+      tags: input.tags,
+    }
+    const existingPlan = await tx.plan.findFirst({
+      where: { productId: product.id },
+      orderBy: { createdAt: 'asc' },
+      select: { id: true },
+    })
+    const plan = existingPlan
+      ? await tx.plan.update({
+          where: { id: existingPlan.id },
+          data: { name: input.name, status: planStatus, features },
+        })
+      : await tx.plan.create({
+          data: {
+            id: createId(),
+            productId: product.id,
+            code: `${product.code}-PLAN`,
+            name: input.name,
+            status: planStatus,
+            features,
+          },
+        })
+
+    await tx.price.updateMany({
+      where: { planId: plan.id, effectiveTo: null },
+      data: { effectiveTo: now },
+    })
+    await tx.price.createMany({
+      data: input.billingPrices.map((price) => ({
+        id: createId(),
+        planId: plan.id,
+        currency: 'VND',
+        billingCycle: price.billingCycle,
+        amountMinor: BigInt(
+          Math.round(price.amount * (1 - price.discountPercent / 100)),
+        ),
+        setupFeeMinor: BigInt(0),
+        effectiveFrom: now,
+        status: planStatus,
+      })),
+    })
+    return { id: product.id, status: input.status }
+  })
 }
 
 export async function setVpsPackageStatusRecord(
@@ -206,7 +408,10 @@ export async function setVpsPackageStatusRecord(
       select: { id: true },
     })
     await tx.price.updateMany({
-      where: { planId: { in: plans.map((plan) => plan.id) } },
+      where: {
+        planId: { in: plans.map((plan) => plan.id) },
+        effectiveTo: null,
+      },
       data: { status: input.status },
     })
     return { id: input.id, status: input.status }
@@ -265,6 +470,7 @@ export function createVpsPackageRecord(
       data: {
         id: createId(),
         code,
+        slug: input.slug,
         categoryId: category.id,
         providerCategoryId: providerCategory.id,
         name: input.name,

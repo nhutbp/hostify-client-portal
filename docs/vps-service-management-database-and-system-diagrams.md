@@ -15,18 +15,27 @@ Tài liệu này bổ sung cho [plan phát triển nền tảng](./vps-service-m
 
 ## 2. Phân vùng module dữ liệu
 
-| Module           | Trách nhiệm                           | Bảng chính                                                                                                            |
-| ---------------- | ------------------------------------- | --------------------------------------------------------------------------------------------------------------------- |
-| Identity         | Người dùng, organization, quyền       | `users`, `organizations`, `memberships`, `roles`, `permissions`                                                       |
-| Catalog          | Sản phẩm, gói, tag, nhà cung cấp, giá | `products`, `product_categories`, `product_tags`, `product_meta`, `product_plans`, `product_prices`, `product_addons` |
-| Commerce         | Giỏ hàng, order, coupon               | `carts`, `cart_items`, `orders`, `order_items`, `coupons`                                                             |
-| Billing          | Invoice, payment, refund, credit      | `invoices`, `payments`, `refunds`, `credits`                                                                          |
-| Services         | Dịch vụ khách hàng và vòng đời        | `customer_services`, `service_events`, `service_actions`                                                              |
-| Infrastructure   | Provider, node, IP, capacity          | `providers`, `datacenters`, `resources`, `ip_pools`                                                                   |
-| Provisioning     | Job cấp phát/thay đổi dịch vụ         | `provisioning_jobs`, `job_attempts`                                                                                   |
-| Domain/Proxy/VIA | Tài nguyên dịch vụ chuyên biệt        | `domains`, `dns_records`, `proxy_allocations`, `via_accounts`                                                         |
-| Support          | Ticket, SLA, thông báo                | `tickets`, `ticket_messages`, `notifications`                                                                         |
-| Audit            | Theo dõi thao tác và thay đổi         | `audit_logs`                                                                                                          |
+<table border="1" bordercolor="#d1d5db" style="border-collapse: collapse; width: 100%;">
+  <thead>
+    <tr>
+      <th style="border: 1px solid #d1d5db; padding: 8px;">Module</th>
+      <th style="border: 1px solid #d1d5db; padding: 8px;">Trách nhiệm</th>
+      <th style="border: 1px solid #d1d5db; padding: 8px;">Bảng chính</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr><td style="border: 1px solid #d1d5db; padding: 8px;">Identity</td><td style="border: 1px solid #d1d5db; padding: 8px;">Người dùng, organization, quyền</td><td style="border: 1px solid #d1d5db; padding: 8px;"><code>users</code>, <code>organizations</code>, <code>memberships</code>, <code>roles</code>, <code>permissions</code></td></tr>
+    <tr><td style="border: 1px solid #d1d5db; padding: 8px;">Catalog</td><td style="border: 1px solid #d1d5db; padding: 8px;">Sản phẩm, gói, tag, nhà cung cấp, giá</td><td style="border: 1px solid #d1d5db; padding: 8px;"><code>products</code>, <code>product_categories</code>, <code>product_tags</code>, <code>product_meta</code>, <code>product_plans</code>, <code>product_prices</code>, <code>product_addons</code></td></tr>
+    <tr><td style="border: 1px solid #d1d5db; padding: 8px;">Commerce</td><td style="border: 1px solid #d1d5db; padding: 8px;">Giỏ hàng, order, coupon</td><td style="border: 1px solid #d1d5db; padding: 8px;"><code>carts</code>, <code>cart_items</code>, <code>orders</code>, <code>order_items</code>, <code>coupons</code></td></tr>
+    <tr><td style="border: 1px solid #d1d5db; padding: 8px;">Billing</td><td style="border: 1px solid #d1d5db; padding: 8px;">Invoice, payment, refund, credit</td><td style="border: 1px solid #d1d5db; padding: 8px;"><code>invoices</code>, <code>payments</code>, <code>refunds</code>, <code>credits</code></td></tr>
+    <tr><td style="border: 1px solid #d1d5db; padding: 8px;">Services</td><td style="border: 1px solid #d1d5db; padding: 8px;">Dịch vụ khách hàng và vòng đời</td><td style="border: 1px solid #d1d5db; padding: 8px;"><code>customer_services</code>, <code>service_events</code>, <code>service_actions</code></td></tr>
+    <tr><td style="border: 1px solid #d1d5db; padding: 8px;">Infrastructure</td><td style="border: 1px solid #d1d5db; padding: 8px;">Provider, node, IP, capacity</td><td style="border: 1px solid #d1d5db; padding: 8px;"><code>providers</code>, <code>datacenters</code>, <code>resources</code>, <code>ip_pools</code></td></tr>
+    <tr><td style="border: 1px solid #d1d5db; padding: 8px;">Provisioning</td><td style="border: 1px solid #d1d5db; padding: 8px;">Job cấp phát/thay đổi dịch vụ</td><td style="border: 1px solid #d1d5db; padding: 8px;"><code>provisioning_jobs</code>, <code>job_attempts</code></td></tr>
+    <tr><td style="border: 1px solid #d1d5db; padding: 8px;">Domain/Proxy/VIA</td><td style="border: 1px solid #d1d5db; padding: 8px;">Tài nguyên dịch vụ chuyên biệt</td><td style="border: 1px solid #d1d5db; padding: 8px;"><code>domains</code>, <code>dns_records</code>, <code>proxy_allocations</code>, <code>via_accounts</code></td></tr>
+    <tr><td style="border: 1px solid #d1d5db; padding: 8px;">Support</td><td style="border: 1px solid #d1d5db; padding: 8px;">Ticket, SLA, thông báo</td><td style="border: 1px solid #d1d5db; padding: 8px;"><code>tickets</code>, <code>ticket_messages</code>, <code>notifications</code></td></tr>
+    <tr><td style="border: 1px solid #d1d5db; padding: 8px;">Audit</td><td style="border: 1px solid #d1d5db; padding: 8px;">Theo dõi thao tác và thay đổi</td><td style="border: 1px solid #d1d5db; padding: 8px;"><code>audit_logs</code></td></tr>
+  </tbody>
+</table>
 
 ## 3. Quy ước group module khi code
 
