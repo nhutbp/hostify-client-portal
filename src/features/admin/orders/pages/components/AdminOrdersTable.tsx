@@ -1,5 +1,6 @@
 import { Copy, Globe2, Link2, Package, Server } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
+import { Link } from '@tanstack/react-router'
 import type { adminOrderService } from '../../services/adminOrderService'
 
 type Data = Awaited<ReturnType<typeof adminOrderService.list>>
@@ -70,7 +71,13 @@ export function AdminOrdersTable({ data }: { data: Data }) {
             return (
               <tr key={order.id} className="hover:bg-blue-50/40">
                 <td className="px-4 py-4 font-semibold text-[#11184c]">
-                  {order.orderNumber}
+                  <Link
+                    to="/admin/dashboard/orders/$id"
+                    params={{ id: order.id }}
+                    className="hover:text-blue-600 hover:underline"
+                  >
+                    {order.orderNumber}
+                  </Link>
                 </td>
                 <td className="px-4 py-4">
                   <span className="block font-medium text-[#11184c]">
@@ -116,17 +123,26 @@ export function AdminOrdersTable({ data }: { data: Data }) {
                   {date(order.createdAt)}
                 </td>
                 <td className="px-4 py-4">
-                  <button
-                    type="button"
-                    onClick={() =>
-                      void navigator.clipboard.writeText(order.orderNumber)
-                    }
-                    className="inline-flex size-9 items-center justify-center rounded-md border border-slate-200 text-blue-600 hover:bg-blue-50"
-                    title={t('copyOrderNumber')}
-                    aria-label={`${t('copyOrderNumber')} ${order.orderNumber}`}
-                  >
-                    <Copy size={16} />
-                  </button>
+                  <div className="flex items-center gap-1">
+                    <Link
+                      to="/admin/dashboard/orders/$id"
+                      params={{ id: order.id }}
+                      className="rounded-md border border-slate-200 px-2 py-1.5 text-xs font-semibold text-blue-600 hover:bg-blue-50"
+                    >
+                      {t('viewDetail')}
+                    </Link>
+                    <button
+                      type="button"
+                      onClick={() =>
+                        void navigator.clipboard.writeText(order.orderNumber)
+                      }
+                      className="inline-flex size-8 items-center justify-center rounded-md border border-slate-200 text-blue-600 hover:bg-blue-50"
+                      title={t('copyOrderNumber')}
+                      aria-label={`${t('copyOrderNumber')} ${order.orderNumber}`}
+                    >
+                      <Copy size={15} />
+                    </button>
+                  </div>
                 </td>
               </tr>
             )

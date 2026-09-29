@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
-import { Download, RotateCcw, Search } from 'lucide-react'
+import { Download, LoaderCircle, RotateCcw, Search } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
-import { useAdminOrders } from '../hooks/useAdminOrders'
+import { useAdminOrderOptions, useAdminOrders } from '../hooks/useAdminOrders'
 import type { AdminOrderFilters } from '../services/adminOrderService'
 import { AdminOrdersTable } from './components/AdminOrdersTable'
 import Pagination from '@/components/table/Pagination'
@@ -21,7 +21,9 @@ export default function AdminOrdersPage() {
   const [filters, setFilters] = useState<AdminOrderFilters>(initialFilters)
   const [search, setSearch] = useState('')
   const orders = useAdminOrders(filters)
+  const options = useAdminOrderOptions()
   const data = orders.data
+  const filterOptions = options.data
   useEffect(() => {
     const timer = window.setTimeout(
       () =>
@@ -94,7 +96,7 @@ export default function AdminOrdersPage() {
         <button
           type="button"
           onClick={exportPage}
-          disabled={!data?.items.length}
+          disabled={!data?.items.length || orders.isFetching}
           className="inline-flex h-10 items-center gap-2 rounded-lg bg-blue-600 px-4 text-sm font-semibold text-white hover:bg-blue-700 disabled:opacity-50"
         >
           <Download size={16} />
@@ -114,8 +116,10 @@ export default function AdminOrdersPage() {
             >
               {t(`tabs.${tab}`)} (
               {tab === 'ALL'
-                ? (data?.totalOrders ?? 0)
-                : (data?.statusCounts[tab] ?? 0)}
+                ? (filterOptions?.totalOrders ?? '…')
+                : filterOptions
+                  ? (filterOptions.statusCounts[tab] ?? 0)
+                  : '…'}
               )
             </button>
           ))}
@@ -143,7 +147,7 @@ export default function AdminOrdersPage() {
             className="h-10 rounded-lg border border-slate-200 bg-white px-3 text-sm"
           >
             <option value="">{t('allServices')}</option>
-            {data?.categories.map((item) => (
+            {filterOptions?.categories.map((item) => (
               <option key={item.id} value={item.id}>
                 {item.name}
               </option>
@@ -185,7 +189,7 @@ export default function AdminOrdersPage() {
             className="h-10 rounded-lg border border-slate-200 bg-white px-3 text-sm"
           >
             <option value="">{t('allProviders')}</option>
-            {data?.providers.map((item) => (
+            {filterOptions?.providers.map((item) => (
               <option key={item.id} value={item.id}>
                 {item.name}
               </option>
@@ -255,7 +259,19 @@ export default function AdminOrdersPage() {
           </p>
         )}
         {data && (
-          <>
+          <div className="relative" aria-busy={orders.isFetching}>
+            {orders.isFetching && (
+              <div
+                className="absolute inset-0 z-10 flex items-start justify-center rounded-xl bg-white/60 pt-20 backdrop-blur-[1px]"
+                role="status"
+                aria-live="polite"
+              >
+                <span className="inline-flex items-center gap-2 rounded-lg border border-blue-100 bg-white px-4 py-2 font-medium text-blue-700 shadow-sm">
+                  <LoaderCircle size={18} className="animate-spin" />
+                  {t('loading')}
+                </span>
+              </div>
+            )}
             <AdminOrdersTable data={data} />
             <Pagination
               pagination={data.meta}
@@ -264,7 +280,7 @@ export default function AdminOrdersPage() {
               onPageSizeChange={(limit) => change({ limit })}
               pageSizeOptions={[8, 10, 20, 50]}
             />
-          </>
+          </div>
         )}
       </section>
     </div>

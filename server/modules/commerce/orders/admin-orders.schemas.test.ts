@@ -1,5 +1,9 @@
 import { describe, expect, it } from 'vitest'
-import { listAdminOrdersSchema } from './admin-orders.schemas'
+import {
+  getAdminOrderSchema,
+  listAdminOrdersSchema,
+  updateAdminOrderSchema,
+} from './admin-orders.schemas'
 
 describe('listAdminOrdersSchema', () => {
   it('uses safe defaults', () => {
@@ -26,5 +30,44 @@ describe('listAdminOrdersSchema', () => {
         sort: 'TOTAL_DESC',
       }),
     ).toMatchObject({ status: 'PENDING_PAYMENT', sort: 'TOTAL_DESC' })
+  })
+})
+
+describe('updateAdminOrderSchema', () => {
+  const input = {
+    id: '01a0e8dd-0b0a-7f04-bd0f-583aec8378d8',
+    expectedStatus: 'PENDING_PAYMENT',
+    status: 'PAID',
+    paymentMethod: 'VIETQR',
+    paymentReference: 'BANK-123',
+    paidAt: '2026-09-29T09:00:00+07:00',
+  }
+  it('accepts manual payment evidence and defaults fulfillment confirmation to false', () => {
+    expect(updateAdminOrderSchema.parse(input).manualFulfillmentConfirmed).toBe(
+      false,
+    )
+  })
+  it('rejects unsupported statuses and invalid payment dates', () => {
+    expect(
+      updateAdminOrderSchema.safeParse({ ...input, status: 'REFUNDED' })
+        .success,
+    ).toBe(false)
+    expect(
+      updateAdminOrderSchema.safeParse({ ...input, paidAt: 'yesterday' })
+        .success,
+    ).toBe(false)
+  })
+})
+
+describe('getAdminOrderSchema', () => {
+  it('requires a valid order UUID', () => {
+    expect(getAdminOrderSchema.safeParse({ id: 'not-an-id' }).success).toBe(
+      false,
+    )
+    expect(
+      getAdminOrderSchema.safeParse({
+        id: '01a0e8dd-0b0a-7f04-bd0f-583aec8378d8',
+      }).success,
+    ).toBe(true)
   })
 })

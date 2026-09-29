@@ -35,3 +35,26 @@ export const listAdminOrdersSchema = z
   )
 
 export type ListAdminOrdersInput = z.infer<typeof listAdminOrdersSchema>
+
+export const getAdminOrderSchema = z.object({ id: z.uuid() })
+
+export const updateAdminOrderSchema = z.object({
+  id: z.uuid(),
+  expectedStatus: z.enum(adminOrderStatuses),
+  status: z.enum([
+    'PENDING_PAYMENT',
+    'PAID',
+    'PROVISIONING',
+    'COMPLETED',
+    'FAILED',
+    'CANCELLED',
+  ]),
+  paymentMethod: z
+    .enum(['WALLET', 'MOMO', 'VIETQR', 'CARD', 'USDT_TRC20'])
+    .nullable(),
+  paymentReference: z.string().trim().max(120).optional(),
+  paidAt: z.iso.datetime({ offset: true }).optional(),
+  manualFulfillmentConfirmed: z.boolean().default(false),
+})
+
+export type UpdateAdminOrderInput = z.infer<typeof updateAdminOrderSchema>

@@ -44,6 +44,7 @@ import { Route as DashboardAdminDashboardCatalogProxyNewRouteImport } from './ro
 import { Route as DashboardAdminDashboardCatalogViaIndexRouteImport } from './routes/_dashboard/admin/dashboard/catalog/via/index'
 import { Route as DashboardAdminDashboardCatalogViaNewRouteImport } from './routes/_dashboard/admin/dashboard/catalog/via/new'
 import { Route as DashboardAdminDashboardCatalogVpsIndexRouteImport } from './routes/_dashboard/admin/dashboard/catalog/vps/index'
+import { Route as DashboardAdminDashboardOrdersIdIndexRouteImport } from './routes/_dashboard/admin/dashboard/orders/$id/index'
 import { Route as DashboardAdminDashboardPostsCategoriesIndexRouteImport } from './routes/_dashboard/admin/dashboard/posts/categories/index'
 import { Route as DashboardAdminDashboardPostsNewIndexRouteImport } from './routes/_dashboard/admin/dashboard/posts/new/index'
 import { Route as DashboardAdminDashboardPostsPlatformsIndexRouteImport } from './routes/_dashboard/admin/dashboard/posts/platforms/index'
@@ -263,6 +264,12 @@ const DashboardAdminDashboardCatalogVpsIndexRoute =
     path: '/dashboard/catalog/vps/',
     getParentRoute: () => DashboardAdminRoute,
   } as any)
+const DashboardAdminDashboardOrdersIdIndexRoute =
+  DashboardAdminDashboardOrdersIdIndexRouteImport.update({
+    id: '/dashboard/orders/$id/',
+    path: '/dashboard/orders/$id/',
+    getParentRoute: () => DashboardAdminRoute,
+  } as any)
 const DashboardAdminDashboardPostsCategoriesIndexRoute =
   DashboardAdminDashboardPostsCategoriesIndexRouteImport.update({
     id: '/dashboard/posts/categories/',
@@ -413,6 +420,7 @@ export interface FileRoutesByFullPath {
   '/admin/dashboard/catalog/proxy/': typeof DashboardAdminDashboardCatalogProxyIndexRoute
   '/admin/dashboard/catalog/via/': typeof DashboardAdminDashboardCatalogViaIndexRoute
   '/admin/dashboard/catalog/vps/': typeof DashboardAdminDashboardCatalogVpsIndexRoute
+  '/admin/dashboard/orders/$id/': typeof DashboardAdminDashboardOrdersIdIndexRoute
   '/admin/dashboard/posts/categories/': typeof DashboardAdminDashboardPostsCategoriesIndexRoute
   '/admin/dashboard/posts/new/': typeof DashboardAdminDashboardPostsNewIndexRoute
   '/admin/dashboard/posts/platforms/': typeof DashboardAdminDashboardPostsPlatformsIndexRoute
@@ -468,6 +476,7 @@ export interface FileRoutesByTo {
   '/admin/dashboard/catalog/proxy': typeof DashboardAdminDashboardCatalogProxyIndexRoute
   '/admin/dashboard/catalog/via': typeof DashboardAdminDashboardCatalogViaIndexRoute
   '/admin/dashboard/catalog/vps': typeof DashboardAdminDashboardCatalogVpsIndexRoute
+  '/admin/dashboard/orders/$id': typeof DashboardAdminDashboardOrdersIdIndexRoute
   '/admin/dashboard/posts/categories': typeof DashboardAdminDashboardPostsCategoriesIndexRoute
   '/admin/dashboard/posts/new': typeof DashboardAdminDashboardPostsNewIndexRoute
   '/admin/dashboard/posts/platforms': typeof DashboardAdminDashboardPostsPlatformsIndexRoute
@@ -525,6 +534,7 @@ export interface FileRoutesById {
   '/_dashboard/admin/dashboard/catalog/proxy/': typeof DashboardAdminDashboardCatalogProxyIndexRoute
   '/_dashboard/admin/dashboard/catalog/via/': typeof DashboardAdminDashboardCatalogViaIndexRoute
   '/_dashboard/admin/dashboard/catalog/vps/': typeof DashboardAdminDashboardCatalogVpsIndexRoute
+  '/_dashboard/admin/dashboard/orders/$id/': typeof DashboardAdminDashboardOrdersIdIndexRoute
   '/_dashboard/admin/dashboard/posts/categories/': typeof DashboardAdminDashboardPostsCategoriesIndexRoute
   '/_dashboard/admin/dashboard/posts/new/': typeof DashboardAdminDashboardPostsNewIndexRoute
   '/_dashboard/admin/dashboard/posts/platforms/': typeof DashboardAdminDashboardPostsPlatformsIndexRoute
@@ -582,6 +592,7 @@ export interface FileRouteTypes {
     | '/admin/dashboard/catalog/proxy/'
     | '/admin/dashboard/catalog/via/'
     | '/admin/dashboard/catalog/vps/'
+    | '/admin/dashboard/orders/$id/'
     | '/admin/dashboard/posts/categories/'
     | '/admin/dashboard/posts/new/'
     | '/admin/dashboard/posts/platforms/'
@@ -637,6 +648,7 @@ export interface FileRouteTypes {
     | '/admin/dashboard/catalog/proxy'
     | '/admin/dashboard/catalog/via'
     | '/admin/dashboard/catalog/vps'
+    | '/admin/dashboard/orders/$id'
     | '/admin/dashboard/posts/categories'
     | '/admin/dashboard/posts/new'
     | '/admin/dashboard/posts/platforms'
@@ -693,6 +705,7 @@ export interface FileRouteTypes {
     | '/_dashboard/admin/dashboard/catalog/proxy/'
     | '/_dashboard/admin/dashboard/catalog/via/'
     | '/_dashboard/admin/dashboard/catalog/vps/'
+    | '/_dashboard/admin/dashboard/orders/$id/'
     | '/_dashboard/admin/dashboard/posts/categories/'
     | '/_dashboard/admin/dashboard/posts/new/'
     | '/_dashboard/admin/dashboard/posts/platforms/'
@@ -971,6 +984,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DashboardAdminDashboardCatalogVpsIndexRouteImport
       parentRoute: typeof DashboardAdminRoute
     }
+    '/_dashboard/admin/dashboard/orders/$id/': {
+      id: '/_dashboard/admin/dashboard/orders/$id/'
+      path: '/dashboard/orders/$id'
+      fullPath: '/admin/dashboard/orders/$id/'
+      preLoaderRoute: typeof DashboardAdminDashboardOrdersIdIndexRouteImport
+      parentRoute: typeof DashboardAdminRoute
+    }
     '/_dashboard/admin/dashboard/posts/categories/': {
       id: '/_dashboard/admin/dashboard/posts/categories/'
       path: '/dashboard/posts/categories'
@@ -1125,6 +1145,7 @@ interface DashboardAdminRouteChildren {
   DashboardAdminDashboardCatalogProxyIndexRoute: typeof DashboardAdminDashboardCatalogProxyIndexRoute
   DashboardAdminDashboardCatalogViaIndexRoute: typeof DashboardAdminDashboardCatalogViaIndexRoute
   DashboardAdminDashboardCatalogVpsIndexRoute: typeof DashboardAdminDashboardCatalogVpsIndexRoute
+  DashboardAdminDashboardOrdersIdIndexRoute: typeof DashboardAdminDashboardOrdersIdIndexRoute
   DashboardAdminDashboardPostsCategoriesIndexRoute: typeof DashboardAdminDashboardPostsCategoriesIndexRoute
   DashboardAdminDashboardPostsNewIndexRoute: typeof DashboardAdminDashboardPostsNewIndexRoute
   DashboardAdminDashboardPostsPlatformsIndexRoute: typeof DashboardAdminDashboardPostsPlatformsIndexRoute
@@ -1179,6 +1200,8 @@ const DashboardAdminRouteChildren: DashboardAdminRouteChildren = {
     DashboardAdminDashboardCatalogViaIndexRoute,
   DashboardAdminDashboardCatalogVpsIndexRoute:
     DashboardAdminDashboardCatalogVpsIndexRoute,
+  DashboardAdminDashboardOrdersIdIndexRoute:
+    DashboardAdminDashboardOrdersIdIndexRoute,
   DashboardAdminDashboardPostsCategoriesIndexRoute:
     DashboardAdminDashboardPostsCategoriesIndexRoute,
   DashboardAdminDashboardPostsNewIndexRoute:

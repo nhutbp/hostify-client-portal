@@ -71,4 +71,9 @@ export const PERMISSION_CODES = {
     'delete',
   ),
   COMMERCE_ORDER_VIEW: permissionCode(MODULE_CODES.COMMERCE, 'order', 'view'),
+  COMMERCE_ORDER_UPDATE: permissionCode(
+    MODULE_CODES.COMMERCE,
+    'order',
+    'update',
+  ),
 } as const

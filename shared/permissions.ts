@@ -107,7 +107,9 @@ export const PERMISSION_MODULES = [
   {
     code: 'commerce',
     name: 'Thương mại',
-    resources: [{ code: 'order', name: 'Đơn hàng', actions: ['view'] }],
+    resources: [
+      { code: 'order', name: 'Đơn hàng', actions: ['view', 'update'] },
+    ],
   },
 ] as const
 
