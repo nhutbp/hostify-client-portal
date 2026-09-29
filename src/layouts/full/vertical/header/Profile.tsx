@@ -6,7 +6,8 @@ import { authService } from '@/features/auth/services/authService'
 import { useAuthActions, useCurrentUser } from '@/features/auth/store/authStore'
 import { formatImageUrl } from '@/utils/format'
 import { Icon } from '@iconify/react'
-import { UserRound } from 'lucide-react'
+import { ClipboardList, Server, UserRound } from 'lucide-react'
+import type { DashboardArea } from '../../FullLayout'
 import { Button } from '@/components/ui/button'
 import {
   DropdownMenu,
@@ -15,7 +16,7 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
 
-const Profile = () => {
+const Profile = ({ area }: { area: DashboardArea }) => {
   const { t } = useTranslation()
   const navigate = useNavigate()
   const { clear } = useAuthActions()
@@ -40,7 +41,11 @@ const Profile = () => {
     <div className="group/menu relative shrink-0 ps-1 sm:ps-3">
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
-          <span className="flex cursor-pointer items-center gap-2 rounded-full px-2 py-0.5 hover:bg-blue-50">
+          <button
+            type="button"
+            aria-label={t('customerShell.accountMenu')}
+            className="flex cursor-pointer items-center gap-2 rounded-full px-2 py-0.5 hover:bg-primary/10"
+          >
             {avatarUrl && !avatarError ? (
               <img
                 src={avatarUrl}
@@ -58,43 +63,65 @@ const Profile = () => {
               </span>
             )}
             <span className="hidden text-left lg:block">
-              <span className="block text-sm font-semibold leading-4 text-slate-800">
-                {user?.displayName ?? 'Nguyễn Văn A'}
+              <span className="block text-sm font-semibold leading-4 text-foreground">
+                {user?.displayName ?? t('customerShell.customer')}
               </span>
-              <span className="block text-xs leading-4 text-slate-400">
-                Quản trị viên
+              <span className="block text-xs leading-4 text-muted-foreground">
+                {area === 'customer'
+                  ? t('customerShell.customer')
+                  : t('profile.administrator')}
               </span>
             </span>
             <Icon
               icon="solar:alt-arrow-down-linear"
-              className="hidden size-4 text-slate-500 lg:block"
+              className="hidden size-4 text-muted-foreground lg:block"
             />
-          </span>
+          </button>
         </DropdownMenuTrigger>
         <DropdownMenuContent
           align="end"
-          className="border-ld w-screen rounded-sm border pt-4 pb-6 shadow-none sm:w-50"
+          className="w-56 rounded-xl border border-border bg-popover p-2 text-popover-foreground shadow-lg"
         >
-          {profileData.profileDD.map((items, index) => (
-            <DropdownMenuItem
-              key={index}
-              asChild
-              className="bg-hover group/link flex w-full cursor-pointer items-center justify-between px-4 py-2"
-            >
-              {items.url === '/admin/dashboard/profile' && user?.id ? (
-                <Link
-                  to="/admin/dashboard/users/$userId"
-                  params={{ userId: user.id }}
-                >
-                  <ProfileMenuContent items={items} t={t} />
+          {area === 'customer' ? (
+            <>
+              <p className="truncate border-b border-border px-3 py-2 text-xs text-muted-foreground">
+                {user?.userEmail}
+              </p>
+              <DropdownMenuItem asChild className="cursor-pointer px-3 py-2.5">
+                <Link to="/customer/dashboard/services">
+                  <Server size={17} />
+                  {t('customerShell.services')}
                 </Link>
-              ) : (
-                <Link to={items.url}>
-                  <ProfileMenuContent items={items} t={t} />
+              </DropdownMenuItem>
+              <DropdownMenuItem asChild className="cursor-pointer px-3 py-2.5">
+                <Link to="/customer/dashboard/orders">
+                  <ClipboardList size={17} />
+                  {t('customerShell.orders')}
                 </Link>
-              )}
-            </DropdownMenuItem>
-          ))}
+              </DropdownMenuItem>
+            </>
+          ) : (
+            profileData.profileDD.map((items, index) => (
+              <DropdownMenuItem
+                key={index}
+                asChild
+                className="bg-hover group/link flex w-full cursor-pointer items-center justify-between px-4 py-2"
+              >
+                {items.url === '/admin/dashboard/profile' && user?.id ? (
+                  <Link
+                    to="/admin/dashboard/users/$userId"
+                    params={{ userId: user.id }}
+                  >
+                    <ProfileMenuContent items={items} t={t} />
+                  </Link>
+                ) : (
+                  <Link to={items.url}>
+                    <ProfileMenuContent items={items} t={t} />
+                  </Link>
+                )}
+              </DropdownMenuItem>
+            ))
+          )}
 
           <div className="px-4 pt-2">
             <Button

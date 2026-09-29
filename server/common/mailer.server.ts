@@ -1,4 +1,5 @@
 import nodemailer from 'nodemailer'
+import type { Transporter } from 'nodemailer'
 import type SMTPTransport from 'nodemailer/lib/smtp-transport'
 import { env } from './env.server'
 
@@ -22,9 +23,8 @@ export type SendMailInput = {
   attachments?: MailAttachment[]
 }
 
-let transporterPromise: Promise<
-  nodemailer.Transporter<SMTPTransport.SentMessageInfo>
-> | null = null
+let transporterPromise: Promise<Transporter<SMTPTransport.SentMessageInfo>> | null =
+  null
 
 async function getTransporter() {
   if (!transporterPromise) {

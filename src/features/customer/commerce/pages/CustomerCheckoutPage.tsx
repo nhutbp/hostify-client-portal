@@ -1,11 +1,9 @@
 import { useRef, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { Link, useNavigate } from '@tanstack/react-router'
 import { CreditCard, QrCode, Server, ShieldCheck, Wallet } from 'lucide-react'
 import { toast } from '@/utils/toast'
-import {
-  cycleLabels,
-  money,
-} from '@/features/customer/catalog/types/customerCatalog'
+import { money } from '@/features/customer/catalog/types/customerCatalog'
 import {
   useApplyCustomerCoupon,
   useCustomerCart,
@@ -18,37 +16,28 @@ import { VpsOperatingSystemSelect } from '../components/VpsOperatingSystemSelect
 const paymentMethods = [
   {
     id: 'WALLET',
-    title: 'Ví điện tử (Nạp tiền)',
-    detail: 'Ghi nhận đơn, chưa trừ số dư ví',
     icon: Wallet,
   },
   {
     id: 'MOMO',
-    title: 'MoMo',
-    detail: 'Cổng thanh toán sẽ kết nối sau',
     icon: Wallet,
   },
   {
     id: 'VIETQR',
-    title: 'VietQR / Ngân hàng',
-    detail: 'Mã QR sẽ được cung cấp sau',
     icon: QrCode,
   },
   {
     id: 'CARD',
-    title: 'Thẻ ngân hàng',
-    detail: 'Visa, Mastercard, JCB…',
     icon: CreditCard,
   },
   {
     id: 'USDT_TRC20',
-    title: 'USDT (TRC20)',
-    detail: 'Thanh toán bằng tiền điện tử',
     icon: Wallet,
   },
 ] as const
 
 export default function CustomerCheckoutPage() {
+  const { t } = useTranslation()
   const cart = useCustomerCart()
   const update = useUpdateCustomerCartItem()
   const apply = useApplyCustomerCoupon()
@@ -93,28 +82,34 @@ export default function CustomerCheckoutPage() {
         params: { id: order.id },
       })
     } catch (error) {
-      toast.error(error instanceof Error ? error.message : 'Không thể đặt hàng')
+      toast.error(
+        error instanceof Error
+          ? error.message
+          : t('customerCheckout.placeFailed'),
+      )
     }
   }
 
   return (
     <div className="mx-auto max-w-[1500px] space-y-4 text-[#101746]">
-      <div className="rounded-2xl border border-blue-100 bg-gradient-to-r from-blue-50 via-white to-violet-50 px-5 py-4">
+      <div className="rounded-2xl border border-blue-100 bg-gradient-to-r from-blue-50 via-white to-violet-50 px-5 py-4 dark:from-[#253145] dark:via-[#1c2536] dark:to-[#253145]">
         <p className="text-sm text-slate-500">
-          Mua dịch vụ / Giỏ hàng / Thanh toán
+          {t('customerCheckout.breadcrumb')}
         </p>
-        <h1 className="mt-1 text-3xl font-bold">Thanh toán</h1>
-        <p className="text-slate-500">
-          Hoàn tất đơn hàng để kích hoạt dịch vụ của bạn
-        </p>
+        <h1 className="mt-1 text-3xl font-bold">
+          {t('customerCheckout.title')}
+        </h1>
+        <p className="text-slate-500">{t('customerCheckout.subtitle')}</p>
       </div>
       {cart.isPending ? (
-        <div className="rounded-xl bg-white p-10">Đang tải đơn hàng...</div>
+        <div className="rounded-xl bg-white p-10">
+          {t('customerCheckout.loading')}
+        </div>
       ) : !data?.items.length ? (
         <div className="rounded-xl bg-white p-10">
-          Giỏ hàng trống.{' '}
+          {t('customerCheckout.empty')}{' '}
           <Link className="text-blue-600" to="/customer/dashboard/buy">
-            Chọn dịch vụ
+            {t('customerCart.choose')}
           </Link>
         </div>
       ) : (
@@ -124,13 +119,13 @@ export default function CustomerCheckoutPage() {
               <span className="mr-2 rounded-full bg-blue-600 px-3 py-1 text-white">
                 1
               </span>{' '}
-              Thông tin dịch vụ
+              {t('customerCheckout.serviceInfo')}
             </h2>
             <div className="mt-4 space-y-4">
               {data.items.map((item) => (
                 <div
                   key={item.id}
-                  className="rounded-xl border border-slate-200 bg-gradient-to-br from-white to-blue-50/30 p-4"
+                  className="rounded-xl border border-slate-200 bg-gradient-to-br from-white to-blue-50/30 p-4 dark:from-[#253145] dark:to-[#1c2536]"
                 >
                   <div className="flex gap-3">
                     <span className="flex size-11 shrink-0 items-center justify-center rounded-xl bg-blue-100">
@@ -158,13 +153,17 @@ export default function CustomerCheckoutPage() {
                             {item.features.diskGb} GB {item.features.diskType}
                           </span>
                         )}
-                        <span>Số lượng: {item.quantity}</span>
+                        <span>
+                          {t('customerCheckout.quantity', {
+                            count: item.quantity,
+                          })}
+                        </span>
                       </div>
                     </div>
                   </div>
                   <div className="mt-4">
                     <p className="mb-2 text-sm font-semibold">
-                      Chu kỳ thanh toán
+                      {t('customerCart.billingCycle')}
                     </p>
                     <div className="grid gap-2 sm:grid-cols-2 xl:grid-cols-4">
                       {item.availableCycles.map((cycle) => (
@@ -184,15 +183,16 @@ export default function CustomerCheckoutPage() {
                               toast.error(
                                 error instanceof Error
                                   ? error.message
-                                  : 'Không thể cập nhật chu kỳ',
+                                  : t('customerCheckout.cycleFailed'),
                               )
                             }
                           }}
                           className={`rounded-lg border p-2.5 text-left text-sm transition ${item.billingCycle === cycle.billingCycle ? 'border-blue-600 bg-blue-50 text-blue-700 shadow-sm' : 'border-slate-200 bg-white hover:border-blue-200'}`}
                         >
                           <strong className="block">
-                            {cycleLabels[cycle.billingCycle] ??
-                              cycle.billingCycle}
+                            {t(`customerBuy.cycles.${cycle.billingCycle}`, {
+                              defaultValue: cycle.billingCycle,
+                            })}
                           </strong>
                           {money(cycle.amountMinor)}
                         </button>
@@ -202,7 +202,7 @@ export default function CustomerCheckoutPage() {
                   <div className="mt-4 grid gap-3 sm:grid-cols-2">
                     {item.locations.length > 0 && (
                       <label className="text-sm font-semibold">
-                        Vị trí Datacenter
+                        {t('customerBuy.datacenter')}
                         <select
                           className="mt-1 w-full rounded-lg border border-slate-200 p-2.5 font-normal"
                           value={item.datacenterId ?? ''}
@@ -218,7 +218,7 @@ export default function CustomerCheckoutPage() {
                               toast.error(
                                 error instanceof Error
                                   ? error.message
-                                  : 'Không thể cập nhật vị trí',
+                                  : t('customerCheckout.locationFailed'),
                               )
                             }
                           }}
@@ -245,12 +245,12 @@ export default function CustomerCheckoutPage() {
                               datacenterId: item.datacenterId,
                               operatingSystem,
                             })
-                            toast.success('Đã cập nhật hệ điều hành')
+                            toast.success(t('customerCart.osUpdated'))
                           } catch (error) {
                             toast.error(
                               error instanceof Error
                                 ? error.message
-                                : 'Không thể cập nhật hệ điều hành',
+                                : t('customerCheckout.osFailed'),
                             )
                           }
                         }}
@@ -258,7 +258,7 @@ export default function CustomerCheckoutPage() {
                     )}
                     {item.categorySlug === 'vps' && (
                       <label className="text-sm font-semibold sm:col-span-2">
-                        Tên máy chủ (Hostname) (tùy chọn)
+                        {t('customerCheckout.hostname')}
                         <input
                           className="mt-1 w-full rounded-lg border border-slate-200 p-2.5 font-normal"
                           placeholder={
@@ -278,8 +278,7 @@ export default function CustomerCheckoutPage() {
                           }
                         />
                         <small className="font-normal text-slate-500">
-                          Dùng chữ cái, số, dấu gạch ngang; với N8N cần tên miền
-                          đầy đủ.
+                          {t('customerCheckout.hostnameHint')}
                         </small>
                       </label>
                     )}
@@ -288,12 +287,12 @@ export default function CustomerCheckoutPage() {
               ))}
             </div>
             <label className="mt-5 block font-semibold">
-              Ghi chú đơn hàng (tùy chọn)
+              {t('customerCheckout.note')}
               <textarea
                 className="mt-2 w-full rounded-lg border border-slate-200 p-3 font-normal"
                 rows={3}
                 maxLength={1000}
-                placeholder="Ví dụ: Cài sẵn phần mềm, mở port, ..."
+                placeholder={t('customerCheckout.notePlaceholder')}
                 value={note}
                 onChange={(event) => setNote(event.target.value)}
               />
@@ -305,7 +304,7 @@ export default function CustomerCheckoutPage() {
                 <span className="mr-2 rounded-full bg-blue-600 px-3 py-1 text-white">
                   2
                 </span>{' '}
-                Mã giảm giá
+                {t('customerCart.coupon')}
               </h2>
               <form
                 className="mt-4 flex gap-2"
@@ -313,19 +312,19 @@ export default function CustomerCheckoutPage() {
                   event.preventDefault()
                   try {
                     await apply.mutateAsync(code)
-                    toast.success('Đã áp dụng mã')
+                    toast.success(t('customerCheckout.couponApplied'))
                   } catch (error) {
                     toast.error(
                       error instanceof Error
                         ? error.message
-                        : 'Mã không khả dụng',
+                        : t('customerCheckout.couponUnavailable'),
                     )
                   }
                 }}
               >
                 <input
                   className="min-w-0 flex-1 rounded-lg border border-slate-200 px-3"
-                  placeholder="Nhập mã giảm giá (nếu có)"
+                  placeholder={t('customerCheckout.couponPlaceholder')}
                   value={code}
                   onChange={(event) => setCode(event.target.value)}
                 />
@@ -333,12 +332,16 @@ export default function CustomerCheckoutPage() {
                   className="rounded-lg bg-blue-600 px-4 py-2 text-white"
                   disabled={!code.trim() || apply.isPending}
                 >
-                  Áp dụng
+                  {t('customerCart.apply')}
                 </button>
               </form>
               {data.coupon && (
                 <div className="mt-3 flex justify-between rounded-lg bg-emerald-50 p-3 text-sm text-emerald-700">
-                  <span>Đã áp dụng mã: {data.coupon.code}</span>
+                  <span>
+                    {t('customerCheckout.couponAppliedCode', {
+                      code: data.coupon.code,
+                    })}
+                  </span>
                   <button onClick={() => remove.mutate()}>✕</button>
                 </div>
               )}
@@ -351,10 +354,10 @@ export default function CustomerCheckoutPage() {
                 <span className="mr-2 rounded-full bg-blue-600 px-3 py-1 text-white">
                   3
                 </span>{' '}
-                Phương thức thanh toán
+                {t('customerCheckout.paymentMethod')}
               </h2>
               <div className="mt-4 space-y-2">
-                {paymentMethods.map(({ id, title, detail, icon: Icon }) => (
+                {paymentMethods.map(({ id, icon: Icon }) => (
                   <label
                     key={id}
                     className={`flex cursor-pointer items-center gap-3 rounded-lg border p-3 ${paymentMethod === id ? 'border-blue-500 bg-blue-50' : 'border-slate-200'}`}
@@ -367,52 +370,59 @@ export default function CustomerCheckoutPage() {
                     />
                     <Icon className="text-blue-600" size={24} />
                     <span>
-                      <strong className="block text-sm">{title}</strong>
-                      <small className="text-slate-500">{detail}</small>
+                      <strong className="block text-sm">
+                        {t(`customerCheckout.methods.${id}`)}
+                      </strong>
+                      <small className="text-slate-500">
+                        {t(`customerCheckout.methods.${id}_detail`)}
+                      </small>
                     </span>
                   </label>
                 ))}
               </div>
               <p className="mt-3 text-xs text-slate-500">
-                Các cổng thanh toán hiện chưa kết nối. Đơn hàng sẽ được ghi nhận
-                chờ thanh toán.
+                {t('customerCheckout.paymentNotice')}
               </p>
             </section>
-            <section className="rounded-xl border border-blue-100 bg-gradient-to-b from-white to-blue-50/60 p-5 shadow-sm">
+            <section className="rounded-xl border border-blue-100 bg-gradient-to-b from-white to-blue-50/60 p-5 shadow-sm dark:from-[#253145] dark:to-[#1c2536]">
               <h2 className="text-lg font-bold">
                 <span className="mr-2 rounded-full bg-blue-600 px-3 py-1 text-white">
                   4
                 </span>{' '}
-                Tổng tiền
+                {t('customerCheckout.totalSection')}
               </h2>
               <div className="mt-4 space-y-2 text-sm">
                 {data.items.map((item) => (
                   <div className="flex justify-between gap-3" key={item.id}>
                     <span>
                       {item.productName} (
-                      {cycleLabels[item.billingCycle] ?? item.billingCycle}) ×{' '}
-                      {item.quantity}
+                      {t(`customerBuy.cycles.${item.billingCycle}`, {
+                        defaultValue: item.billingCycle,
+                      })}
+                      ) × {item.quantity}
                     </span>
                     <span>{money(item.totalMinor ?? 0)}</span>
                   </div>
                 ))}
                 {data.discountMinor > 0 && (
                   <div className="flex justify-between text-emerald-600">
-                    <span>Giảm giá ({data.coupon?.code})</span>
+                    <span>
+                      {t('customerCart.discount', { code: data.coupon?.code })}
+                    </span>
                     <span>-{money(data.discountMinor)}</span>
                   </div>
                 )}
                 <div className="flex justify-between border-t pt-2">
-                  <span>Tạm tính</span>
+                  <span>{t('customerCart.subtotal')}</span>
                   <span>{money(data.subtotalMinor - data.discountMinor)}</span>
                 </div>
                 <div className="flex justify-between">
-                  <span>Thuế VAT (10%)</span>
+                  <span>{t('customerCart.vat')}</span>
                   <span>{money(data.taxMinor)}</span>
                 </div>
               </div>
               <div className="mt-3 flex justify-between border-t pt-3 text-xl font-bold">
-                <span>Tổng cộng</span>
+                <span>{t('customerCart.total')}</span>
                 <span className="text-blue-600">{money(data.totalMinor)}</span>
               </div>
               <button
@@ -427,8 +437,8 @@ export default function CustomerCheckoutPage() {
               >
                 <ShieldCheck className="mr-2 inline" size={18} />
                 {create.isPending
-                  ? 'Đang ghi nhận đơn...'
-                  : 'Đặt hàng — chờ thanh toán'}
+                  ? t('customerCheckout.placing')
+                  : t('customerCheckout.placeOrder')}
               </button>
               <label className="mt-3 flex gap-2 text-sm">
                 <input
@@ -436,10 +446,7 @@ export default function CustomerCheckoutPage() {
                   checked={terms}
                   onChange={(event) => setTerms(event.target.checked)}
                 />
-                <span>
-                  Tôi đã đọc và đồng ý với Điều khoản dịch vụ và Chính sách hoàn
-                  tiền.
-                </span>
+                <span>{t('customerCheckout.terms')}</span>
               </label>
             </section>
           </aside>

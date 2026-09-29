@@ -10,5 +10,8 @@ describe('customer service display', () => {
   it('does not invent a price when no order snapshot exists', () => {
     expect(formatServicePrice(null, null, null)).toBe('—')
     expect(formatServicePrice(299000, 'VND', 'MONTHLY')).toContain('/tháng')
+    expect(formatServicePrice(299000, 'VND', 'MONTHLY', 'en')).toContain(
+      '/month',
+    )
   })
 })

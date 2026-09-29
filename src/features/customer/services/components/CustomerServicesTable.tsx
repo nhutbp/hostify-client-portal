@@ -14,6 +14,7 @@ import {
   formatServicePrice,
   serviceStatusPresentation,
 } from '../utils/serviceDisplay'
+import { useTranslation } from 'react-i18next'
 
 type Row = Awaited<
   ReturnType<typeof customerServicesService.list>
@@ -25,28 +26,30 @@ const categoryStyle: Record<
 > = {
   vps: {
     icon: Server,
-    badge: 'bg-blue-100 text-blue-700',
-    tile: 'bg-blue-50 text-blue-600',
+    badge: 'bg-blue-100 text-blue-700 dark:bg-blue-950/50 dark:text-blue-200',
+    tile: 'bg-blue-50 text-blue-600 dark:bg-blue-950/50 dark:text-blue-200',
   },
   hosting: {
     icon: Globe2,
-    badge: 'bg-sky-100 text-sky-700',
-    tile: 'bg-sky-50 text-sky-600',
+    badge: 'bg-sky-100 text-sky-700 dark:bg-sky-950/50 dark:text-sky-200',
+    tile: 'bg-sky-50 text-sky-600 dark:bg-sky-950/50 dark:text-sky-200',
   },
   physical: {
     icon: HardDrive,
-    badge: 'bg-violet-100 text-violet-700',
-    tile: 'bg-violet-50 text-violet-600',
+    badge:
+      'bg-violet-100 text-violet-700 dark:bg-violet-950/50 dark:text-violet-200',
+    tile: 'bg-violet-50 text-violet-600 dark:bg-violet-950/50 dark:text-violet-200',
   },
   proxy: {
     icon: Link2,
-    badge: 'bg-orange-100 text-orange-700',
-    tile: 'bg-orange-50 text-orange-600',
+    badge:
+      'bg-orange-100 text-orange-700 dark:bg-orange-950/50 dark:text-orange-200',
+    tile: 'bg-orange-50 text-orange-600 dark:bg-orange-950/50 dark:text-orange-200',
   },
   via: {
     icon: UserRound,
-    badge: 'bg-pink-100 text-pink-700',
-    tile: 'bg-pink-50 text-pink-600',
+    badge: 'bg-pink-100 text-pink-700 dark:bg-pink-950/50 dark:text-pink-200',
+    tile: 'bg-pink-50 text-pink-600 dark:bg-pink-950/50 dark:text-pink-200',
   },
 }
 
@@ -61,36 +64,51 @@ export function CustomerServicesTable({
   onSelect: (id: string) => void
   onSelectAll: () => void
 }) {
+  const { t, i18n } = useTranslation()
+  const locale = i18n.resolvedLanguage ?? i18n.language
   const allSelected =
     rows.length > 0 && rows.every((row) => selected.has(row.id))
   return (
-    <div className="overflow-x-auto rounded-xl border border-slate-200">
+    <div className="overflow-x-auto rounded-xl border border-border">
       <table className="w-full min-w-[1100px] border-collapse text-left text-sm">
-        <thead className="bg-slate-50 text-xs font-semibold text-[#26365e]">
+        <thead className="bg-muted text-xs font-semibold text-foreground">
           <tr>
             <th className="w-10 px-4 py-3">
               <input
-                aria-label="Chọn tất cả dịch vụ trên trang"
+                aria-label={t('customerServices.selectAll')}
                 type="checkbox"
                 checked={allSelected}
                 onChange={onSelectAll}
               />
             </th>
-            <th className="min-w-52 px-3 py-3">Dịch vụ</th>
-            <th className="min-w-40 px-3 py-3">Thông tin</th>
-            <th className="min-w-32 px-3 py-3">Nhà cung cấp</th>
-            <th className="min-w-36 px-3 py-3">Thanh toán</th>
-            <th className="min-w-36 px-3 py-3">Trạng thái</th>
-            <th className="min-w-32 px-3 py-3">Thời hạn</th>
-            <th className="w-32 px-3 py-3">Thao tác</th>
+            <th className="min-w-52 px-3 py-3">
+              {t('customerServices.service')}
+            </th>
+            <th className="min-w-40 px-3 py-3">
+              {t('customerServices.information')}
+            </th>
+            <th className="min-w-32 px-3 py-3">
+              {t('customerServices.provider')}
+            </th>
+            <th className="min-w-36 px-3 py-3">
+              {t('customerServices.payment')}
+            </th>
+            <th className="min-w-36 px-3 py-3">
+              {t('customerServices.statusLabel')}
+            </th>
+            <th className="min-w-32 px-3 py-3">
+              {t('customerServices.deadline')}
+            </th>
+            <th className="w-32 px-3 py-3">{t('customerServices.actions')}</th>
           </tr>
         </thead>
-        <tbody className="divide-y divide-slate-100">
+        <tbody className="divide-y divide-border">
           {rows.map((row) => {
             const style = categoryStyle[row.category.slug] ?? {
               icon: Package,
-              badge: 'bg-slate-100 text-slate-700',
-              tile: 'bg-slate-50 text-slate-600',
+              badge:
+                'bg-slate-100 text-slate-700 dark:bg-slate-700 dark:text-slate-100',
+              tile: 'bg-slate-50 text-slate-600 dark:bg-slate-700 dark:text-slate-100',
             }
             const Icon = style.icon
             const status = serviceStatusPresentation(
@@ -100,11 +118,13 @@ export function CustomerServicesTable({
             return (
               <tr
                 key={row.id}
-                className="bg-white transition hover:bg-blue-50/40"
+                className="bg-card transition hover:bg-primary/5"
               >
                 <td className="px-4 py-3">
                   <input
-                    aria-label={`Chọn ${row.productName}`}
+                    aria-label={t('customerServices.selectService', {
+                      name: row.productName,
+                    })}
                     type="checkbox"
                     checked={selected.has(row.id)}
                     onChange={() => onSelect(row.id)}
@@ -121,23 +141,25 @@ export function CustomerServicesTable({
                       <Link
                         to="/customer/dashboard/services/$id"
                         params={{ id: row.id }}
-                        className="font-semibold text-[#101746] hover:text-blue-600"
+                        className="font-semibold text-foreground hover:text-blue-600 dark:hover:text-blue-300"
                       >
                         {row.productName}
                       </Link>
-                      <p className="truncate text-xs text-slate-500">
+                      <p className="truncate text-xs text-muted-foreground">
                         {row.serviceCode}
                       </p>
                       <span
                         className={`mt-1 inline-block rounded px-2 py-0.5 text-xs font-medium ${style.badge}`}
                       >
-                        {row.category.name}
+                        {t(`customerCategories.${row.category.slug}`, {
+                          defaultValue: row.category.name,
+                        })}
                       </span>
                     </div>
                   </div>
                 </td>
-                <td className="px-3 py-3 text-slate-600">
-                  <p className="font-medium text-[#26365e]">
+                <td className="px-3 py-3 text-muted-foreground">
+                  <p className="font-medium text-foreground">
                     {row.address ?? row.planName ?? '—'}
                   </p>
                   {row.details.slice(0, 2).map((detail) => (
@@ -150,7 +172,7 @@ export function CustomerServicesTable({
                   <p className="font-medium">{row.provider ?? '—'}</p>
                   {row.operatingSystem && (
                     <p
-                      className="max-w-32 truncate text-xs text-slate-500"
+                      className="max-w-32 truncate text-xs text-muted-foreground"
                       title={row.operatingSystem}
                     >
                       {row.operatingSystem}
@@ -158,17 +180,18 @@ export function CustomerServicesTable({
                   )}
                 </td>
                 <td className="px-3 py-3">
-                  <p className="font-semibold text-blue-600">
+                  <p className="font-semibold text-blue-600 dark:text-blue-300">
                     {formatServicePrice(
                       row.amountMinor,
                       row.currency,
                       row.billingCycle,
+                      locale,
                     )}
                   </p>
-                  <p className="text-xs text-slate-500">
+                  <p className="text-xs text-muted-foreground">
                     {row.amountMinor === null
-                      ? 'Chưa có giá đơn hàng'
-                      : 'Giá khi mua'}
+                      ? t('customerServices.noOrderPrice')
+                      : t('customerServices.purchasePrice')}
                   </p>
                 </td>
                 <td className="px-3 py-3">
@@ -176,18 +199,20 @@ export function CustomerServicesTable({
                     className={`inline-flex items-center gap-1.5 rounded-md px-2.5 py-1 text-xs font-semibold ${status.className}`}
                   >
                     <span className={`size-1.5 rounded-full ${status.dot}`} />
-                    {status.label}
+                    {t(status.labelKey, { defaultValue: status.label })}
                   </span>
                 </td>
                 <td className="px-3 py-3">
                   <p className="font-medium">
-                    {formatServiceDate(row.expiresAt)}
+                    {formatServiceDate(row.expiresAt, locale)}
                   </p>
                   {row.daysRemaining !== null && (
-                    <p className="text-xs text-slate-500">
+                    <p className="text-xs text-muted-foreground">
                       {row.daysRemaining > 0
-                        ? `Còn ${row.daysRemaining} ngày`
-                        : 'Đã tới hạn'}
+                        ? t('customerServices.remainingDays', {
+                            count: row.daysRemaining,
+                          })
+                        : t('customerServices.due')}
                     </p>
                   )}
                 </td>
@@ -196,21 +221,24 @@ export function CustomerServicesTable({
                     <Link
                       to="/customer/dashboard/services/$id"
                       params={{ id: row.id }}
-                      className="rounded-l-lg border border-blue-200 bg-white px-3 py-2 text-sm font-semibold text-blue-600 hover:bg-blue-50"
+                      className="rounded-l-lg border border-blue-200 bg-card px-3 py-2 text-sm font-semibold text-blue-600 hover:bg-primary/10 dark:border-blue-800 dark:text-blue-300"
                     >
-                      Quản lý
+                      {t('customerServices.manage')}
                     </Link>
                     <details className="relative">
-                      <summary className="flex h-[38px] cursor-pointer list-none items-center rounded-r-lg border border-l-0 border-blue-200 px-2 text-blue-600">
+                      <summary
+                        className="flex h-[38px] cursor-pointer list-none items-center rounded-r-lg border border-l-0 border-blue-200 px-2 text-blue-600 dark:border-blue-800 dark:text-blue-300"
+                        aria-label={t('customerServices.actions')}
+                      >
                         <ChevronDown size={14} />
                       </summary>
-                      <div className="absolute right-0 z-10 mt-1 w-36 rounded-lg border border-slate-200 bg-white p-1 shadow-lg">
+                      <div className="absolute right-0 z-10 mt-1 w-36 rounded-lg border border-border bg-popover p-1 text-popover-foreground shadow-lg">
                         <Link
                           to="/customer/dashboard/services/$id"
                           params={{ id: row.id }}
-                          className="block rounded px-2 py-1.5 hover:bg-blue-50"
+                          className="block rounded px-2 py-1.5 hover:bg-primary/10"
                         >
-                          Xem chi tiết
+                          {t('customerServices.viewDetails')}
                         </Link>
                       </div>
                     </details>

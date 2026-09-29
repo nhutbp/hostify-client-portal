@@ -28,8 +28,8 @@ export function LanguageSwitcher({ iconOnly = false }: { iconOnly?: boolean }) {
       onClick={toggleLanguage}
       className={
         iconOnly
-          ? 'size-[22px] rounded-md p-0 text-[#111] transition-colors hover:text-primary'
-          : 'gap-2 px-3'
+          ? 'size-[22px] rounded-md p-0 text-foreground transition-colors hover:text-primary'
+          : 'gap-2 px-3 text-foreground hover:bg-primary/10 hover:text-primary'
       }
       aria-label={t('settings.language')}
       title={t('settings.language')}

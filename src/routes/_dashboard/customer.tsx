@@ -2,7 +2,7 @@ import { createFileRoute, Outlet, redirect } from '@tanstack/react-router'
 import { getCurrentUser } from '../../../server/modules/identity/auth/auth'
 import { unwrapSuccessResponse } from '@/utils/response'
 import { ROLE_CODES } from '../../../shared/roles'
-import CustomerLayout from '@/layouts/customer/CustomerLayout'
+import FullLayout from '@/layouts/full/FullLayout'
 
 export const Route = createFileRoute('/_dashboard/customer')({
   beforeLoad: async () => {
@@ -13,8 +13,8 @@ export const Route = createFileRoute('/_dashboard/customer')({
     }
   },
   component: () => (
-    <CustomerLayout>
+    <FullLayout area="customer">
       <Outlet />
-    </CustomerLayout>
+    </FullLayout>
   ),
 })

@@ -6,33 +6,36 @@ import {
   orderStatus,
   paymentMethodLabels,
 } from '../../utils/orderDisplay'
+import { useTranslation } from 'react-i18next'
 
 type OrderRow = Awaited<
   ReturnType<typeof customerOrderService.list>
 >['items'][number]
 
 export function CustomerOrdersTable({ rows }: { rows: OrderRow[] }) {
+  const { t, i18n } = useTranslation()
+  const locale = i18n.resolvedLanguage ?? i18n.language
   return (
-    <div className="overflow-x-auto rounded-xl border border-slate-200">
+    <div className="overflow-x-auto rounded-xl border border-border">
       <table className="w-full min-w-[930px] border-collapse text-left text-sm">
-        <thead className="bg-slate-50 text-xs font-semibold text-[#26365e]">
+        <thead className="bg-muted text-xs font-semibold text-foreground">
           <tr>
-            <th className="px-4 py-3">Mã đơn hàng</th>
-            <th className="px-4 py-3">Sản phẩm</th>
-            <th className="px-4 py-3">Ngày đặt</th>
-            <th className="px-4 py-3">Thanh toán</th>
-            <th className="px-4 py-3">Tổng tiền</th>
-            <th className="px-4 py-3">Trạng thái</th>
-            <th className="px-4 py-3">Thao tác</th>
+            <th className="px-4 py-3">{t('customerOrders.number')}</th>
+            <th className="px-4 py-3">{t('customerOrders.products')}</th>
+            <th className="px-4 py-3">{t('customerOrders.placedAt')}</th>
+            <th className="px-4 py-3">{t('customerOrders.payment')}</th>
+            <th className="px-4 py-3">{t('customerOrders.total')}</th>
+            <th className="px-4 py-3">{t('customerOrders.statusLabel')}</th>
+            <th className="px-4 py-3">{t('customerOrders.actions')}</th>
           </tr>
         </thead>
-        <tbody className="divide-y divide-slate-100">
+        <tbody className="divide-y divide-border">
           {rows.map((order) => {
             const status = orderStatus(order.status)
             return (
               <tr
                 key={order.id}
-                className="bg-white transition hover:bg-blue-50/40"
+                className="bg-card transition hover:bg-primary/5"
               >
                 <td className="px-4 py-4">
                   <Link
@@ -42,8 +45,8 @@ export function CustomerOrdersTable({ rows }: { rows: OrderRow[] }) {
                   >
                     {order.orderNumber}
                   </Link>
-                  <p className="mt-0.5 text-xs text-slate-500">
-                    {order.itemCount} sản phẩm
+                  <p className="mt-0.5 text-xs text-muted-foreground">
+                    {t('customerOrders.itemCount', { count: order.itemCount })}
                   </p>
                 </td>
                 <td className="max-w-64 px-4 py-4">
@@ -55,30 +58,37 @@ export function CustomerOrdersTable({ rows }: { rows: OrderRow[] }) {
                   >
                     {order.items[0]?.productName ?? '—'}
                     {order.items.length > 1 &&
-                      ` +${order.items.length - 1} gói`}
+                      ` ${t('customerOrders.morePlans', { count: order.items.length - 1 })}`}
                   </p>
-                  <p className="text-xs text-slate-500">
-                    {order.items[0]?.categoryName ?? '—'}
+                  <p className="text-xs text-muted-foreground">
+                    {order.items[0]
+                      ? t(`customerCategories.${order.items[0].categorySlug}`, {
+                          defaultValue: order.items[0].categoryName,
+                        })
+                      : '—'}
                   </p>
                 </td>
-                <td className="whitespace-nowrap px-4 py-4 text-slate-600">
-                  {orderDate(order.createdAt)}
+                <td className="whitespace-nowrap px-4 py-4 text-muted-foreground">
+                  {orderDate(order.createdAt, locale)}
                 </td>
                 <td className="px-4 py-4">
                   {order.paymentMethod
-                    ? (paymentMethodLabels[order.paymentMethod] ??
-                      order.paymentMethod)
+                    ? t(`customerOrders.method.${order.paymentMethod}`, {
+                        defaultValue:
+                          paymentMethodLabels[order.paymentMethod] ??
+                          order.paymentMethod,
+                      })
                     : '—'}
                 </td>
                 <td className="whitespace-nowrap px-4 py-4 font-bold text-blue-600">
-                  {orderMoney(order.totalMinor, order.currency)}
+                  {orderMoney(order.totalMinor, order.currency, locale)}
                 </td>
                 <td className="px-4 py-4">
                   <span
                     className={`inline-flex items-center gap-1.5 whitespace-nowrap rounded-md px-2.5 py-1 text-xs font-semibold ${status.className}`}
                   >
                     <span className={`size-1.5 rounded-full ${status.dot}`} />
-                    {status.label}
+                    {t(status.labelKey, { defaultValue: status.label })}
                   </span>
                 </td>
                 <td className="px-4 py-4">
@@ -87,7 +97,7 @@ export function CustomerOrdersTable({ rows }: { rows: OrderRow[] }) {
                     params={{ id: order.id }}
                     className="rounded-lg border border-blue-200 px-3 py-2 font-semibold text-blue-600 hover:bg-blue-50"
                   >
-                    Chi tiết
+                    {t('customerOrders.detail')}
                   </Link>
                 </td>
               </tr>

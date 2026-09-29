@@ -13,10 +13,12 @@ import { CustomerServicesFilters } from '../components/CustomerServicesFilters'
 import { CustomerServicesTable } from '../components/CustomerServicesTable'
 import { useCustomerServices } from '../hooks/useCustomerServices'
 import type { CustomerServicesFilters as Filters } from '../services/customerServicesService'
+import { useTranslation } from 'react-i18next'
 
 const initialFilters: Filters = { page: 1, limit: 6, sort: 'NEWEST' }
 
 export default function CustomerServicesPage() {
+  const { t } = useTranslation()
   const [filters, setFilters] = useState<Filters>(initialFilters)
   const [searchText, setSearchText] = useState('')
   const [selected, setSelected] = useState<Set<string>>(() => new Set())
@@ -49,23 +51,27 @@ export default function CustomerServicesPage() {
   const first = rows.length ? (filters.page - 1) * filters.limit + 1 : 0
   const last = rows.length ? first + rows.length - 1 : 0
   return (
-    <div className="mx-auto max-w-[1500px] space-y-4 text-[#101746]">
+    <div className="mx-auto max-w-[1500px] space-y-4 text-foreground">
       <div className="flex flex-wrap items-center justify-between gap-4 px-1">
         <div>
-          <p className="text-sm text-slate-500">Trang chủ / Quản lý dịch vụ</p>
-          <h1 className="mt-1 text-3xl font-bold">Quản lý dịch vụ</h1>
-          <p className="mt-1 text-slate-500">
-            Xem và quản lý tất cả dịch vụ bạn đã mua
+          <p className="text-sm text-muted-foreground">
+            {t('customerServices.breadcrumb')}
+          </p>
+          <h1 className="mt-1 text-3xl font-bold">
+            {t('customerServices.title')}
+          </h1>
+          <p className="mt-1 text-muted-foreground">
+            {t('customerServices.description')}
           </p>
         </div>
         <Link
           to="/customer/dashboard/buy"
           className="inline-flex items-center gap-2 rounded-lg bg-blue-600 px-5 py-2.5 font-semibold text-white shadow-sm hover:bg-blue-700"
         >
-          <Plus size={18} /> Mua thêm dịch vụ
+          <Plus size={18} /> {t('customerServices.buyMore')}
         </Link>
       </div>
-      <section className="rounded-xl border border-blue-100 bg-white p-4 shadow-sm sm:p-5">
+      <section className="rounded-xl border border-border bg-card p-4 text-card-foreground shadow-sm sm:p-5">
         <CustomerServicesFilters
           filters={filters}
           categories={data?.categories ?? []}
@@ -77,17 +83,17 @@ export default function CustomerServicesPage() {
         />
         <div className="mt-4">
           {services.isPending ? (
-            <div className="rounded-xl border border-slate-200 p-16 text-center text-slate-500">
-              Đang tải dịch vụ...
+            <div className="rounded-xl border border-border p-16 text-center text-muted-foreground">
+              {t('customerServices.loading')}
             </div>
           ) : services.isError ? (
-            <div className="rounded-xl border border-red-200 bg-red-50 p-10 text-center text-red-700">
-              Không thể tải dịch vụ.{' '}
+            <div className="rounded-xl border border-red-200 bg-red-50 p-10 text-center text-red-700 dark:border-red-900 dark:bg-red-950/30 dark:text-red-300">
+              {t('customerServices.loadError')}{' '}
               <button
                 className="font-semibold underline"
                 onClick={() => services.refetch()}
               >
-                Thử lại
+                {t('customerServices.retry')}
               </button>
             </div>
           ) : rows.length ? (
@@ -113,49 +119,53 @@ export default function CustomerServicesPage() {
               }
             />
           ) : (
-            <div className="rounded-xl border border-dashed border-blue-200 bg-blue-50/40 p-12 text-center">
+            <div className="rounded-xl border border-dashed border-blue-200 bg-blue-50/40 p-12 text-center dark:border-blue-800 dark:bg-blue-950/20">
               <Server className="mx-auto text-blue-500" size={38} />
               <h2 className="mt-3 text-lg font-bold">
                 {data?.totalServices
-                  ? 'Không tìm thấy dịch vụ phù hợp'
-                  : 'Bạn chưa có dịch vụ nào'}
+                  ? t('customerServices.noMatches')
+                  : t('customerServices.noServices')}
               </h2>
-              <p className="mt-1 text-sm text-slate-500">
+              <p className="mt-1 text-sm text-muted-foreground">
                 {data?.totalServices
-                  ? 'Thử thay đổi bộ lọc hoặc từ khóa tìm kiếm.'
-                  : 'Dịch vụ sẽ xuất hiện tại đây sau khi đơn hàng được thanh toán và cấp phát.'}
+                  ? t('customerServices.noMatchesHint')
+                  : t('customerServices.noServicesHint')}
               </p>
               {!data?.totalServices && (
                 <Link
                   to="/customer/dashboard/buy"
                   className="mt-4 inline-block rounded-lg bg-blue-600 px-4 py-2 text-white"
                 >
-                  Khám phá dịch vụ
+                  {t('customerServices.explore')}
                 </Link>
               )}
             </div>
           )}
         </div>
-        <div className="mt-4 flex flex-wrap items-center justify-between gap-3 text-sm text-slate-600">
+        <div className="mt-4 flex flex-wrap items-center justify-between gap-3 text-sm text-muted-foreground">
           <div className="flex items-center gap-3">
             <span>
-              Hiển thị {first} - {last} của {data?.meta.total ?? 0} dịch vụ
+              {t('customerServices.pagination', {
+                first,
+                last,
+                total: data?.meta.total ?? 0,
+              })}
             </span>
             {selected.size > 0 && (
               <button
                 className="font-medium text-blue-600"
                 onClick={() => setSelected(new Set())}
               >
-                Đã chọn {selected.size} · Bỏ chọn
+                {t('customerServices.selected', { count: selected.size })}
               </button>
             )}
           </div>
           <div className="flex items-center gap-1">
             <button
-              aria-label="Trang trước"
+              aria-label={t('customerServices.previousPage')}
               disabled={!data?.meta.hasPrevious}
               onClick={() => change({ page: filters.page - 1 })}
-              className="rounded-lg border border-slate-200 p-2 disabled:opacity-40"
+              className="rounded-lg border border-border p-2 disabled:opacity-40"
             >
               <ChevronLeft size={17} />
             </button>
@@ -163,42 +173,41 @@ export default function CustomerServicesPage() {
               {filters.page} / {Math.max(1, data?.meta.totalPages ?? 1)}
             </span>
             <button
-              aria-label="Trang sau"
+              aria-label={t('customerServices.nextPage')}
               disabled={!data?.meta.hasNext}
               onClick={() => change({ page: filters.page + 1 })}
-              className="rounded-lg border border-slate-200 p-2 disabled:opacity-40"
+              className="rounded-lg border border-border p-2 disabled:opacity-40"
             >
               <ChevronRight size={17} />
             </button>
             <button
-              aria-label="Làm mới danh sách"
+              aria-label={t('customerServices.refresh')}
               onClick={() => services.refetch()}
-              className="ml-2 rounded-lg border border-slate-200 p-2 text-blue-600"
+              className="ml-2 rounded-lg border border-border p-2 text-blue-600 dark:text-blue-300"
             >
               <RefreshCw size={17} />
             </button>
           </div>
         </div>
       </section>
-      <section className="flex flex-wrap items-center justify-between gap-4 rounded-xl border border-blue-100 bg-white px-5 py-4 shadow-sm">
+      <section className="flex flex-wrap items-center justify-between gap-4 rounded-xl border border-border bg-card px-5 py-4 text-card-foreground shadow-sm">
         <div className="flex items-center gap-3">
           <span className="flex size-10 items-center justify-center rounded-full bg-blue-600 text-white">
             <CircleHelp size={23} />
           </span>
           <div>
-            <strong>Cần hỗ trợ quản lý dịch vụ?</strong>
-            <p className="text-sm text-slate-500">
-              Bạn có thể theo dõi trạng thái, thời hạn và lịch sử của dịch vụ
-              tại trang chi tiết.
+            <strong>{t('customerServices.supportTitle')}</strong>
+            <p className="text-sm text-muted-foreground">
+              {t('customerServices.supportHint')}
             </p>
           </div>
         </div>
         <button
           disabled
-          title="Kênh hỗ trợ trực tuyến đang được hoàn thiện"
-          className="inline-flex items-center gap-2 rounded-lg border border-blue-200 px-4 py-2 text-sm font-semibold text-blue-600 opacity-60"
+          title={t('customerServices.supportUnavailable')}
+          className="inline-flex items-center gap-2 rounded-lg border border-blue-200 px-4 py-2 text-sm font-semibold text-blue-600 opacity-60 dark:border-blue-800 dark:text-blue-300"
         >
-          <Headphones size={17} /> Liên hệ hỗ trợ
+          <Headphones size={17} /> {t('customerServices.supportContact')}
         </button>
       </section>
     </div>

@@ -8,11 +8,14 @@ import { useTheme } from '@/components/provider/ThemeProvider'
 import { Icon } from '@iconify/react'
 import { VisuallyHidden } from '@radix-ui/react-visually-hidden'
 import { Sheet, SheetContent, SheetTitle } from '@/components/ui/sheet'
+import type { DashboardArea } from '../../FullLayout'
+import { useTranslation } from 'react-i18next'
+import { Moon, Sun } from 'lucide-react'
 
-const Header = () => {
+const Header = ({ area }: { area: DashboardArea }) => {
   const { theme, setTheme } = useTheme()
+  const { t } = useTranslation()
   const [isSticky, setIsSticky] = useState(false)
-  const [mobileMenu, setMobileMenu] = useState('')
   const [isOpen, setIsOpen] = useState(false)
 
   const handleScroll = useEffectEvent(() => {
@@ -44,48 +47,51 @@ const Header = () => {
   }, [])
 
   const toggleMode = () => {
-    setTheme(theme === 'light' ? 'dark' : 'light')
+    const isDark =
+      theme === 'dark' ||
+      (theme === 'system' &&
+        window.matchMedia('(prefers-color-scheme: dark)').matches)
+    setTheme(isDark ? 'light' : 'dark')
   }
-
-  const handleMobileMenu = () => {
-    if (mobileMenu === 'active') {
-      setMobileMenu('')
-    } else {
-      setMobileMenu('active')
-    }
-  }
+  const isDark =
+    theme === 'dark' ||
+    (theme === 'system' &&
+      typeof window !== 'undefined' &&
+      window.matchMedia('(prefers-color-scheme: dark)').matches)
 
   return (
     <>
       <header
-        className={`sticky top-0 z-40 border-b border-slate-100 bg-white/95 backdrop-blur ${
+        className={`sticky top-0 z-40 border-b border-border bg-background/95 text-foreground backdrop-blur ${
           isSticky ? 'shadow-sm' : ''
         }`}
       >
-        <nav className="flex h-[58px] w-full items-center justify-between rounded-none bg-transparent px-4 py-0 dark:bg-transparent">
+        <nav className="flex h-[58px] w-full items-center justify-between rounded-none bg-transparent px-4 py-0">
           {/* Mobile Toggle Icon */}
-          <span
+          <button
+            type="button"
+            aria-label={t('layout.openMenu')}
             onClick={() => setIsOpen(true)}
-            className="hover:text-primary dark:hover:text-primary text-link dark:text-darklink hover:after:bg-lightprimary relative flex cursor-pointer items-center justify-center rounded-full after:absolute after:h-10 after:w-10 after:rounded-full after:bg-transparent md:hidden"
+            className="relative flex cursor-pointer items-center justify-center rounded-full p-2 text-foreground hover:bg-primary/10 hover:text-primary md:hidden"
           >
             <Icon icon="tabler:menu-2" height={20} />
-          </span>
+          </button>
 
           <div className="hidden min-w-0 items-end gap-3 md:flex">
-            <Search />
+            <Search area={area} />
           </div>
 
           {/* mobile-logo */}
           <div className="block max-w-40 md:hidden">
-            <FullLogo />
+            <FullLogo area={area} />
           </div>
 
           <div className="hidden md:block">
             <div className="flex items-center gap-2">
               <button
                 type="button"
-                className="relative rounded-full p-2 text-slate-600 hover:bg-blue-50 hover:text-blue-600"
-                aria-label="Thông báo"
+                className="relative rounded-full p-2 text-foreground/70 hover:bg-primary/10 hover:text-primary"
+                aria-label={t('layout.notifications')}
               >
                 <Icon icon="solar:bell-linear" width="21" />
                 <span className="absolute right-0 top-0 flex size-4 items-center justify-center rounded-full bg-red-500 text-[9px] font-bold text-white">
@@ -95,72 +101,41 @@ const Header = () => {
               {/* Language Switcher */}
               <LanguageSwitcher />
               {/* Theme Toggle */}
-              {theme === 'light' ? (
-                <div
-                  className="hover:text-primary group dark:hover:text-primary text-link dark:text-darklink relative flex cursor-pointer items-center justify-center rounded-full px-15 focus:ring-0"
-                  onClick={toggleMode}
-                >
-                  <span className="group-hover:after:bg-lightprimary relative flex items-center justify-center after:absolute after:-top-1/2 after:h-10 after:w-10 after:rounded-full">
-                    <Icon icon="tabler:moon" width="20" />
-                  </span>
-                </div>
-              ) : (
-                // Dark Mode Button
-                <div
-                  className="hover:text-primary dark:hover:text-primary text-link dark:text-darklink group relative flex cursor-pointer items-center justify-center rounded-full px-15 focus:ring-0"
-                  onClick={toggleMode}
-                >
-                  <span className="group-hover:after:bg-lightprimary relative flex items-center justify-center after:absolute after:-top-1/2 after:h-10 after:w-10 after:rounded-full">
-                    <Icon
-                      icon="solar:sun-bold-duotone"
-                      width="20"
-                      className="group-hover:text-primary"
-                    />
-                  </span>
-                </div>
-              )}
+              <button
+                type="button"
+                onClick={toggleMode}
+                aria-label={t(
+                  isDark ? 'settings.lightMode' : 'settings.darkMode',
+                )}
+                title={t(isDark ? 'settings.lightMode' : 'settings.darkMode')}
+                className="flex size-9 items-center justify-center rounded-full text-foreground/70 hover:bg-primary/10 hover:text-primary"
+              >
+                {isDark ? <Sun size={20} /> : <Moon size={20} />}
+              </button>
 
               {/* Messages Dropdown */}
               {/* <Messages /> */}
 
               {/* Profile Dropdown */}
-              <Profile />
+              <Profile area={area} />
             </div>
           </div>
           {/* Mobile Toggle Icon */}
-          <span className="flex md:hidden" onClick={handleMobileMenu}>
-            <div className="flex w-full md:hidden">
-              <div className="flex items-center justify-center">
-                {theme === 'light' ? (
-                  <div
-                    className="hover:text-primary group dark:hover:text-primary text-link dark:text-darklink relative flex cursor-pointer items-center justify-center rounded-full px-1 focus:ring-0 sm:px-15"
-                    onClick={toggleMode}
-                  >
-                    <span className="group-hover:after:bg-lightprimary relative flex items-center justify-center after:absolute after:-top-1/2 after:h-10 after:w-10 after:rounded-full">
-                      <Icon icon="tabler:moon" width="20" />
-                    </span>
-                  </div>
-                ) : (
-                  // Dark Mode Button
-                  <div
-                    className="hover:text-primary dark:hover:text-primary text-link dark:text-darklink group relative flex cursor-pointer items-center justify-center rounded-full px-1 focus:ring-0 sm:px-15"
-                    onClick={toggleMode}
-                  >
-                    <span className="group-hover:after:bg-lightprimary relative flex items-center justify-center after:absolute after:-top-1/2 after:h-10 after:w-10 after:rounded-full">
-                      <Icon
-                        icon="solar:sun-bold-duotone"
-                        width="20"
-                        className="group-hover:text-primary"
-                      />
-                    </span>
-                  </div>
-                )}
-                <LanguageSwitcher />
-                {/* <Messages /> */}
-                <Profile />
-              </div>
-            </div>
-          </span>
+          <div className="flex items-center gap-1 md:hidden">
+            <button
+              type="button"
+              onClick={toggleMode}
+              aria-label={t(
+                isDark ? 'settings.lightMode' : 'settings.darkMode',
+              )}
+              title={t(isDark ? 'settings.lightMode' : 'settings.darkMode')}
+              className="flex size-9 items-center justify-center rounded-full text-foreground/70 hover:bg-primary/10 hover:text-primary"
+            >
+              {isDark ? <Sun size={20} /> : <Moon size={20} />}
+            </button>
+            <LanguageSwitcher />
+            <Profile area={area} />
+          </div>
         </nav>
       </header>
 
@@ -168,9 +143,9 @@ const Header = () => {
       <Sheet open={isOpen} onOpenChange={setIsOpen}>
         <SheetContent side="left" className="w-64 p-0">
           <VisuallyHidden>
-            <SheetTitle>sidebar</SheetTitle>
+            <SheetTitle>{t('layout.navigation')}</SheetTitle>
           </VisuallyHidden>
-          <SidebarLayout onClose={() => setIsOpen(false)} />
+          <SidebarLayout area={area} onClose={() => setIsOpen(false)} />
         </SheetContent>
       </Sheet>
     </>

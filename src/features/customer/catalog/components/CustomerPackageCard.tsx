@@ -7,8 +7,9 @@ import {
   Network,
   Server,
 } from 'lucide-react'
+import { useTranslation } from 'react-i18next'
 import type { CustomerPackage } from '../types/customerCatalog'
-import { cycleLabels, money } from '../types/customerCatalog'
+import { money } from '../types/customerCatalog'
 
 export function CustomerPackageCard({
   item,
@@ -21,6 +22,7 @@ export function CustomerPackageCard({
   selected: boolean
   onSelect: () => void
 }) {
+  const { t, i18n } = useTranslation()
   const price = item.prices[cycle]
   return (
     <article
@@ -28,7 +30,7 @@ export function CustomerPackageCard({
     >
       {item.featured && (
         <span className="absolute -top-3 left-1/2 -translate-x-1/2 rounded bg-blue-600 px-3 py-1 text-xs font-semibold text-white">
-          Phổ biến nhất
+          {t('customerBuy.popular')}
         </span>
       )}
       <div className="flex items-center gap-3">
@@ -43,9 +45,9 @@ export function CustomerPackageCard({
         </div>
       </div>
       <div className="mt-4 text-2xl font-bold text-blue-600">
-        {price === undefined ? 'Liên hệ' : money(price)}
+        {price === undefined ? t('customerBuy.contact') : money(price, i18n.language)}
         <span className="ml-1 text-xs font-medium">
-          /{cycleLabels[cycle] ?? cycle}
+          /{t(`customerBuy.cycles.${cycle}`, { defaultValue: cycle })}
         </span>
       </div>
       <div className="mt-3 flex-1 space-y-2 text-sm text-[#26365e]">
@@ -76,7 +78,7 @@ export function CustomerPackageCard({
         {item.features.ipCount > 0 && (
           <p className="flex items-center gap-2">
             <Network size={15} />
-            {item.features.ipCount} địa chỉ IP
+            {t('customerBuy.ipAddress', { count: item.features.ipCount })}
           </p>
         )}
         {item.details.map((detail) => (
@@ -92,7 +94,7 @@ export function CustomerPackageCard({
         onClick={onSelect}
         className={`mt-5 h-10 rounded-lg border font-semibold ${selected ? 'border-blue-600 bg-blue-600 text-white' : 'border-blue-500 text-blue-600 hover:bg-blue-50'} disabled:cursor-not-allowed disabled:opacity-50`}
       >
-        {selected ? 'Đã chọn' : 'Chọn gói'}
+        {selected ? t('customerBuy.selected') : t('customerBuy.selectPackage')}
       </button>
     </article>
   )

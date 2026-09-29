@@ -225,9 +225,9 @@ body {
   --secondary: var(--secondary-500);
   --secondary-foreground: var(--white);
   --muted: #2a3851;
-  --muted-foreground: #7c8fac;
-  --accent: var(--accent);
-  --accent-foreground: var(--accent-foreground);
+  --muted-foreground: #aebbd0;
+  --accent: var(--lightprimary);
+  --accent-foreground: #93c5fd;
   --destructive: var(--error);
   --border: #333f55;
   --input: var(--border);
@@ -238,13 +238,13 @@ body {
   --chart-4: var(--warning);
   --chart-5: var(--error);
   --sidebar: var(--dark);
-  --sidebar-foreground: #7c8fac;
-  --sidebar-primary: var(--sidebar-primary);
-  --sidebar-primary-foreground: var(--sidebar-primary-foreground);
-  --sidebar-accent: var(--sidebar-accent);
-  --sidebar-accent-foreground: var(--sidebar-accent-foreground);
-  --sidebar-border: var(--sidebar-border);
-  --sidebar-ring: var(--sidebar-ring);
+  --sidebar-foreground: #cbd5e1;
+  --sidebar-primary: var(--primary);
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: var(--lightprimary);
+  --sidebar-accent-foreground: #93c5fd;
+  --sidebar-border: var(--border);
+  --sidebar-ring: #93c5fd;
 
   /* CUSTOM COLORS */
   --info: #8754ec;
@@ -254,7 +254,7 @@ body {
   --white: #ffffff;
   --dark: #1c2536;
   --darkgray: #253145;
-  --bodytext: #5a6a85bf;
+  --bodytext: #b7c5d9;
 
   /* Light Variants (Dark Mode) */
   --lightprimary: color-mix(in oklab, var(--primary) 20%, transparent);
@@ -271,6 +271,45 @@ body {
   --warning-emphasis: color-mix(in oklab, var(--warning) 80%, black);
   --error-emphasis: color-mix(in oklab, var(--error) 80%, black);
   --info-emphasis: color-mix(in oklab, var(--info) 80%, black);
+}
+
+/* Legacy customer pages still contain literal light-palette utilities. Scope their
+   dark equivalents to the customer area until each page uses semantic tokens. */
+.dark [data-dashboard-area='customer'] [class~='bg-white'] {
+  background-color: var(--card);
+}
+.dark [data-dashboard-area='customer'] [class~='bg-slate-50'] {
+  background-color: var(--muted);
+}
+.dark [data-dashboard-area='customer'] [class~='bg-blue-50'],
+.dark [data-dashboard-area='customer'] [class~='bg-blue-50/40'] {
+  background-color: color-mix(in srgb, var(--primary) 14%, var(--card));
+}
+.dark [data-dashboard-area='customer'] [class~='bg-blue-50/60'],
+.dark [data-dashboard-area='customer'] [class~='bg-blue-50/70'] {
+  background-color: color-mix(in srgb, var(--primary) 18%, var(--card));
+}
+.dark [data-dashboard-area='customer'] [class~='bg-emerald-50'] {
+  background-color: #064e3b;
+}
+.dark [data-dashboard-area='customer'] [class~='text-[#101746]'],
+.dark [data-dashboard-area='customer'] [class~='text-[#26365e]'] {
+  color: var(--foreground);
+}
+.dark [data-dashboard-area='customer'] [class~='text-slate-500'],
+.dark [data-dashboard-area='customer'] [class~='text-slate-600'] {
+  color: var(--muted-foreground);
+}
+.dark [data-dashboard-area='customer'] [class~='text-blue-600'] {
+  color: #93c5fd;
+}
+.dark [data-dashboard-area='customer'] [class~='text-emerald-700'] {
+  color: #a7f3d0;
+}
+.dark [data-dashboard-area='customer'] [class~='border-slate-100'],
+.dark [data-dashboard-area='customer'] [class~='border-slate-200'],
+.dark [data-dashboard-area='customer'] [class~='border-blue-100'] {
+  border-color: var(--border);
 }
 
 @layer base {

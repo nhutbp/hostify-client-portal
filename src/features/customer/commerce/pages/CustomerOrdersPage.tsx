@@ -12,6 +12,7 @@ import { useCustomerOrders } from '../hooks/useCustomerOrder'
 import { CustomerOrdersTable } from './components/CustomerOrdersTable'
 import type { CustomerOrderFilters } from '../services/customerOrderService'
 import { orderStatuses } from '../utils/orderDisplay'
+import { useTranslation } from 'react-i18next'
 
 const initialFilters: CustomerOrderFilters = {
   page: 1,
@@ -19,14 +20,15 @@ const initialFilters: CustomerOrderFilters = {
   sort: 'NEWEST',
 }
 const featuredStatuses = [
-  { value: '', label: 'Tất cả' },
-  { value: 'PENDING_PAYMENT', label: 'Chờ thanh toán' },
-  { value: 'PAID', label: 'Đã thanh toán' },
-  { value: 'COMPLETED', label: 'Hoàn tất' },
-  { value: 'CANCELLED', label: 'Đã hủy' },
+  { value: '' },
+  { value: 'PENDING_PAYMENT' },
+  { value: 'PAID' },
+  { value: 'COMPLETED' },
+  { value: 'CANCELLED' },
 ] as const
 
 export default function CustomerOrdersPage() {
+  const { t } = useTranslation()
   const [filters, setFilters] = useState<CustomerOrderFilters>(initialFilters)
   const [searchText, setSearchText] = useState('')
   const orders = useCustomerOrders(filters)
@@ -54,23 +56,27 @@ export default function CustomerOrdersPage() {
   const first = rows.length ? (filters.page - 1) * filters.limit + 1 : 0
   const last = rows.length ? first + rows.length - 1 : 0
   return (
-    <div className="mx-auto max-w-[1500px] space-y-4 text-[#101746]">
+    <div className="mx-auto max-w-[1500px] space-y-4 text-foreground">
       <div className="flex flex-wrap items-center justify-between gap-4 px-1">
         <div>
-          <p className="text-sm text-slate-500">Trang chủ / Lịch sử mua hàng</p>
-          <h1 className="mt-1 text-3xl font-bold">Lịch sử mua hàng</h1>
-          <p className="mt-1 text-slate-500">
-            Theo dõi đơn hàng, thanh toán và trạng thái xử lý
+          <p className="text-sm text-muted-foreground">
+            {t('customerOrders.breadcrumb')}
+          </p>
+          <h1 className="mt-1 text-3xl font-bold">
+            {t('customerOrders.title')}
+          </h1>
+          <p className="mt-1 text-muted-foreground">
+            {t('customerOrders.description')}
           </p>
         </div>
         <Link
           to="/customer/dashboard/buy"
           className="inline-flex items-center gap-2 rounded-lg bg-blue-600 px-5 py-2.5 font-semibold text-white shadow-sm hover:bg-blue-700"
         >
-          <Plus size={18} /> Mua thêm dịch vụ
+          <Plus size={18} /> {t('customerOrders.buyMore')}
         </Link>
       </div>
-      <section className="rounded-xl border border-blue-100 bg-white p-4 shadow-sm sm:p-5">
+      <section className="rounded-xl border border-border bg-card p-4 text-card-foreground shadow-sm sm:p-5">
         <div className="flex gap-2 overflow-x-auto pb-1">
           {featuredStatuses.map((entry) => (
             <button
@@ -82,9 +88,12 @@ export default function CustomerOrdersPage() {
                     undefined) as CustomerOrderFilters['status'],
                 })
               }
-              className={`shrink-0 rounded-lg border px-4 py-2 text-sm font-semibold ${filters.status === (entry.value || undefined) ? 'border-blue-600 bg-blue-600 text-white' : 'border-slate-200 bg-white text-[#26365e] hover:border-blue-300'}`}
+              className={`shrink-0 rounded-lg border px-4 py-2 text-sm font-semibold ${filters.status === (entry.value || undefined) ? 'border-blue-600 bg-blue-600 text-white' : 'border-border bg-background text-foreground hover:border-blue-300'}`}
             >
-              {entry.label} (
+              {entry.value
+                ? t(`customerOrders.status.${entry.value}`)
+                : t('customerOrders.all')}{' '}
+              (
               {entry.value
                 ? (data?.statusCounts[entry.value] ?? 0)
                 : (data?.totalOrders ?? 0)}
@@ -94,17 +103,17 @@ export default function CustomerOrdersPage() {
         </div>
         <div className="mt-4 grid gap-2 sm:grid-cols-[minmax(0,1fr)_190px_150px]">
           <label className="relative">
-            <Search className="absolute left-3 top-1/2 size-4 -translate-y-1/2 text-slate-500" />
+            <Search className="absolute left-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />
             <input
-              aria-label="Tìm đơn hàng"
+              aria-label={t('customerOrders.search')}
               value={searchText}
               onChange={(event) => setSearchText(event.target.value)}
-              placeholder="Tìm mã đơn hoặc tên sản phẩm..."
-              className="h-10 w-full rounded-lg border border-slate-200 pl-9 pr-3 text-sm outline-none focus:border-blue-500"
+              placeholder={t('customerOrders.searchPlaceholder')}
+              className="h-10 w-full rounded-lg border border-border bg-background pl-9 pr-3 text-sm text-foreground outline-none focus:border-blue-500"
             />
           </label>
           <select
-            aria-label="Lọc trạng thái đơn hàng"
+            aria-label={t('customerOrders.filterStatus')}
             value={filters.status ?? ''}
             onChange={(event) =>
               change({
@@ -112,80 +121,84 @@ export default function CustomerOrdersPage() {
                   undefined) as CustomerOrderFilters['status'],
               })
             }
-            className="h-10 rounded-lg border border-slate-200 bg-white px-3 text-sm"
+            className="h-10 rounded-lg border border-border bg-background px-3 text-sm text-foreground"
           >
-            <option value="">Tất cả trạng thái</option>
+            <option value="">{t('customerOrders.allStatuses')}</option>
             {Object.entries(orderStatuses).map(([value, { label }]) => (
               <option key={value} value={value}>
-                {label}
+                {t(`customerOrders.status.${value}`, { defaultValue: label })}
               </option>
             ))}
           </select>
           <select
-            aria-label="Sắp xếp đơn hàng"
+            aria-label={t('customerOrders.sort')}
             value={filters.sort}
             onChange={(event) =>
               change({
                 sort: event.target.value as CustomerOrderFilters['sort'],
               })
             }
-            className="h-10 rounded-lg border border-slate-200 bg-white px-3 text-sm"
+            className="h-10 rounded-lg border border-border bg-background px-3 text-sm text-foreground"
           >
-            <option value="NEWEST">Mới nhất</option>
-            <option value="OLDEST">Cũ nhất</option>
+            <option value="NEWEST">{t('customerOrders.newest')}</option>
+            <option value="OLDEST">{t('customerOrders.oldest')}</option>
           </select>
         </div>
         <div className="mt-4">
           {orders.isPending ? (
-            <div className="rounded-xl border border-slate-200 p-14 text-center text-slate-500">
-              Đang tải đơn hàng...
+            <div className="rounded-xl border border-border p-14 text-center text-muted-foreground">
+              {t('customerOrders.loading')}
             </div>
           ) : orders.isError ? (
-            <div className="rounded-xl border border-red-200 bg-red-50 p-10 text-center text-red-700">
-              Không thể tải lịch sử mua hàng.{' '}
+            <div className="rounded-xl border border-red-200 bg-red-50 p-10 text-center text-red-700 dark:border-red-900 dark:bg-red-950/30 dark:text-red-300">
+              {t('customerOrders.loadError')}{' '}
               <button
                 className="font-semibold underline"
                 onClick={() => orders.refetch()}
               >
-                Thử lại
+                {t('customerOrders.retry')}
               </button>
             </div>
           ) : rows.length ? (
             <CustomerOrdersTable rows={rows} />
           ) : (
-            <div className="rounded-xl border border-dashed border-blue-200 bg-blue-50/40 p-12 text-center">
+            <div className="rounded-xl border border-dashed border-blue-200 bg-blue-50/40 p-12 text-center dark:border-blue-800 dark:bg-blue-950/20">
               <ClipboardList className="mx-auto text-blue-500" size={38} />
               <h2 className="mt-3 text-lg font-bold">
                 {data?.totalOrders
-                  ? 'Không tìm thấy đơn phù hợp'
-                  : 'Bạn chưa có đơn hàng nào'}
+                  ? t('customerOrders.noMatches')
+                  : t('customerOrders.noOrders')}
               </h2>
-              <p className="mt-1 text-sm text-slate-500">
+              <p className="mt-1 text-sm text-muted-foreground">
                 {data?.totalOrders
-                  ? 'Thử thay đổi trạng thái hoặc từ khóa tìm kiếm.'
-                  : 'Các đơn đã đặt sẽ xuất hiện tại đây, kể cả khi đang chờ thanh toán.'}
+                  ? t('customerOrders.noMatchesHint')
+                  : t('customerOrders.noOrdersHint')}
               </p>
               {!data?.totalOrders && (
                 <Link
                   to="/customer/dashboard/buy"
                   className="mt-4 inline-block rounded-lg bg-blue-600 px-4 py-2 text-white"
                 >
-                  Khám phá dịch vụ
+                  {t('customerOrders.explore')}
                 </Link>
               )}
             </div>
           )}
         </div>
-        <div className="mt-4 flex flex-wrap items-center justify-between gap-3 text-sm text-slate-600">
+        <div className="mt-4 flex flex-wrap items-center justify-between gap-3 text-sm text-muted-foreground">
           <span>
-            Hiển thị {first} - {last} của {data?.meta.total ?? 0} đơn hàng
+            {t('customerOrders.pagination', {
+              first,
+              last,
+              total: data?.meta.total ?? 0,
+            })}
           </span>
           <div className="flex items-center gap-1">
             <button
-              aria-label="Trang trước"
+              aria-label={t('customerOrders.previousPage')}
               disabled={!data?.meta.hasPrevious}
               onClick={() => change({ page: filters.page - 1 })}
-              className="rounded-lg border border-slate-200 p-2 disabled:opacity-40"
+              className="rounded-lg border border-border p-2 disabled:opacity-40"
             >
               <ChevronLeft size={17} />
             </button>
@@ -193,17 +206,17 @@ export default function CustomerOrdersPage() {
               {filters.page} / {Math.max(1, data?.meta.totalPages ?? 1)}
             </span>
             <button
-              aria-label="Trang sau"
+              aria-label={t('customerOrders.nextPage')}
               disabled={!data?.meta.hasNext}
               onClick={() => change({ page: filters.page + 1 })}
-              className="rounded-lg border border-slate-200 p-2 disabled:opacity-40"
+              className="rounded-lg border border-border p-2 disabled:opacity-40"
             >
               <ChevronRight size={17} />
             </button>
             <button
-              aria-label="Làm mới lịch sử"
+              aria-label={t('customerOrders.refresh')}
               onClick={() => orders.refetch()}
-              className="ml-2 rounded-lg border border-slate-200 p-2 text-blue-600"
+              className="ml-2 rounded-lg border border-border p-2 text-blue-600 dark:text-blue-300"
             >
               <RefreshCw size={17} />
             </button>

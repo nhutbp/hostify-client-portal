@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import {
   ChevronRight,
   Cloud,
@@ -17,7 +18,7 @@ import {
 import { useAddCustomerCartItem } from '@/features/customer/commerce/hooks/useCustomerCart'
 import { CustomerPackageCard } from '../components/CustomerPackageCard'
 import { CustomerOrderSummary } from '../components/CustomerOrderSummary'
-import { cycleLabels, type CustomerPackage } from '../types/customerCatalog'
+import type { CustomerPackage } from '../types/customerCatalog'
 
 const icons = {
   vps: Server,
@@ -36,6 +37,7 @@ const preferredCycles = [
 ]
 
 export default function CustomerBuyPage() {
+  const { t } = useTranslation()
   const [category, setCategory] = useState('vps')
   const [cycle, setCycle] = useState('')
   const [custom, setCustom] = useState(false)
@@ -50,9 +52,11 @@ export default function CustomerBuyPage() {
   const catalog = useCustomerPackages(activeCategory)
   const addToCart = useAddCustomerCartItem()
   const items = catalog.data ?? []
-  const categoryName =
-    categories.data?.find((item) => item.slug === activeCategory)?.name ??
-    'dịch vụ'
+  const categoryName = t(`customerCategories.${activeCategory}`, {
+    defaultValue:
+      categories.data?.find((item) => item.slug === activeCategory)?.name ??
+      t('customerBuy.service'),
+  })
   const availableCycles = [
     ...new Set(items.flatMap((item) => Object.keys(item.prices))),
   ].sort((a, b) => preferredCycles.indexOf(a) - preferredCycles.indexOf(b))
@@ -94,23 +98,23 @@ export default function CustomerBuyPage() {
         billingCycle: activeCycle,
         ...(selectedLocationId ? { datacenterId: selectedLocationId } : {}),
       })
-      toast.success('Đã thêm gói vào giỏ hàng')
+      toast.success(t('customerBuy.added'))
     } catch (error) {
       toast.error(
-        error instanceof Error ? error.message : 'Không thể thêm vào giỏ hàng',
+        error instanceof Error ? error.message : t('customerBuy.addFailed'),
       )
     }
   }
 
   return (
     <div className="space-y-4">
-      <div className="relative overflow-hidden rounded-2xl bg-gradient-to-r from-[#eaf4ff] to-[#f5faff] px-5 py-8 md:px-8">
+      <div className="relative overflow-hidden rounded-2xl bg-gradient-to-r from-[#eaf4ff] to-[#f5faff] px-5 py-8 dark:from-[#253145] dark:to-[#1c2536] md:px-8">
         <div className="relative z-10">
           <h1 className="text-3xl font-bold tracking-tight text-[#101746] md:text-4xl">
-            Chọn dịch vụ phù hợp với bạn
+            {t('customerBuy.hero')}
           </h1>
           <p className="mt-2 text-base text-slate-600 md:text-lg">
-            Hiệu suất cao - Triển khai nhanh chóng - Linh hoạt tùy chỉnh
+            {t('customerBuy.tagline')}
           </p>
         </div>
         <Server
@@ -120,7 +124,9 @@ export default function CustomerBuyPage() {
       </div>
       <div className="grid gap-3 rounded-xl bg-white p-3 shadow-sm sm:grid-cols-2 xl:grid-cols-5">
         {categories.isPending ? (
-          <p className="p-4 text-slate-500">Đang tải danh mục...</p>
+          <p className="p-4 text-slate-500">
+            {t('customerBuy.loadingCategories')}
+          </p>
         ) : (
           categories.data?.map((item) => {
             const Icon = icons[item.slug as keyof typeof icons] ?? Server
@@ -147,7 +153,11 @@ export default function CustomerBuyPage() {
                   size={32}
                 />
                 <span className="min-w-0">
-                  <strong className="block text-base">{item.name}</strong>
+                  <strong className="block text-base">
+                    {t(`customerCategories.${item.slug}`, {
+                      defaultValue: item.name,
+                    })}
+                  </strong>
                   <small className="mt-1 block text-slate-500">
                     {item.description ?? ''}
                   </small>
@@ -165,13 +175,17 @@ export default function CustomerBuyPage() {
         <section className="min-w-0 rounded-xl bg-white p-5 shadow-sm">
           <div className="flex flex-wrap items-center justify-between gap-3 border-b border-slate-100 pb-4">
             <div>
-              <h2 className="text-xl font-bold">Các gói {categoryName}</h2>
+              <h2 className="text-xl font-bold">
+                {t('customerBuy.packages', { category: categoryName })}
+              </h2>
               <p className="mt-1 text-sm text-slate-500">
-                Giá và cấu hình được cập nhật từ catalog.
+                {t('customerBuy.catalogHint')}
               </p>
             </div>
             <div className="flex items-center gap-2 text-sm">
-              <span className="text-slate-500">Thanh toán theo</span>
+              <span className="text-slate-500">
+                {t('customerBuy.billingBy')}
+              </span>
               <div className="flex rounded-lg border border-slate-200 p-1">
                 {availableCycles.map((value) => (
                   <button
@@ -183,7 +197,7 @@ export default function CustomerBuyPage() {
                     }}
                     className={`rounded-md px-3 py-1.5 ${activeCycle === value ? 'bg-blue-600 font-semibold text-white' : 'text-[#26365e]'}`}
                   >
-                    {cycleLabels[value] ?? value}
+                    {t(`customerBuy.cycles.${value}`, { defaultValue: value })}
                   </button>
                 ))}
               </div>
@@ -198,7 +212,7 @@ export default function CustomerBuyPage() {
               }}
               className={`px-3 py-2 font-medium ${!custom ? 'border-b-2 border-blue-600 text-blue-600' : 'text-slate-500'}`}
             >
-              Chọn gói có sẵn
+              {t('customerBuy.readyMade')}
             </button>
             <button
               type="button"
@@ -208,20 +222,20 @@ export default function CustomerBuyPage() {
               }}
               className={`px-3 py-2 font-medium ${custom ? 'border-b-2 border-blue-600 text-blue-600' : 'text-slate-500'}`}
             >
-              Tùy chỉnh cấu hình
+              {t('customerBuy.custom')}
             </button>
           </div>
           <div className="mt-4 flex flex-wrap gap-3">
             <input
-              aria-label="Tìm gói"
+              aria-label={t('customerBuy.search')}
               value={search}
               onChange={(event) => setSearch(event.target.value)}
-              placeholder="Tìm kiếm gói..."
+              placeholder={t('customerBuy.search')}
               className="h-10 min-w-0 flex-1 rounded-lg border border-slate-200 px-3 text-sm"
             />
             {locations.length > 0 && (
               <select
-                aria-label="Lọc vị trí datacenter"
+                aria-label={t('customerBuy.filterLocation')}
                 value={locationFilter}
                 onChange={(event) => {
                   setLocationFilter(event.target.value)
@@ -229,7 +243,7 @@ export default function CustomerBuyPage() {
                 }}
                 className="h-10 rounded-lg border border-slate-200 px-3 text-sm"
               >
-                <option value="">Tất cả vị trí DC</option>
+                <option value="">{t('customerBuy.allLocations')}</option>
                 {locations.map((location) => (
                   <option key={location.id} value={location.id}>
                     {location.name}
@@ -240,17 +254,17 @@ export default function CustomerBuyPage() {
           </div>
           {catalog.isPending ? (
             <p className="py-16 text-center text-slate-500">
-              Đang tải các gói dịch vụ...
+              {t('customerBuy.loadingPackages')}
             </p>
           ) : catalog.isError ? (
             <div className="py-12 text-center">
-              <p className="text-red-600">Không thể tải gói dịch vụ.</p>
+              <p className="text-red-600">{t('customerBuy.loadFailed')}</p>
               <button
                 type="button"
                 onClick={() => catalog.refetch()}
                 className="mt-3 text-blue-600"
               >
-                Thử lại
+                {t('customerBuy.retry')}
               </button>
             </div>
           ) : visible.length ? (
@@ -271,12 +285,12 @@ export default function CustomerBuyPage() {
               </div>
               {activeCategory === 'vps' && (
                 <div className="mt-5 overflow-x-auto">
-                  <h3 className="mb-2 font-bold">So sánh nhanh các gói VPS</h3>
+                  <h3 className="mb-2 font-bold">{t('customerBuy.compare')}</h3>
                   <table className="w-full min-w-[600px] border-collapse text-center text-sm">
                     <thead>
                       <tr className="bg-slate-50">
                         <th className="border border-slate-200 p-2 text-left">
-                          Thông số
+                          {t('customerBuy.specification')}
                         </th>
                         {visible.map((item) => (
                           <th
@@ -289,7 +303,7 @@ export default function CustomerBuyPage() {
                       </tr>
                     </thead>
                     <tbody>
-                      {compareRows.map(([label, value]) => (
+                      {compareRows(t).map(([label, value]) => (
                         <tr key={label}>
                           <th className="border border-slate-200 p-2 text-left font-normal">
                             {label}
@@ -313,8 +327,8 @@ export default function CustomerBuyPage() {
             <div className="flex items-center gap-2 py-16 text-center text-slate-500">
               <Info size={18} />
               {custom
-                ? 'Chưa có cấu hình tùy chỉnh được mở bán.'
-                : `Hiện chưa có gói ${categoryName} phù hợp.`}
+                ? t('customerBuy.noCustom')
+                : t('customerBuy.noPackages', { category: categoryName })}
             </div>
           )}
         </section>
@@ -331,9 +345,14 @@ export default function CustomerBuyPage() {
   )
 }
 
-const compareRows: [string, (item: CustomerPackage) => string][] = [
+const compareRows = (
+  t: (key: string) => string,
+): [string, (item: CustomerPackage) => string][] => [
   ['vCPU', (item) => String(item.features.cpu)],
   ['RAM', (item) => `${item.features.ramGb} GB`],
-  ['Ổ cứng', (item) => `${item.features.diskGb} GB ${item.features.diskType}`],
-  ['Băng thông', (item) => item.features.bandwidth || '—'],
+  [
+    t('customerBuy.disk'),
+    (item) => `${item.features.diskGb} GB ${item.features.diskType}`,
+  ],
+  [t('customerBuy.bandwidth'), (item) => item.features.bandwidth || '—'],
 ]

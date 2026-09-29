@@ -4,12 +4,15 @@ import { Link, useLocation } from '@tanstack/react-router'
 import FullLogo from '@/layouts/full/shared/logo/FullLogo'
 import Logo from '@/layouts/full/shared/logo/Logo'
 import SidebarContent from '@/layouts/full/vertical/sidebar/sidebaritem'
+import customerSidebarItems from '@/layouts/full/vertical/sidebar/customerSidebarItems'
 import type { MenuItem } from '@/layouts/full/vertical/sidebar/sidebaritem'
+import type { DashboardArea } from '@/layouts/full/FullLayout'
 import { cn } from '@/utils/utils'
 import { Icon } from '@iconify/react'
 import SimpleBar from 'simplebar-react'
 import { Button } from '@/components/ui/button'
 import { useCurrentUser } from '@/features/auth/store/authStore'
+import { getVisibleSidebarItems } from './getVisibleSidebarItems'
 
 const SIDEBAR_COLLAPSED_KEY = 'sidebar-collapsed'
 
@@ -34,6 +37,22 @@ const CollapsibleMenuItem = ({
   isCollapsed: boolean
 }) => {
   const hasChildren = item.children && item.children.length > 0
+  if (item.disabled) {
+    return (
+      <button
+        type="button"
+        disabled
+        title={t('customerShell.comingSoon')}
+        className={cn(
+          'flex w-full cursor-not-allowed items-center gap-3 rounded-lg px-3 py-2.5 text-base text-sidebar-foreground opacity-50',
+          isCollapsed && 'justify-center px-2',
+        )}
+      >
+        <Icon icon={item.icon} className="size-5 shrink-0" />
+        {!isCollapsed && <span className="truncate">{t(item.titleKey)}</span>}
+      </button>
+    )
+  }
   const isActive = item.active !== false && item.url === currentPath
   const activeChild = item.children
     ?.filter(
@@ -61,9 +80,9 @@ const CollapsibleMenuItem = ({
         onClick={onClose}
         className={cn(
           'relative flex items-center gap-3 rounded-lg px-3 py-2.5 text-base font-medium transition-colors',
-          'hover:bg-primary/10 hover:text-primary',
+          'hover:bg-primary/10 hover:text-primary dark:hover:text-blue-300',
           isActive
-            ? 'bg-primary/10 text-primary before:absolute before:left-0 before:h-7 before:w-1 before:rounded-r-full before:bg-primary'
+            ? 'bg-primary/10 text-primary dark:text-blue-300 before:absolute before:left-0 before:h-7 before:w-1 before:rounded-r-full before:bg-primary'
             : 'text-sidebar-foreground',
           isCollapsed && 'justify-center px-2',
         )}
@@ -83,9 +102,9 @@ const CollapsibleMenuItem = ({
         onClick={onToggle}
         className={cn(
           'text-md flex w-full items-center justify-between rounded-lg px-3 py-2.5 font-medium transition-colors',
-          'hover:bg-primary/10 hover:text-primary',
+          'hover:bg-primary/10 hover:text-primary dark:hover:text-blue-300',
           hasActiveChild
-            ? 'bg-primary/10 text-primary'
+            ? 'bg-primary/10 text-primary dark:text-blue-300'
             : 'text-sidebar-foreground',
           isCollapsed && 'justify-center px-2',
         )}
@@ -128,9 +147,9 @@ const CollapsibleMenuItem = ({
                 onClick={onClose}
                 className={cn(
                   'relative flex items-center gap-2 rounded-lg px-3 py-2 text-base transition-colors',
-                  'hover:bg-primary/10 hover:text-primary',
+                  'hover:bg-primary/10 hover:text-primary dark:hover:text-blue-300',
                   isChildActive
-                    ? 'bg-primary/10 text-primary font-medium before:absolute before:left-0 before:h-7 before:w-1 before:rounded-r-full before:bg-primary'
+                    ? 'bg-primary/10 text-primary dark:text-blue-300 font-medium before:absolute before:left-0 before:h-7 before:w-1 before:rounded-r-full before:bg-primary'
                     : 'text-sidebar-foreground/80',
                   isCollapsed && 'justify-center px-2',
                 )}
@@ -158,33 +177,42 @@ const CollapsibleMenuItem = ({
   )
 }
 
-const SidebarLayout = ({ onClose }: { onClose?: () => void }) => {
+const SidebarLayout = ({
+  onClose,
+  area,
+}: {
+  onClose?: () => void
+  area: DashboardArea
+}) => {
   const { t } = useTranslation()
   const location = useLocation()
   const pathname = location.pathname
   const [isCollapsed, setIsCollapsed] = useState(false)
   const currentUser = useCurrentUser()
+  const sidebarContent =
+    area === 'customer' ? customerSidebarItems : SidebarContent
+  const storageKey = `${SIDEBAR_COLLAPSED_KEY}-${area}`
 
   useEffect(() => {
     if (typeof window === 'undefined') return
 
-    const saved = window.localStorage.getItem(SIDEBAR_COLLAPSED_KEY)
+    const saved = window.localStorage.getItem(storageKey)
     if (saved !== null) {
       setIsCollapsed(saved === 'true')
     }
-  }, [])
+  }, [storageKey])
 
   useEffect(() => {
     if (typeof window === 'undefined') return
 
-    window.localStorage.setItem(SIDEBAR_COLLAPSED_KEY, String(isCollapsed))
-  }, [isCollapsed])
+    window.localStorage.setItem(storageKey, String(isCollapsed))
+  }, [isCollapsed, storageKey])
 
   // Track expanded menu items
   const [expandedMenus, setExpandedMenus] = useState<Set<string>>(() => {
     // Auto-expand menu containing current path on initial load
     const initialExpanded = new Set<string>()
-    for (const item of SidebarContent) {
+    for (const item of sidebarContent) {
       if (
         item.children?.some(
           (child) =>
@@ -210,34 +238,31 @@ const SidebarLayout = ({ onClose }: { onClose?: () => void }) => {
   }
 
   const filteredSidebarContent = useMemo((): MenuItem[] => {
-    if (currentUser?.isSuperAdmin) return SidebarContent
-    const granted = new Set(currentUser?.permissionCodes ?? [])
-    return SidebarContent.flatMap((item) => {
-      const children = item.children?.filter(
-        (child) => !child.permission || granted.has(child.permission),
-      )
-      if (item.permission && !granted.has(item.permission)) return []
-      if (item.children && !children?.length) return []
-      return [{ ...item, children }]
-    })
-  }, [currentUser?.isSuperAdmin, currentUser?.permissionCodes])
+    return getVisibleSidebarItems(
+      area,
+      currentUser?.permissionCodes,
+      currentUser?.isSuperAdmin,
+    )
+  }, [area, currentUser?.isSuperAdmin, currentUser?.permissionCodes])
 
   return (
     <aside
       className={cn(
-        'border-border bg-sidebar fixed top-0 left-0 z-10 flex h-screen flex-col border-r transition-all duration-300',
+        'fixed top-0 left-0 z-10 flex h-screen flex-col border-r border-sidebar-border bg-sidebar text-sidebar-foreground transition-all duration-300',
         isCollapsed ? 'w-20' : 'w-60',
       )}
     >
       {/* Logo */}
       <div
         className={cn(
-          'flex h-[58px] items-center border-b border-[#e4ebf7]',
+          'flex h-[58px] items-center border-b border-sidebar-border',
           isCollapsed ? 'px-3' : 'px-5',
         )}
       >
         <Link
-          to="/admin/dashboard"
+          to={
+            area === 'customer' ? '/customer/dashboard/buy' : '/admin/dashboard'
+          }
           className={cn(
             'flex h-[58px] w-full items-center justify-start',
             isCollapsed && 'px-1',
@@ -248,7 +273,7 @@ const SidebarLayout = ({ onClose }: { onClose?: () => void }) => {
               <Logo />
             </div>
           ) : (
-            <FullLogo />
+            <FullLogo area={area} />
           )}
         </Link>
       </div>
@@ -292,8 +317,12 @@ const SidebarLayout = ({ onClose }: { onClose?: () => void }) => {
               : 'ml-auto w-full justify-start px-3',
           )}
           onClick={() => setIsCollapsed((prev) => !prev)}
-          aria-label={isCollapsed ? 'Mở rộng sidebar' : 'Thu gọn sidebar'}
-          title={isCollapsed ? 'Mở rộng sidebar' : 'Thu gọn sidebar'}
+          aria-label={t(
+            isCollapsed ? 'layout.expandSidebar' : 'layout.collapseSidebar',
+          )}
+          title={t(
+            isCollapsed ? 'layout.expandSidebar' : 'layout.collapseSidebar',
+          )}
         >
           <Icon
             icon={
@@ -303,7 +332,11 @@ const SidebarLayout = ({ onClose }: { onClose?: () => void }) => {
             }
             className="size-5 shrink-0"
           />
-          {!isCollapsed && <span className="text-sm font-medium">Thu gọn</span>}
+          {!isCollapsed && (
+            <span className="text-sm font-medium">
+              {t('layout.collapseSidebar')}
+            </span>
+          )}
         </Button>
       </div>
     </aside>

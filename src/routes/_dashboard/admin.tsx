@@ -24,7 +24,7 @@ export const Route = createFileRoute('/_dashboard/admin')({
     }
   },
   component: () => (
-    <FullLayout>
+    <FullLayout area="admin">
       <Outlet />
     </FullLayout>
   ),

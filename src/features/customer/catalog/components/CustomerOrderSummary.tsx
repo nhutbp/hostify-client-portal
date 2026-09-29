@@ -1,7 +1,8 @@
 import { Link } from '@tanstack/react-router'
 import { Server, ShoppingCart } from 'lucide-react'
+import { useTranslation } from 'react-i18next'
 import type { CustomerPackage } from '../types/customerCatalog'
-import { cycleLabels, money } from '../types/customerCatalog'
+import { money } from '../types/customerCatalog'
 
 export function CustomerOrderSummary({
   item,
@@ -18,6 +19,7 @@ export function CustomerOrderSummary({
   onAdd: () => void
   pending: boolean
 }) {
+  const { t, i18n } = useTranslation()
   const price = item?.prices[cycle]
   const setupFee = item?.setupFees[cycle] ?? 0
   const locationRequired = Boolean(item?.locations.length)
@@ -27,7 +29,7 @@ export function CustomerOrderSummary({
   return (
     <aside className="h-fit rounded-xl bg-white p-5 shadow-sm">
       <h2 className="border-b border-slate-100 pb-3 text-lg font-bold">
-        Tổng quan đơn hàng
+        {t('customerBuy.summary')}
       </h2>
       {item && price !== undefined ? (
         <>
@@ -39,11 +41,12 @@ export function CustomerOrderSummary({
               <div className="flex justify-between gap-2 font-bold">
                 <span className="truncate">{item.name}</span>
                 <span className="whitespace-nowrap text-blue-600">
-                  {money(price)}
+                  {money(price, i18n.language)}
                 </span>
               </div>
               <p className="mt-1 text-slate-500">
-                Chu kỳ: {cycleLabels[cycle] ?? cycle}
+                {t('customerBuy.cycle')}:{' '}
+                {t(`customerBuy.cycles.${cycle}`, { defaultValue: cycle })}
               </p>
               {item.features.cpu > 0 && (
                 <p className="text-slate-500">
@@ -55,13 +58,13 @@ export function CustomerOrderSummary({
           </div>
           {locationRequired && (
             <label className="mt-4 block text-sm font-medium">
-              Vị trí datacenter
+              {t('customerBuy.datacenter')}
               <select
                 value={locationId}
                 onChange={(event) => onLocationChange(event.target.value)}
                 className="mt-2 h-10 w-full rounded-lg border border-slate-200 px-3"
               >
-                <option value="">Chọn vị trí</option>
+                <option value="">{t('customerBuy.selectLocation')}</option>
                 {item.locations.map((location) => (
                   <option key={location.id} value={location.id}>
                     {location.name}
@@ -73,20 +76,20 @@ export function CustomerOrderSummary({
           )}
           <div className="mt-4 space-y-2 border-t border-slate-100 py-3 text-sm">
             <div className="flex justify-between">
-              <span>Giá gói</span>
-              <span>{money(price)}</span>
+              <span>{t('customerBuy.packagePrice')}</span>
+              <span>{money(price, i18n.language)}</span>
             </div>
             {setupFee > 0 && (
               <div className="flex justify-between">
-                <span>Phí cài đặt</span>
-                <span>{money(setupFee)}</span>
+                <span>{t('customerBuy.setupFee')}</span>
+                <span>{money(setupFee, i18n.language)}</span>
               </div>
             )}
           </div>
           <div className="flex justify-between gap-2 border-t border-slate-100 py-4 font-bold">
-            <span>Tạm tính</span>
+            <span>{t('customerBuy.subtotal')}</span>
             <span className="text-xl text-blue-600">
-              {money(price + setupFee)}
+              {money(price + setupFee, i18n.language)}
             </span>
           </div>
           <button
@@ -96,23 +99,22 @@ export function CustomerOrderSummary({
             className="flex h-11 w-full items-center justify-center gap-2 rounded-lg bg-blue-600 font-semibold text-white hover:bg-blue-700 disabled:opacity-50"
           >
             <ShoppingCart size={18} />
-            {pending ? 'Đang thêm...' : 'Thêm vào giỏ hàng'}
+            {pending ? t('customerBuy.adding') : t('customerBuy.addToCart')}
           </button>
           <p className="mt-2 text-xs text-slate-500">
-            Thuế, khuyến mãi và tổng thanh toán được xác nhận khi checkout. Chưa
-            tạo đơn hàng hoặc thu tiền ở bước này.
+            {t('customerBuy.checkoutHint')}
           </p>
         </>
       ) : (
         <p className="py-8 text-center text-sm text-slate-500">
-          Chọn một gói dịch vụ để xem chi phí.
+          {t('customerBuy.selectForPrice')}
         </p>
       )}
       <Link
         to="/customer/dashboard/cart"
         className="mt-4 block text-center text-sm font-semibold text-blue-600"
       >
-        Xem giỏ hàng →
+        {t('customerBuy.viewCart')}
       </Link>
     </aside>
   )
